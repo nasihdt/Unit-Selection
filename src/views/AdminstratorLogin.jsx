@@ -1,25 +1,44 @@
 import React from 'react'
 import './styles/AdminstratorLogin.css'
+import {FaUser, FaLock} from "react-icons/fa"
+import Adminlogin_img from "../components/Adminlogin-image.jpg"
+import Logo from "../components/logo-chamran.png"
 
 const AdminstratorLogin = () =>{
     return(
-        <div className='container'>
-            <div className='header'>
-                <div className='title_page'>ورود</div>
-                <div className='underline'></div>
-            </div>
-            <div className='inputs'>
-                <div className='input'>
-                    <input type='text' placeholder='نام کاربری'/>
-                </div>
-                <div className='input'>
-                    <input type='password' placeholder='رمز عبور'/>
-                </div>
-            </div>
-            <div className='forgot_password'>فراموشی رمز عبور؟ کلیک کنید</div>
-            <div className='Login'>ورود</div>
-            <button>ورود</button>
+  
+     <div className="login-container">
+      
+      <div className="login-image">
+        <img src={Adminlogin_img} alt="Login" />
+      </div>
+      <div className="logo">
+        <img src={Logo} alt="logo-chamran"/>
+      </div>
+
+      {/* بخش فرم */}
+      <div className="login-form">
+        <div className="header">
+          <div className="title_page">ورود به سامانه</div>
+          <div className="underline"></div>
         </div>
+        <div className="inputs">
+          <div className="input-wrapper">
+            <FaUser className="icon" />
+            <input type="text" placeholder="نام کاربری" />
+          </div>
+          <div className="input-wrapper">
+            <FaLock className="icon" />
+            <input type="password" placeholder="رمز عبور" />
+          </div>
+        </div>
+        <div className="forgot_password">
+           <a href="/forgot-password">فراموشی رمز عبور؟</a>
+
+          </div>
+        <button className="Login_btn">ورود</button>
+      </div>
+    </div>
     )
 }
 
