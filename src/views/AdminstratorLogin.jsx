@@ -32,10 +32,7 @@ const AdminstratorLogin = () =>{
             <input type="password" placeholder="رمز عبور" />
           </div>
         </div>
-        <div className="forgot_password">
-           <a href="/forgot-password">فراموشی رمز عبور؟</a>
 
-          </div>
         <button className="Login_btn">ورود</button>
       </div>
     </div>

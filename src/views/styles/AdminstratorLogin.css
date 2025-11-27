@@ -78,25 +78,9 @@
   border: none;
   cursor: pointer;
   margin-left: 50px;
+  margin-top: 50px;
 }
 
-.forgot_password{
-  align-self: flex-end;
-  margin-bottom: 60px;
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 100px;
-}
-.forgot_password a {
-  color: #000000;
-  text-decoration: none;
-  font-size: 16px;
-}
-
-.forgot_password a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
 .logo {
   position: absolute;  
   top: 20px;            
