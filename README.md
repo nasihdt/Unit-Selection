@@ -139,6 +139,7 @@ course-registration/
 \## Feature Branch Naming Convention
 
 
+  
 
 \### Backend
 
@@ -148,9 +149,11 @@ feature/BE2-<short-description>
 
 
 
+
 \### Frontend
 
 feature/FE-<short-description>
+
 
 
 
@@ -167,7 +170,7 @@ feature/FE-login-page
 feature/FE-admin-dashboard
 
 
-
+---
 
 
 \##  Development Workflow Summary
@@ -184,21 +187,9 @@ feature/FE-admin-dashboard
 
 Create a new feature branch:
 
-
-
-bash
-
-Copy code
-
 git checkout -b feature/<branch-name>
 
 Work on the feature → commit small updates:
-
-
-
-bash
-
-Copy code
 
 git add .
 
@@ -206,25 +197,13 @@ git commit -m "Meaningful update message"
 
 Push your branch:
 
-
-
-bash
-
-Copy code
-
 git push origin feature/<branch-name>
 
 Create Pull Request → use the PR template
 
-
-
 Get code review → fix issues if needed
 
-
-
 Merge PR into main
-
-
 
 Delete the feature branch
 
