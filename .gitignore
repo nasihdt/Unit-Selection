@@ -1,0 +1,15 @@
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.cache
+*.log
+*.vs/
+*.vscode/
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+node_modules/
+dist/
+wwwroot/dist/
