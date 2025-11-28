@@ -3,8 +3,16 @@ import './styles/AdminstratorLogin.css'
 import {FaUser, FaLock} from "react-icons/fa"
 import Adminlogin_img from "../components/Adminlogin-image.jpg"
 import Logo from "../components/logo-chamran.png"
+import { useNavigate } from "react-router-dom";
 
 const AdminstratorLogin = () =>{
+
+   const navigate = useNavigate();
+
+   const handleLogin = () => {
+      navigate("/dashboard"); 
+    }
+
     return(
   
      <div className="login-container">
@@ -33,7 +41,7 @@ const AdminstratorLogin = () =>{
           </div>
         </div>
 
-        <button className="Login_btn">ورود</button>
+        <button className="Login_btn" onClick={handleLogin}>ورود</button>
       </div>
     </div>
     )
