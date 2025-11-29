@@ -33,14 +33,14 @@ const AdminDashboard = () => {
         <div className="rectangle" />
 
         <div className="dashboard">
-          <button className="btn_dashdoard">داشبورد</button>
+          <button className="btn_dashboardadmin">داشبورد</button>
           <div className="icon_doshboard">
             <MdDashboard className="icon" />
           </div>
 
           <div className="div" />
 
-          <button className="btn_manage_course" onClick={handleManageCourse}>مدیریت دروس</button>
+          <button className="btn_managecourse" onClick={handleManageCourse}>مدیریت دروس</button>
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>

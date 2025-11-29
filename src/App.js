@@ -1,20 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminstratorLogin from './views/AdminstratorLogin'
-function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-  return (
+import Dashboard from './views/AdminDashboard'  
+import Managementcourse from './views/ManagementCourse'
+import Addcourse from './views/AddCourse'
+import Editcourse from './views/EditCourse'
 
-    <div className="App">
-      <AdminstratorLogin/>
-    </div>
-    // <>
-    //   {!loggedIn ? (
-    //     <AdminstratorLogin onLogin={() => setLoggedIn(true)} />
-    //   ) : (
-    //     <h1 style={{ textAlign: "center" }}>مدیر وارد شد ✔</h1>
-    //   )}
-    // </>
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<AdminstratorLogin />} />
+        <Route path="/login" element={<AdminstratorLogin/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/management" element={<Managementcourse />} />
+        <Route path="/add-new-course" element={<Addcourse />} />
+        <Route path="/edit" element={<Editcourse />} />
+      </Routes>
+    </Router>
   );
 }
 
