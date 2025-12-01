@@ -22,7 +22,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Helpers\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Services\Implementations\" />
   </ItemGroup>
 
 </Project>

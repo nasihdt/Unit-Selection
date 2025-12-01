@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using UniversityRegistration.Api.Data;
 using UniversityRegistration.Api.Repository.Implementations;
 using UniversityRegistration.Api.Repository.Interfaces;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
+using UniversityRegistration.Api.Services.Interfaces;
+using UniversityRegistration.Api.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Repository layer
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+
+// Service layer
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 // Swagger / OpenAPI
 builder.Services.AddEndpointsApiExplorer();
