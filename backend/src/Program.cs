@@ -21,6 +21,7 @@ builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 // Service layer
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // Swagger / OpenAPI
 builder.Services.AddEndpointsApiExplorer();
