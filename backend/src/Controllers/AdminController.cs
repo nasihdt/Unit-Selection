@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UniversityRegistration.Api.Services.Interfaces;
+using UniversityRegistration.Api.Models.Auth;
 
 namespace UniversityRegistration.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
@@ -14,16 +15,19 @@ namespace UniversityRegistration.Api.Controllers
             _adminService = adminService;
         }
 
-        // GET /api/admin/login?username=admin&password=Admin@123
-        [HttpGet("login")]
-        public async Task<IActionResult> Login(string username, string password)
+        // POST: api/admin/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var admin = await _adminService.LoginAsync(username, password);
+            if (!ModelState.IsValid)
+                return BadRequest("درخواست نامعتبر است");
 
-            if (admin == null)
-                return Unauthorized(new { message = "Invalid username or password" });
+            var result = await _adminService.LoginAsync(request.Username, request.Password);
 
-            return Ok(admin);
+            if (result == null)
+                return Unauthorized(new { message = "نام کاربری یا رمز عبور اشتباه است" });
+
+            return Ok(result);
         }
     }
 }
