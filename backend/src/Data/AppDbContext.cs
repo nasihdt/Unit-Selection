@@ -33,15 +33,6 @@ namespace UniversityRegistration.Api.Data
                 entity.Property(a => a.Role)
                       .IsRequired()
                       .HasMaxLength(20);
-
-                // Seed یک ادمین اولیه
-                entity.HasData(new Admin
-                {
-                    Id = 1,
-                    Username = "admin",
-                    Password = "Admin@123", // برای پروژه دانشگاهی ساده نگه‌داشتیم
-                    Role = "Admin"
-                });
             });
 
             // ===== Course =====
@@ -77,34 +68,6 @@ namespace UniversityRegistration.Api.Data
 
                 entity.Property(c => c.Description)
                       .HasMaxLength(500);
-
-                // چند تا Course نمونه (Seed)
-                modelBuilder.Entity<Course>().HasData(
-                    new Course
-                    {
-                        Id = 1,
-                        Title = "برنامه‌نویسی ۱",
-                        Code = "CS101",
-                        Units = 3,
-                        Capacity = 40,
-                        TeacherName = "دکتر احمدی",
-                        Time = "شنبه 10-12",
-                        Location = "کلاس 201",
-                        Description = "درس مقدماتی برنامه‌نویسی"
-                    },
-                    new Course
-                    {
-                        Id = 2,
-                        Title = "پایگاه داده",
-                        Code = "CS202",
-                        Units = 3,
-                        Capacity = 35,
-                        TeacherName = "دکتر رضایی",
-                        Time = "دوشنبه 8-10",
-                        Location = "کلاس 105",
-                        Description = "مبانی سیستم‌های مدیریت پایگاه داده"
-                    }
-                );
             });
         }
     }

@@ -11,7 +11,7 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251123102337_InitialCreate")]
+    [Migration("20251205191426_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -50,15 +50,6 @@ namespace UniversityRegistration.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Password = "Admin@123",
-                            Role = "Admin",
-                            Username = "admin"
-                        });
                 });
 
             modelBuilder.Entity("UniversityRegistration.Api.Models.Course", b =>
@@ -107,32 +98,6 @@ namespace UniversityRegistration.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 40,
-                            Code = "CS101",
-                            Description = "درس مقدماتی برنامه‌نویسی",
-                            Location = "کلاس 201",
-                            TeacherName = "دکتر احمدی",
-                            Time = "شنبه 10-12",
-                            Title = "برنامه‌نویسی ۱",
-                            Units = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 35,
-                            Code = "CS202",
-                            Description = "مبانی سیستم‌های مدیریت پایگاه داده",
-                            Location = "کلاس 105",
-                            TeacherName = "دکتر رضایی",
-                            Time = "دوشنبه 8-10",
-                            Title = "پایگاه داده",
-                            Units = 3
-                        });
                 });
 #pragma warning restore 612, 618
         }

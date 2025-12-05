@@ -1,41 +1,40 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 using UniversityRegistration.Api.Data;
+using UniversityRegistration.Api.Helpers;
 using UniversityRegistration.Api.Repository.Implementations;
 using UniversityRegistration.Api.Repository.Interfaces;
-using UniversityRegistration.Api.Services.Interfaces;
 using UniversityRegistration.Api.Services.Implementations;
-using UniversityRegistration.Api.Helpers;                  
-using Microsoft.IdentityModel.Tokens;                     
-using System.Text;                                        
+using UniversityRegistration.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services
 builder.Services.AddControllers();
 
-// DbContext (PostgreSQL)
+// DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Repository layer
-builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+// Repository
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
-// Service layer
-builder.Services.AddScoped<ICourseService, CourseService>();
+// Services
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
-// Jwt Helper registration
-var secretKey = builder.Configuration["JwtSettings:Secret"]
-        ?? throw new Exception("JWT Secret Key is missing in configuration!");
-
+// JWT Helper
+var secretKey = builder.Configuration["JwtSettings:Secret"]!;
 builder.Services.AddSingleton(new JwtHelper(secretKey));
 
-// JWT Authentication configuration
+// Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -46,13 +45,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Swagger / OpenAPI
-builder.Services.AddEndpointsApiExplorer();
+// Swagger
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Run Seeder (after Build)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();     // auto-create DB
+    DbSeeder.SeedAdmins(db);  // seed admin
+}
+
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -61,8 +67,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Authentication MUST be before Authorization
-app.UseAuthentication();    
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

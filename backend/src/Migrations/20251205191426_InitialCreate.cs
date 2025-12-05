@@ -3,8 +3,6 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace UniversityRegistration.Api.Migrations
 {
     /// <inheritdoc />
@@ -46,29 +44,6 @@ namespace UniversityRegistration.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
-                });
-
-            // -----------------------------
-            // UPDATED: Insert Admin with hashed password
-            // -----------------------------
-            migrationBuilder.InsertData(
-                table: "Admins",
-                columns: new[] { "Id", "Password", "Role", "Username" },
-                values: new object[]
-                {
-                    1,
-                    "AQAAAAEAACcQAAAAEKVfFlaGhYhFHkf6i6FMvWiQ2HuFrFufTzvHKwH0HGpR8fSZ6kKiC9Tv2FfaTaahYA==",
-                    "Admin",
-                    "admin"
-                });
-
-            migrationBuilder.InsertData(
-                table: "Courses",
-                columns: new[] { "Id", "Capacity", "Code", "Description", "Location", "TeacherName", "Time", "Title", "Units" },
-                values: new object[,]
-                {
-                    { 1, 40, "CS101", "درس مقدماتی برنامه‌نویسی", "کلاس 201", "دکتر احمدی", "شنبه 10-12", "برنامه‌نویسی ۱", 3 },
-                    { 2, 35, "CS202", "مبانی سیستم‌های مدیریت پایگاه داده", "کلاس 105", "دکتر رضایی", "دوشنبه 8-10", "پایگاه داده", 3 }
                 });
         }
 
