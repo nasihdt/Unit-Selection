@@ -20,12 +20,5 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Username == username);
         }
-
-        public async Task<Admin?> GetByUsernameAndPasswordAsync(string username, string password)
-        {
-            return await _context.Admins
-                .AsNoTracking()
-                .FirstOrDefaultAsync(a => a.Username == username && a.Password == password);
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using UniversityRegistration.Api.Models;
-using UniversityRegistration.Api.Models.Auth;
+﻿using UniversityRegistration.Api.Models.Auth;
 
 namespace UniversityRegistration.Api.Services.Interfaces
 {

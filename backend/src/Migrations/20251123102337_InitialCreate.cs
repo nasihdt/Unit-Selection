@@ -48,10 +48,19 @@ namespace UniversityRegistration.Api.Migrations
                     table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
+            // -----------------------------
+            // UPDATED: Insert Admin with hashed password
+            // -----------------------------
             migrationBuilder.InsertData(
                 table: "Admins",
                 columns: new[] { "Id", "Password", "Role", "Username" },
-                values: new object[] { 1, "Admin@123", "Admin", "admin" });
+                values: new object[]
+                {
+                    1,
+                    "AQAAAAEAACcQAAAAEKVfFlaGhYhFHkf6i6FMvWiQ2HuFrFufTzvHKwH0HGpR8fSZ6kKiC9Tv2FfaTaahYA==",
+                    "Admin",
+                    "admin"
+                });
 
             migrationBuilder.InsertData(
                 table: "Courses",
