@@ -20,7 +20,7 @@ namespace UniversityRegistration.Api.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
-                return BadRequest("درخواست نامعتبر است");
+                return BadRequest(new { message = "درخواست نامعتبر است" });
 
             var result = await _adminService.LoginAsync(request.Username, request.Password);
 
@@ -31,3 +31,6 @@ namespace UniversityRegistration.Api.Controllers
         }
     }
 }
+
+
+

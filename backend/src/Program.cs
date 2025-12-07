@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 using UniversityRegistration.Api.Data;
@@ -12,27 +14,29 @@ using UniversityRegistration.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+// ================================
+//          Add Services
+// ================================
 builder.Services.AddControllers();
 
-// DbContext
+// ---------- DbContext ----------
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// Repository
+// ---------- Repositories ----------
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
-// Services
+// ---------- Services ----------
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 
-// JWT Helper
+// ---------- JWT Helper ----------
 var secretKey = builder.Configuration["JwtSettings:Secret"]!;
 builder.Services.AddSingleton(new JwtHelper(secretKey));
 
-// Authentication
+// ---------- Authentication ----------
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -41,24 +45,57 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ValidateLifetime = true
         };
     });
 
-// Swagger
-builder.Services.AddSwaggerGen();
+// ================================
+//         Swagger Security
+// ================================
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Enter your JWT token.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,  
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                 Reference = new OpenApiReference
+                 {
+                     Type = ReferenceType.SecurityScheme,
+                     Id = "Bearer"
+                 }
+            },
+            new string[]{}
+        }
+    });
+});
 
 var app = builder.Build();
 
-// Run Seeder (after Build)
+// ================================
+//       RUN DB MIGRATION + SEED
+// ================================
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();     // auto-create DB
-    DbSeeder.SeedAdmins(db);  // seed admin
+    db.Database.Migrate();
+    DbSeeder.SeedAdmins(db);
 }
 
-// Middleware
+// ================================
+//        Middlewares
+// ================================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -22,9 +22,9 @@ namespace UniversityRegistration.Api.Helpers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
                 new Claim(ClaimTypes.Name, admin.Username),
-                new Claim(ClaimTypes.Role, admin.Role),
-                new Claim("AdminId", admin.Id.ToString())
+                new Claim(ClaimTypes.Role, admin.Role)
             };
 
             var token = new JwtSecurityToken(

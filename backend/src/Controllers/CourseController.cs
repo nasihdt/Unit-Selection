@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using UniversityRegistration.Api.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using UniversityRegistration.Api.Models.DTOs;
 using UniversityRegistration.Api.Services.Interfaces;
 
 namespace UniversityRegistration.Api.Controllers
@@ -15,46 +16,51 @@ namespace UniversityRegistration.Api.Controllers
             _service = service;
         }
 
-        // GET: api/course
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var courses = await _service.GetAllAsync();
             return Ok(courses);
         }
 
-        // GET: api/course/{id}
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             var course = await _service.GetByIdAsync(id);
             if (course == null)
                 return NotFound();
-
             return Ok(course);
         }
 
-        // POST: api/course
         [HttpPost]
-        public async Task<IActionResult> Add(Course course)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Add([FromBody] CreateCourseRequest dto)
         {
-            var created = await _service.AddAsync(course);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _service.AddAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-        // PUT: api/course/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Course course)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateCourseRequest dto)
         {
-            var success = await _service.UpdateAsync(id, course);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var success = await _service.UpdateAsync(id, dto);
             if (!success)
                 return NotFound();
 
             return NoContent();
         }
 
-        // DELETE: api/course/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
