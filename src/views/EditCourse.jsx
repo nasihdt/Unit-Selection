@@ -9,14 +9,80 @@ import "./styles/EditCourse.css";
 import { useState, useEffect } from "react";
 
  
-const EditCourse = () => {
+const EditCourse = ({ courseId }) => {
 
-  
+  const [course, setCourse] = useState({
+    name: "",
+    code: "",
+    vahed: "",
+    capacity: "",
+    teacher: "",
+    time: "",
+    place: "",
+    examDate: ""
+  });
+
+  // دریافت اطلاعات درس از سرور هنگام باز شدن صفحه
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/courses/${courseId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setCourse(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCourse();
+  }, [courseId]);
+
+  // بروزرسانی فرم
+  const handleChange = (e) => {
+    setCourse({
+      ...course,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // ثبت تغییرات
+  const handleUpdate = async () => {
+    // اعتبارسنجی فیلدها
+    for (let key in course) {
+      if (course[key].trim() === "") {
+        alert(`لطفاً فیلد ${key} را پر کنید!`);
+        return;
+      }
+    }
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/courses/${courseId}`, {
+        method: "PUT", // یا PATCH بسته به سرور
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(course)
+      });
+
+      if (res.ok) {
+        alert("ویرایش درس با موفقیت انجام شد!");
+        navigate("/management");
+      } else {
+        alert("خطا در ویرایش درس");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("مشکل در ارتباط با سرور");
+    }
+  };
+
+
+
   const [value, setValue] = useState("");
   
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+  // const handleChange = (e) => {
+  //   setValue(e.target.value);
+  // };
+
   const navigate = useNavigate();
   
   const handledashboard = () =>{
@@ -48,42 +114,42 @@ const EditCourse = () => {
 
        <div class="field-name">
           <label class="label-name">نام درس </label>
-          <input type="text" class="ipt-name"/>
+          <input type="text" class="ipt-name" value={course.name} onChange={handleChange}/>
        </div>
             
         <div class="field-code">
           <label class="label-code">کد درس</label>
-          <input type="text" class="ipt-code"/>
+          <input type="text" class="ipt-code" value={course.code} onChange={handleChange}/>
        </div>
 
         <div class="field-vahed">
           <label class="label-vahed">واحد</label>
-          <input type="text" class="ipt-vahed"/>
+          <input type="text" class="ipt-vahed" value={course.vahed} onChange={handleChange}/>
        </div>
 
         <div class="field-capacity">
           <label class="label-capacity">ظرفیت</label>
-          <input type="text" class="ipt-capacity"/>
+          <input type="text" class="ipt-capacity" value={course.capacity} onChange={handleChange}/>
        </div>
 
         <div class="field-teacher">
           <label class="label-teacher">نام استاد</label>
-          <input type="text" class="ipt-teacher"/>
+          <input type="text" class="ipt-teacher" value={course.teacher} onChange={handleChange}/>
        </div>
 
         <div class="field-time">
           <label class="label-time">زمان</label>
-          <input type="date" class="ipt-time"/>
+          <input type="date" class="ipt-time" value={course.time} onChange={handleChange}/>
        </div>
 
         <div class="field-place">
           <label class="label-place">مکان</label>
-          <input type="text" class="ipt-place"/>
+          <input type="text" class="ipt-place" value={course.place} onChange={handleChange}/>
        </div>
 
         <div class="field-examtime">
           <label class="label-examtime">تاریخ امتحان</label>
-          <input type="date" class="ipt-examtime"/>
+          <input type="date" class="ipt-examtime" value={course.examDate} onChange={handleChange}/>
        </div>   
          
         <div className="dashboard">
