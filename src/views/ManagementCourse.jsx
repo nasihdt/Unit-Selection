@@ -165,7 +165,7 @@ const ManagementCourse = () => {
           <div key={course.id} className="item-course">
             <div className="course-name">{course.name}</div>
             <div className="course-code">{course.code}</div>
-            <div className="course-unit">{course.unit}</div>
+            <div className="course-vahed">{course.unit}</div>
             <div className="course-capacity">{course.capacity}</div>
             <div className="teacher-name">{course.teacher}</div>
             <div className="time-name">{course.time}</div>
