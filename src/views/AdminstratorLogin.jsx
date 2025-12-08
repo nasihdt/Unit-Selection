@@ -3,7 +3,7 @@ import './styles/AdminstratorLogin.css'
 import {FaUser, FaLock} from "react-icons/fa"
 import Adminlogin_img from "../components/Adminlogin-image.jpg"
 import Logo from "../components/logo-chamran.png"
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginAdmin } from '../services/Authoservice';
 import React, { useState } from 'react';
 
@@ -28,11 +28,11 @@ const AdminstratorLogin = () =>{
   }
   };
 
-  //  const navigate = useNavigate();
+   const navigate = useNavigate();
 
-  //  const handleLogin = () => {
-  //     navigate("/dashboard"); 
-  //   }
+   const handleLogin = () => {
+      navigate("/dashboard"); 
+    }
 
     return(
   
@@ -65,7 +65,7 @@ const AdminstratorLogin = () =>{
           </div>
         </div>
 
-        <button className="Login_btn" onClick={handleSubmit}>ورود</button>
+        <button className="Login_btn" onClick={handleLogin}>ورود</button>
 
        {error && <p style={{color:'red'}}>{error}</p>}
       </div>
