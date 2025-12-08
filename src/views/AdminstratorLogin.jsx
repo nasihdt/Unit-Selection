@@ -1,17 +1,38 @@
-import React from 'react'
+
 import './styles/AdminstratorLogin.css'
 import {FaUser, FaLock} from "react-icons/fa"
 import Adminlogin_img from "../components/Adminlogin-image.jpg"
 import Logo from "../components/logo-chamran.png"
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { loginAdmin } from '../services/Authoservice';
+import React, { useState } from 'react';
 
 const AdminstratorLogin = () =>{
 
-   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-   const handleLogin = () => {
-      navigate("/dashboard"); 
-    }
+  const handleSubmit = async (e) => {
+     if (!username.trim() || !password.trim()) {
+    setError("نام کاربری و رمز عبور نباید خالی باشند!");
+    return;
+  }
+
+  try {
+    const data = await loginAdmin(username, password);
+    localStorage.setItem('token', data.token);
+    alert('Login successful!');
+  } catch (err) {
+    setError(err.message);
+  }
+  };
+
+  //  const navigate = useNavigate();
+
+  //  const handleLogin = () => {
+  //     navigate("/dashboard"); 
+  //   }
 
     return(
   
@@ -24,6 +45,7 @@ const AdminstratorLogin = () =>{
         <img src={Logo} alt="logo-chamran"/>
       </div>
 
+     
       {/* بخش فرم */}
       <div className="login-form">
         <div className="header">
@@ -31,17 +53,21 @@ const AdminstratorLogin = () =>{
           <div className="underline"></div>
         </div>
         <div className="inputs">
+
           <div className="input-wrapper">
             <FaUser className="icon" />
-            <input type="text" placeholder="نام کاربری" />
+            <input type="text" placeholder="نام کاربری" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
+
           <div className="input-wrapper">
             <FaLock className="icon" />
-            <input type="password" placeholder="رمز عبور" />
+            <input type="password" placeholder="رمز عبور" value={password} onChange={(e) => setPassword(e.target.value)}/>
           </div>
         </div>
 
-        <button className="Login_btn" onClick={handleLogin}>ورود</button>
+        <button className="Login_btn" onClick={handleSubmit}>ورود</button>
+
+       {error && <p style={{color:'red'}}>{error}</p>}
       </div>
     </div>
     )
