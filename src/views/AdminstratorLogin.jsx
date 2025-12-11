@@ -8,7 +8,8 @@ import { loginAdmin } from '../services/Authoservice';
 import React, { useState } from 'react';
 
 const AdminstratorLogin = () =>{
-
+  
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,18 +22,15 @@ const AdminstratorLogin = () =>{
 
   try {
     const data = await loginAdmin(username, password);
+
     localStorage.setItem('token', data.token);
-    alert('Login successful!');
+    console.log("LOGIN RESPONSE:", data);
+    navigate("/dashboard"); 
+    // alert('Login successful!');
   } catch (err) {
-    setError(err.message);
+    setError(err.message || "نام کاربری یا رمز عبور اشتباه است");
   }
   };
-
-   const navigate = useNavigate();
-
-   const handleLogin = () => {
-      navigate("/dashboard"); 
-    }
 
     return(
   
@@ -65,7 +63,7 @@ const AdminstratorLogin = () =>{
           </div>
         </div>
 
-        <button className="Login_btn" onClick={handleLogin}>ورود</button>
+        <button className="Login_btn" onClick={handleSubmit}>ورود</button>
 
        {error && <p style={{color:'red'}}>{error}</p>}
       </div>
