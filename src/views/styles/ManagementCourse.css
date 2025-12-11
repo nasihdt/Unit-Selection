@@ -211,14 +211,57 @@
   z-index: 10;
   
 }
+/* ---------------نمایش دروس----------------- */
+.item-course{
+    position: relative;   
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 40;
+    padding: 10px;
+    justify-content: space-between;
+    background: white;
+    direction: rtl;
+    width: 915px;
+    margin: 20px auto;  
+    border-radius: 10px;
+    align-items: center;
+    box-sizing: border-box;
+    top: 240px;
+    height: 60px;
+    right: 100px;
 
-.btn-img-delete{
-  position: relative;
-  left: 100px;
-  top: 200px;
+}
+.item-course .course-name{
+  
 }
 
-.btn-flash-bask{
-  position: relative;
+.img-delete{
+  width: 30px;
+  height: 30px;
+}
+.img_edit{
+  width: 30px;
+  height: 30px;
 }
 
+.list-of-course{
+    position: absolute;
+    display: flex;
+    gap: 40px;       /* فاصله بین ستون‌ها */
+    padding: 10px;
+   
+    font-weight: bold;
+    direction: rtl;
+    top: 160px;
+    width: 900px;
+    margin: 40px auto;
+    border-radius: 10px;
+    right: 400px;
+    
+}
+.space-bet{
+  right: 40px;
+}
+.space-bet1{
+  right: 40px;
+}
