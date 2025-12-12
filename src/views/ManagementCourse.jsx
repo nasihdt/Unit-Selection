@@ -18,7 +18,6 @@ const ManagementCourse = () => {
   const API_URL = "http://localhost:5127/api/Course";
   const navigate = useNavigate();
 
-  // تبدیل کلیدهای JSON به camelCase
   const parseCourses = (data) =>
     data.map((c) => ({
       id: c.courseId ?? c.Id ?? c.id,
@@ -81,7 +80,8 @@ const ManagementCourse = () => {
   // روتینگ
   const handleAddNewCourse = () => navigate("/add-new-course");
   const handleDashboard = () => navigate("/dashboard");
-  const handleEdit = (id) => navigate(`/edit`);
+  const handleEdit = (id) => {console.log("Editing courseId:", id);
+    navigate(`/edit/${id}`)};
 
   // حذف درس
   const handleDelete = async (id) => {
@@ -181,7 +181,7 @@ const ManagementCourse = () => {
           <div className="time">زمان</div>
           <div className="space-bet1"></div>
           <div className="palace">مکان</div>
-           <div className="space-bet1"></div>
+          <div className="space-bet1"></div>
           <div className="delete">حذف</div>
           <div className="space-bet1"></div>
           <div className="edit">ویرایش</div>
