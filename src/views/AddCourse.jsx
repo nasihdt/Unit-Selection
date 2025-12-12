@@ -3,7 +3,6 @@ import { FaSearch} from "react-icons/fa"
 import { MdDashboard } from "react-icons/md";
 import { MdMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
 import Logo from "../components/logo-chamran.png"
 import "./styles/AddCourse.css";
 import { useState, useEffect } from "react";
@@ -21,7 +20,7 @@ const AddCourse = () => {
     teacher: "",
     time: "",
     place: "",
-    examDate: ""
+    // examDate: ""
   });
 
   // بروزرسانی فرم
@@ -34,12 +33,6 @@ const AddCourse = () => {
   
   const [value, setValue] = useState("");
   
-  // const handleChange = (e) => {
-  //   setValue(e.target.value);
-  // };
-
-
-  
   const handledashboard = () =>{
     navigate('/dashboard')
   }
@@ -49,25 +42,34 @@ const AddCourse = () => {
 
 
   const handleSubmit = async () => {
-  // بررسی خالی بودن فیلدها
-  for (let key in course) {
-    if (course[key].trim() === "") {
-      alert(`لطفاً فیلد ${key} را پر کنید!`);
-      return; // ارسال فرم را متوقف می‌کنیم
-    }
-  }
+  const token = localStorage.getItem("token"); 
+
+  const body = {
+    title: course.name,
+    code: course.code,
+    units: parseInt(course.vahed),
+    capacity: parseInt(course.capacity),
+    teacherName: course.teacher,
+    time: course.time,
+    location: course.place
+  };
 
   try {
-    const res = await fetch("http://localhost:5000/api/courses", {
+    const res = await fetch("http://localhost:5127/api/Course", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(course)
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}` 
+      },
+      body: JSON.stringify(body)
     });
 
     if (res.ok) {
       alert("درس با موفقیت ثبت شد!");
-      navigate("/management"); // بعد از ثبت به مدیریت دروس برو
+      navigate("/management");
     } else {
+      const errorText = await res.text();
+      console.log("Error:", errorText);
       alert("خطا در ثبت درس");
     }
   } catch (error) {
@@ -75,29 +77,6 @@ const AddCourse = () => {
     alert("مشکل در ارتباط با سرور");
   }
 };
-
-
-  // // ثبت درس با API
-  // const handleSubmit = async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:5000/api/courses", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(course)
-  //     });
-
-  //     if (res.ok) {
-  //       alert("درس با موفقیت ثبت شد!");
-  //       navigate("/management"); // بعد از ثبت به مدیریت دروس برو
-  //     } else {
-  //       alert("خطا در ثبت درس");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("مشکل در ارتباط با سرور");
-  //   }
-  // };
-
 
   //پارامتر های تایم
   const [dateTime, setDateTime] = useState(new Date());
@@ -117,45 +96,45 @@ const AddCourse = () => {
         <div className="rectangle" />
 
        {/* لیستی که برای اضافه کردن درس باید پر کنیم*/}
-       <div class="field-name">
-          <label class="label-name">نام درس <span class="assign1">*</span></label>
-          <input type="text" class="ipt-name" value={course.name} onChange={handleChange}/>
+       <div className="field-name">
+          <label className="label-name">نام درس <span className="assign1">*</span></label>
+          <input type="text" name="name" className="ipt-name" value={course.name} onChange={handleChange}/>
        </div>
             
-        <div class="field-code">
-          <label class="label-code">کد درس<span class="assign2">*</span></label>
-          <input type="text" class="ipt-code" value={course.code} onChange={handleChange}/>
+        <div className="field-code">
+          <label className="label-code">کد درس<span className="assign2">*</span></label>
+          <input type="text" name="code" className="ipt-code" value={course.code} onChange={handleChange}/>
        </div>
 
-        <div class="field-vahed">
-          <label class="label-vahed">واحد<span class="assign3">*</span></label>
-          <input type="text" class="ipt-vahed" value={course.vahed} onChange={handleChange}/>
+        <div className="field-vahed">
+          <label className="label-vahed">واحد<span className="assign3">*</span></label>
+          <input type="text" name="vahed" className="ipt-vahed" value={course.vahed} onChange={handleChange}/>
        </div>
 
-        <div class="field-capacity">
-          <label class="label-capacity">ظرفیت<span class="assign4">*</span></label>
-          <input type="text" class="ipt-capacity" value={course.capacity} onChange={handleChange}/>
+        <div className="field-capacity">
+          <label className="label-capacity">ظرفیت<span className="assign4">*</span></label>
+          <input type="text" name="capacity" className="ipt-capacity" value={course.capacity} onChange={handleChange}/>
        </div>
 
-        <div class="field-teacher">
-          <label class="label-teacher">نام استاد<span class="assign5">*</span></label>
-          <input type="text" class="ipt-teacher" value={course.teacher} onChange={handleChange}/>
+        <div className="field-teacher">
+          <label className="label-teacher">نام استاد<span className="assign5">*</span></label>
+          <input type="text" name="teacher" className="ipt-teacher" value={course.teacher} onChange={handleChange}/>
        </div>
 
-        <div class="field-time">
-          <label class="label-time">زمان<span class="assign6">*</span></label>
-          <input type="text" class="ipt-time" value={course.time} onChange={handleChange}/>
+        <div className="field-time">
+          <label className="label-time">زمان<span className="assign6">*</span></label>
+          <input type="text" name="time" className="ipt-time" value={course.time} onChange={handleChange}/>
        </div>
 
-        <div class="field-place">
-          <label class="label-place">مکان<span class="assign7">*</span></label>
-          <input type="text" class="ipt-place" value={course.place} onChange={handleChange}/>
+        <div className="field-place">
+          <label className="label-place">مکان<span className="assign7">*</span></label>
+          <input type="text" name="place" className="ipt-place" value={course.place} onChange={handleChange}/>
        </div>
 
-        <div class="field-examtime">
+        {/* <div class="field-examtime">
           <label class="label-examtime">تاریخ امتحان<span class="assign8">*</span></label>
           <input type="date" class="ipt-examtime" value={course.examDate} onChange={handleChange}/>
-       </div>   
+       </div>    */}
          
          
         <div className="dashboard">
@@ -188,7 +167,7 @@ const AddCourse = () => {
         {/* برای سرچ باکس*/}
         <div className="search-container">
         <FaSearch className="search-icon"/>
-        <input type="text" placeholder="جستجو کنید..." value={value} onChange={handleChange} className="search-input"/>
+        <input type="text" placeholder="جستجو کنید..." value={value} className="search-input"/>
         </div>
 
         {/*برای دکمه ثبت درس*/}
