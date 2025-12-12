@@ -1,10 +1,27 @@
-.vs/
+# .NET build folders
 bin/
 obj/
-node_modules/
-build/
-dist/
+*.user
+*.rsuser
+*.suo
+*.cache
+*.log
+.vs/
 
-bin/
-obj/
-.vs/
+# ASP.NET Core config files
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# VS Code
+.vscode/
+
+# Others
+*.db
+*.sqlite
+wwwroot/dist/
