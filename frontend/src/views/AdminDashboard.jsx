@@ -50,7 +50,7 @@ const AdminDashboard = () => {
 
         <div className="rectangle-2" />
 
-        <p className="p">کاربر عزیز به داشبورد خود خوش آمدید</p>
+        <p className="p">مدیر عزیز به داشبورد خود خوش آمدید</p>
 
         <img className="login-page" alt="Login page" src={dashboard} />
 
