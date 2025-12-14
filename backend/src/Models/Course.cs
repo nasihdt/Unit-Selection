@@ -24,6 +24,9 @@
 
         // مکان برگزاری (مثلاً "کلاس 201")
         public string Location { get; set; } = null!;
+        public ICollection<CoursePrerequisite> Prerequisites { get; set; } = new List<CoursePrerequisite>();
+        public ICollection<CoursePrerequisite> IsPrerequisiteFor { get; set; } = new List<CoursePrerequisite>();
+
 
         // توضیحات اختیاری
         public string? Description { get; set; }
