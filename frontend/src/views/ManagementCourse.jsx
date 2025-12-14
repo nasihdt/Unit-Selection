@@ -28,6 +28,7 @@ const ManagementCourse = () => {
       teacherName: c.TeacherName ?? c.teacherName,
       time: c.Time ?? c.time,
       location: c.Location ?? c.location,
+      description: c.description,
     }));
 
   useEffect(() => {
@@ -179,8 +180,11 @@ const ManagementCourse = () => {
           <div className="teachname">نام استاد</div>
           <div className="space-bet"></div>
           <div className="time">زمان</div>
-          <div className="space-bet1"></div>
+          
           <div className="palace">مکان</div>
+          <div className="space-bet1"></div>
+          <div className="exam-date">تاریخ امتحان</div>
+          <div className="description">پیش نیاز</div>
           <div className="space-bet1"></div>
           <div className="delete">حذف</div>
           <div className="space-bet1"></div>
@@ -201,6 +205,9 @@ const ManagementCourse = () => {
               <div className="teacher-name">{course.teacherName}</div>
               <div className="time-name">{course.time}</div>
               <div className="course-palace">{course.location}</div>
+              
+              <div className="course-examdate"></div>
+              <div className="course-description">{course.description}</div>
 
               <div className="course-delete">
                 <button onClick={() => handleDelete(course.id)} className="btn-delete">
