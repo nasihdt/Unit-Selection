@@ -12,6 +12,8 @@ namespace UniversityRegistration.Api.Data
 
         public DbSet<Admin> Admins => Set<Admin>();
         public DbSet<Course> Courses => Set<Course>();
+        public DbSet<RegistrationSettings> RegistrationSettings => Set<RegistrationSettings>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
