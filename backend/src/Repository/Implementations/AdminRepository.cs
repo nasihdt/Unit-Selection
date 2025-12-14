@@ -20,5 +20,18 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Username == username);
         }
+
+        public async Task<RefreshToken?> GetRefreshTokenAsync(string token)
+        {
+            return await _context.RefreshTokens
+                .Include(r => r.Admin)
+                .FirstOrDefaultAsync(r => r.Token == token && !r.IsRevoked);
+        }
+
+        public async Task SaveRefreshTokenAsync(RefreshToken token)
+        {
+            _context.RefreshTokens.Update(token);
+            await _context.SaveChangesAsync();
+        }
     }
 }

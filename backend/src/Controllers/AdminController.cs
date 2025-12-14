@@ -29,6 +29,21 @@ namespace UniversityRegistration.Api.Controllers
 
             return Ok(result);
         }
+
+        // POST: api/admin/refresh
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+        {
+            if (string.IsNullOrEmpty(request.RefreshToken))
+                return BadRequest(new { message = "Refresh Token الزامی است" });
+
+            var result = await _adminService.RefreshTokenAsync(request.RefreshToken);
+
+            if (result == null)
+                return Unauthorized(new { message = "توکن منقضی یا نامعتبر است" });
+
+            return Ok(result);
+        }
     }
 }
 

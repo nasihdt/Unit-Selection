@@ -5,5 +5,8 @@ namespace UniversityRegistration.Api.Repository.Interfaces
     public interface IAdminRepository
     {
         Task<Admin?> GetByUsernameAsync(string username);
+
+        Task<RefreshToken?> GetRefreshTokenAsync(string token);
+        Task SaveRefreshTokenAsync(RefreshToken token);
     }
 }

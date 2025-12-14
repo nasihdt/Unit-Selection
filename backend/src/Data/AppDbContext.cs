@@ -12,6 +12,8 @@ namespace UniversityRegistration.Api.Data
 
         public DbSet<Admin> Admins => Set<Admin>();
         public DbSet<Course> Courses => Set<Course>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,6 +71,28 @@ namespace UniversityRegistration.Api.Data
                 entity.Property(c => c.Description)
                       .HasMaxLength(500);
             });
+
+            // ===== RefreshToken =====
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(rt => rt.Id);
+
+                entity.Property(rt => rt.Token)
+                      .IsRequired()
+                      .HasMaxLength(500);
+
+                entity.Property(rt => rt.ExpiresAt)
+                      .IsRequired();
+
+                entity.Property(rt => rt.IsRevoked)
+                      .IsRequired();
+
+                entity.HasOne(rt => rt.Admin)
+                      .WithMany()
+                      .HasForeignKey(rt => rt.AdminId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
         }
     }
 }
