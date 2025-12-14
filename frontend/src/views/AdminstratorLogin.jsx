@@ -25,6 +25,12 @@ const AdminstratorLogin = () =>{
 
     localStorage.setItem('token', data.token);
     console.log("LOGIN RESPONSE:", data);
+
+    
+    // if(username === "student" && password === '1234'){
+    //   navigate('/dashboardstd')
+    // }
+    
     navigate("/dashboard"); 
     // alert('Login successful!');
   } catch (err) {
