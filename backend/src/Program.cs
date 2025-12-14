@@ -11,6 +11,8 @@ using UniversityRegistration.Api.Repository.Interfaces;
 using UniversityRegistration.Api.Services.Implementations;
 using UniversityRegistration.Api.Services.Interfaces;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ================================
@@ -44,6 +46,9 @@ builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 // ---------- Services ----------
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IRegistrationSettingsRepository, RegistrationSettingsRepository>();
+builder.Services.AddScoped<IRegistrationSettingsService, RegistrationSettingsService>();
+
 
 // ---------- JWT Helper ----------
 var secretKey = builder.Configuration["JwtSettings:Secret"]!;
