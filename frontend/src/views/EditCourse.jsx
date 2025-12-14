@@ -6,8 +6,9 @@ import Logo from "../components/logo-chamran.png";
 import "./styles/EditCourse.css";
 
 const EditCourse = () => {
-  const { courseId } = useParams(); // گرفتن courseId از URL
+  const { courseId } = useParams();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const [course, setCourse] = useState({
     name: "",
@@ -17,20 +18,18 @@ const EditCourse = () => {
     teacher: "",
     time: "",
     place: "",
+    // examdate: "",
+    description: "",
   });
 
   const [dateTime, setDateTime] = useState(new Date());
   const [searchValue, setSearchValue] = useState("");
-  const token = localStorage.getItem("token");
-  // دریافت داده درس از سرور
+
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        
         const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
-            headers: {
-             "Authorization": `Bearer ${token}`
-            }
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
           const data = await res.json();
@@ -42,6 +41,8 @@ const EditCourse = () => {
             teacher: String(data.teacherName || ""),
             time: String(data.time || ""),
             place: String(data.location || ""),
+            // examDate: String(data.examDate || ""),
+            description: String(data.description || ""),
           });
         } else {
           console.error("خطا در دریافت داده درس");
@@ -51,7 +52,7 @@ const EditCourse = () => {
       }
     };
     fetchCourse();
-  }, [courseId]);
+  }, [courseId, token]);
 
   // تایمر تاریخ و ساعت
   useEffect(() => {
@@ -64,17 +65,15 @@ const EditCourse = () => {
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
-  // ثبت تغییرات
+  // اعتبارسنجی
   const handleUpdate = async () => {
-    // اعتبارسنجی
     for (let key in course) {
       if (course[key].trim() === "") {
         alert(`لطفاً فیلد ${key} را پر کنید!`);
         return;
       }
     }
-
-    // map کردن داده‌ها مطابق API
+   // map کردن داده‌ها مطابق API
     const payload = {
       title: course.name,
       code: course.code,
@@ -82,13 +81,15 @@ const EditCourse = () => {
       capacity: parseInt(course.capacity),
       teacherName: course.teacher,
       time: course.time,
-      location: course.place
+      location: course.place,
+      // examDate: course.examDate,
+      description: course.description,
     };
 
     try {
       const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
         method: "PUT",
-        headers: {  "Content-Type": "application/json","Authorization": `Bearer ${token}` },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 
@@ -105,7 +106,6 @@ const EditCourse = () => {
     }
   };
 
-  // ناوبری صفحات
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
   const handleaddnewcourse = () => navigate("/add-new-course");
@@ -192,6 +192,30 @@ const EditCourse = () => {
           />
         </div>
 
+        <div className="field-examtime">
+          <label className="label-examtime">تاریخ امتحان </label>
+          <input
+            type="date"
+            name="examDate"
+            className="ipt-examtime"
+            value={course.examDate}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="field-description">
+          <label className="label-description">پیش نیاز </label>
+          <input
+            type="text"
+            name="description"
+            className="ipt-description"
+            value={course.description}
+            onChange={handleChange}
+          />
+        </div>
+
+
+
         <div className="dashboard">
           <button className="btn_dashdoard-edit" onClick={handledashboard}>
             داشبورد
@@ -211,11 +235,7 @@ const EditCourse = () => {
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
 
         <div className="box">
-          <button
-            className="btn-addcourseedit"
-            alt="altbtncourse"
-            onClick={handleaddnewcourse}
-          >
+          <button className="btn-addcourseedit" onClick={handleaddnewcourse}>
             افزودن درس جدید +
           </button>
         </div>
