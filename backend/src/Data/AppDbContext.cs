@@ -11,10 +11,12 @@ namespace UniversityRegistration.Api.Data
         }
 
         public DbSet<Admin> Admins => Set<Admin>();
-        public DbSet<Course> Courses => Set<Course>();
-        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Professor> Professors => Set<Professor>();
+        public DbSet<Course> Courses => Set<Course>();
+        public DbSet<CoursePrerequisite> CoursePrerequisites => Set<CoursePrerequisite>();
+        public DbSet<RegistrationSettings> RegistrationSettings => Set<RegistrationSettings>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,93 +25,39 @@ namespace UniversityRegistration.Api.Data
             // ===== Admin =====
             modelBuilder.Entity<Admin>(entity =>
             {
-                entity.HasKey(a => a.Id);
+                entity.HasKey(x => x.Id);
 
-                entity.Property(a => a.Username)
+                entity.Property(x => x.Username)
                       .IsRequired()
                       .HasMaxLength(50);
 
-                entity.Property(a => a.Password)
+                entity.Property(x => x.Password)
                       .IsRequired()
                       .HasMaxLength(256);
 
-                entity.Property(a => a.Role)
+                entity.Property(x => x.Role)
                       .IsRequired()
                       .HasMaxLength(20);
-            });
-
-            // ===== Course =====
-            modelBuilder.Entity<Course>(entity =>
-            {
-                entity.HasKey(c => c.Id);
-
-                entity.Property(c => c.Title)
-                      .IsRequired()
-                      .HasMaxLength(100);
-
-                entity.Property(c => c.Code)
-                      .IsRequired()
-                      .HasMaxLength(20);
-
-                entity.Property(c => c.Units)
-                      .IsRequired();
-
-                entity.Property(c => c.Capacity)
-                      .IsRequired();
-
-                entity.Property(c => c.TeacherName)
-                      .IsRequired()
-                      .HasMaxLength(100);
-
-                entity.Property(c => c.Time)
-                      .IsRequired()
-                      .HasMaxLength(50);
-
-                entity.Property(c => c.Location)
-                      .IsRequired()
-                      .HasMaxLength(100);
-
-                entity.Property(c => c.Description)
-                      .HasMaxLength(500);
-            });
-
-            // ===== RefreshToken (GENERIC) =====
-            modelBuilder.Entity<RefreshToken>(entity =>
-            {
-                entity.HasKey(rt => rt.Id);
-
-                entity.Property(rt => rt.Token)
-                      .IsRequired()
-                      .HasMaxLength(500);
-
-                entity.Property(rt => rt.UserId)
-                      .IsRequired();
-
-                entity.Property(rt => rt.Role)
-                      .IsRequired()
-                      .HasMaxLength(20);
-
-                entity.Property(rt => rt.ExpiresAt)
-                      .IsRequired();
-
-                entity.Property(rt => rt.IsRevoked)
-                      .IsRequired();
             });
 
             // ===== Student =====
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasKey(s => s.Id);
+                entity.HasKey(x => x.Id);
 
-                entity.Property(s => s.StudentNumber)
+                entity.Property(x => x.StudentNumber)
                       .IsRequired()
                       .HasMaxLength(50);
 
-                entity.Property(s => s.Password)
+                entity.Property(x => x.FullName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(x => x.Password)
                       .IsRequired()
                       .HasMaxLength(256);
 
-                entity.Property(s => s.Role)
+                entity.Property(x => x.Role)
                       .IsRequired()
                       .HasMaxLength(20);
             });
@@ -117,19 +65,106 @@ namespace UniversityRegistration.Api.Data
             // ===== Professor =====
             modelBuilder.Entity<Professor>(entity =>
             {
-                entity.HasKey(p => p.Id);
+                entity.HasKey(x => x.Id);
 
-                entity.Property(p => p.ProfessorCode)
+                entity.Property(x => x.ProfessorCode)
                       .IsRequired()
                       .HasMaxLength(50);
 
-                entity.Property(p => p.Password)
+                entity.Property(x => x.FullName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(x => x.Password)
                       .IsRequired()
                       .HasMaxLength(256);
 
-                entity.Property(p => p.Role)
+                entity.Property(x => x.Role)
                       .IsRequired()
                       .HasMaxLength(20);
+            });
+
+            // ===== Course =====
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Title)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(x => x.Code)
+                      .IsRequired()
+                      .HasMaxLength(20);
+
+                entity.Property(x => x.Units)
+                      .IsRequired();
+
+                entity.Property(x => x.Capacity)
+                      .IsRequired();
+
+                entity.Property(x => x.TeacherName)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(x => x.Time)
+                      .IsRequired()
+                      .HasMaxLength(50);
+
+                entity.Property(x => x.Location)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.Property(x => x.Description)
+                      .HasMaxLength(500);
+            });
+
+            // ===== CoursePrerequisite =====
+            modelBuilder.Entity<CoursePrerequisite>(entity =>
+            {
+                entity.HasKey(x => new { x.CourseId, x.PrerequisiteCourseId });
+
+                entity.HasOne(x => x.Course)
+                      .WithMany(c => c.Prerequisites)
+                      .HasForeignKey(x => x.CourseId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.PrerequisiteCourse)
+                      .WithMany(c => c.IsPrerequisiteFor)
+                      .HasForeignKey(x => x.PrerequisiteCourseId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ===== RegistrationSettings =====
+            modelBuilder.Entity<RegistrationSettings>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.MinUnits).IsRequired();
+                entity.Property(x => x.MaxUnits).IsRequired();
+            });
+
+            // ===== RefreshToken (Generic) =====
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.Token)
+                      .IsRequired()
+                      .HasMaxLength(500);
+
+                entity.Property(x => x.UserId)
+                      .IsRequired();
+
+                entity.Property(x => x.Role)
+                      .IsRequired()
+                      .HasMaxLength(20);
+
+                entity.Property(x => x.ExpiresAt)
+                      .IsRequired();
+
+                entity.Property(x => x.IsRevoked)
+                      .IsRequired();
             });
         }
     }

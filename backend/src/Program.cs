@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
 using UniversityRegistration.Api.Data;
 using UniversityRegistration.Api.Helpers;
 using UniversityRegistration.Api.Repository.Implementations;
@@ -14,58 +13,61 @@ using UniversityRegistration.Api.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // ================================
-//          Add Controllers
+// Controllers
 // ================================
 builder.Services.AddControllers();
 
 // ================================
-//               CORS
+// CORS
 // ================================
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy =>
-        {
-            policy
-                .WithOrigins("http://localhost:3000")
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials();
-        });
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
 });
 
 // ================================
-//            DbContext
+// DbContext
 // ================================
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // ================================
-//            Repositories
+// Repositories
 // ================================
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
-builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+builder.Services.AddScoped<IRegistrationSettingsRepository, RegistrationSettingsRepository>();
+builder.Services.AddScoped<ICoursePrerequisiteRepository, CoursePrerequisiteRepository>();
 
 // ================================
-//              Services
+// Services
 // ================================
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IRegistrationSettingsService, RegistrationSettingsService>();
+builder.Services.AddScoped<ICoursePrerequisiteService, CoursePrerequisiteService>();
 
 // ================================
-//            JWT Helper
+// JWT Helper
 // ================================
 var secretKey = builder.Configuration["JwtSettings:Secret"]!;
 builder.Services.AddSingleton(new JwtHelper(secretKey));
 
 // ================================
-//         Authentication (JWT)
+// Authentication (JWT)
 // ================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -84,7 +86,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 // ================================
-//        Swagger + JWT Support
+// Swagger + JWT
 // ================================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -118,7 +120,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // ================================
-//       RUN MIGRATION + SEED
+// Migration + Seed
 // ================================
 using (var scope = app.Services.CreateScope())
 {
@@ -131,7 +133,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // ================================
-//            Middlewares
+// Middlewares
 // ================================
 if (app.Environment.IsDevelopment())
 {
@@ -140,12 +142,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

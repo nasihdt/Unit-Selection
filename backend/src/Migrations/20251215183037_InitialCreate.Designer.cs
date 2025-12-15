@@ -12,7 +12,7 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251214223252_InitialCreate")]
+    [Migration("20251215183037_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -101,6 +101,21 @@ namespace UniversityRegistration.Api.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("UniversityRegistration.Api.Models.CoursePrerequisite", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PrerequisiteCourseId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CourseId", "PrerequisiteCourseId");
+
+                    b.HasIndex("PrerequisiteCourseId");
+
+                    b.ToTable("CoursePrerequisites");
+                });
+
             modelBuilder.Entity("UniversityRegistration.Api.Models.Professor", b =>
                 {
                     b.Property<int>("Id")
@@ -108,6 +123,11 @@ namespace UniversityRegistration.Api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -161,6 +181,25 @@ namespace UniversityRegistration.Api.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
+            modelBuilder.Entity("UniversityRegistration.Api.Models.RegistrationSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaxUnits")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinUnits")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RegistrationSettings");
+                });
+
             modelBuilder.Entity("UniversityRegistration.Api.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -168,6 +207,14 @@ namespace UniversityRegistration.Api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<bool>("IsLabStudent")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -187,6 +234,32 @@ namespace UniversityRegistration.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("UniversityRegistration.Api.Models.CoursePrerequisite", b =>
+                {
+                    b.HasOne("UniversityRegistration.Api.Models.Course", "Course")
+                        .WithMany("Prerequisites")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("UniversityRegistration.Api.Models.Course", "PrerequisiteCourse")
+                        .WithMany("IsPrerequisiteFor")
+                        .HasForeignKey("PrerequisiteCourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("PrerequisiteCourse");
+                });
+
+            modelBuilder.Entity("UniversityRegistration.Api.Models.Course", b =>
+                {
+                    b.Navigation("IsPrerequisiteFor");
+
+                    b.Navigation("Prerequisites");
                 });
 #pragma warning restore 612, 618
         }

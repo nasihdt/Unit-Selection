@@ -32,7 +32,9 @@ namespace UniversityRegistration.Api.Data
                 var s = new Student
                 {
                     StudentNumber = "40123456",
-                    Role = "Student" 
+                    FullName = "Test Student",
+                    IsLabStudent = false,
+                    Role = "Student"
                 };
 
                 var hasher = new PasswordHasher<Student>();
@@ -47,10 +49,12 @@ namespace UniversityRegistration.Api.Data
             if (!context.Professors.Any())
             {
                 var p = new Professor
-                { 
+                {
                     ProfessorCode = "P1001",
-                    Role = "Professor" 
+                    FullName = "Test Professor",
+                    Role = "Professor"
                 };
+
 
                 var hasher = new PasswordHasher<Professor>();
                 p.Password = hasher.HashPassword(p, "Professor@123");
