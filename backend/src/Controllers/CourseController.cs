@@ -18,9 +18,9 @@ namespace UniversityRegistration.Api.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CourseQueryParameters query)
         {
-            var courses = await _service.GetAllAsync();
+            var courses = await _service.GetFilteredAsync(query);
             return Ok(courses);
         }
 

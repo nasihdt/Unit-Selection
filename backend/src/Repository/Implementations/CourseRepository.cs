@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UniversityRegistration.Api.Data;
 using UniversityRegistration.Api.Models;
+using UniversityRegistration.Api.Models.DTOs;
 using UniversityRegistration.Api.Repository.Interfaces;
 
 namespace UniversityRegistration.Api.Repository.Implementations
@@ -68,6 +69,43 @@ namespace UniversityRegistration.Api.Repository.Implementations
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<Course>> GetFilteredAsync(CourseQueryParameters q)
+        {
+            IQueryable<Course> query = _context.Courses.AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(q.Search))
+            {
+                var s = q.Search.Trim();
+                query = query.Where(c =>
+                    c.Title.Contains(s) ||
+                    c.Code.Contains(s) ||
+                    c.TeacherName.Contains(s));
+            }
+
+            if (!string.IsNullOrWhiteSpace(q.Code))
+            {
+                var code = q.Code.Trim();
+                query = query.Where(c => c.Code.Contains(code));
+            }
+
+            if (!string.IsNullOrWhiteSpace(q.TeacherName))
+            {
+                var teacher = q.TeacherName.Trim();
+                query = query.Where(c => c.TeacherName.Contains(teacher));
+            }
+
+            if (q.Units.HasValue)
+                query = query.Where(c => c.Units == q.Units.Value);
+
+            if (q.MinCapacity.HasValue)
+                query = query.Where(c => c.Capacity >= q.MinCapacity.Value);
+
+            if (q.OnlyAvailable == true)
+                query = query.Where(c => c.Capacity > 0);
+
+            return await query.ToListAsync();
         }
     }
 }

@@ -9,5 +9,7 @@ namespace UniversityRegistration.Api.Services.Interfaces
         Task<CourseResponse> AddAsync(CreateCourseRequest dto);
         Task<bool> UpdateAsync(int id, UpdateCourseRequest dto);
         Task<bool> DeleteAsync(int id);
+
+        Task<List<CourseResponse>> GetFilteredAsync(CourseQueryParameters q);
     }
 }

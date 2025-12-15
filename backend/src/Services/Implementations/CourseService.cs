@@ -88,5 +88,11 @@ namespace UniversityRegistration.Api.Services.Implementations
                 Description = course.Description
             };
         }
+
+        public async Task<List<CourseResponse>> GetFilteredAsync(CourseQueryParameters q)
+        {
+            var courses = await _repo.GetFilteredAsync(q);
+            return courses.Select(c => MapToResponse(c)).ToList();
+        }
     }
 }
