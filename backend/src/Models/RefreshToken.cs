@@ -10,8 +10,8 @@
 
         public bool IsRevoked { get; set; }
 
-        // ===== Relation =====
-        public int AdminId { get; set; }
-        public Admin Admin { get; set; } = null!;
+        // ===== Generic User Info =====
+        public int UserId { get; set; }
+        public string Role { get; set; } = null!;
     }
 }

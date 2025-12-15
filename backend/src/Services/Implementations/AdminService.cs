@@ -4,49 +4,49 @@ using UniversityRegistration.Api.Models;
 using UniversityRegistration.Api.Models.Auth;
 using UniversityRegistration.Api.Repository.Interfaces;
 using UniversityRegistration.Api.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace UniversityRegistration.Api.Services.Implementations
 {
     public class AdminService : IAdminService
     {
-        private readonly IAdminRepository _repo;
+        private readonly IAdminRepository _adminRepo;
+        private readonly IRefreshTokenRepository _refreshRepo;
         private readonly JwtHelper _jwtHelper;
-        private readonly PasswordHasher<Admin> _passwordHasher;
+        private readonly PasswordHasher<Admin> _hasher = new();
 
-        public AdminService(IAdminRepository repo, JwtHelper jwtHelper)
+        public AdminService(
+            IAdminRepository adminRepo,
+            IRefreshTokenRepository refreshRepo,
+            JwtHelper jwtHelper)
         {
-            _repo = repo;
+            _adminRepo = adminRepo;
+            _refreshRepo = refreshRepo;
             _jwtHelper = jwtHelper;
-            _passwordHasher = new PasswordHasher<Admin>();
         }
 
-        // Login با username و password
+        // =========================
+        // Login
+        // =========================
         public async Task<LoginResponse?> LoginAsync(string username, string password)
         {
-            var admin = await _repo.GetByUsernameAsync(username);
+            var admin = await _adminRepo.GetByUsernameAsync(username);
+            if (admin == null) return null;
 
-            if (admin == null)
+            if (_hasher.VerifyHashedPassword(admin, admin.Password, password)
+                == PasswordVerificationResult.Failed)
                 return null;
 
-            var verification = _passwordHasher.VerifyHashedPassword(admin, admin.Password, password);
-
-            if (verification == PasswordVerificationResult.Failed)
-                return null;
-
-            // ساخت Access Token و Refresh Token
             var accessToken = _jwtHelper.GenerateToken(admin);
             var refreshToken = _jwtHelper.GenerateRefreshToken();
 
-            // ذخیره Refresh Token در دیتابیس
-            var tokenEntity = new RefreshToken
+            await _refreshRepo.SaveAsync(new RefreshToken
             {
                 Token = refreshToken,
-                AdminId = admin.Id,
+                UserId = admin.Id,
+                Role = admin.Role,
                 ExpiresAt = DateTime.UtcNow.AddDays(7),
                 IsRevoked = false
-            };
-            await _repo.SaveRefreshTokenAsync(tokenEntity);
+            });
 
             return new LoginResponse
             {
@@ -57,29 +57,31 @@ namespace UniversityRegistration.Api.Services.Implementations
             };
         }
 
-        // Refresh کردن Access Token با استفاده از Refresh Token
+        // =========================
+        // Refresh Token (Admin)
+        // =========================
         public async Task<LoginResponse?> RefreshTokenAsync(string refreshToken)
         {
-            var storedToken = await _repo.GetRefreshTokenAsync(refreshToken);
+            var stored = await _refreshRepo.GetAsync(refreshToken);
 
-            if (storedToken == null || storedToken.IsRevoked || storedToken.ExpiresAt < DateTime.UtcNow)
+            if (stored == null ||
+                stored.IsRevoked ||
+                stored.ExpiresAt < DateTime.UtcNow ||
+                stored.Role != "Admin")
                 return null;
 
-            var admin = await _repo.GetByUsernameAsync(storedToken.Admin.Username);
+            // 👇 خیلی مهم: admin رو با UserId می‌گیریم
+            var admin = await _adminRepo.GetByIdAsync(stored.UserId);
+            if (admin == null) return null;
 
-            if (admin == null)
-                return null;
-
-            // ساخت Access Token جدید
             var newAccessToken = _jwtHelper.GenerateToken(admin);
-
-            // (اختیاری) تولید Refresh Token جدید و بروزرسانی
             var newRefreshToken = _jwtHelper.GenerateRefreshToken();
-            storedToken.Token = newRefreshToken;
-            storedToken.ExpiresAt = DateTime.UtcNow.AddDays(7);
-            storedToken.IsRevoked = false;
 
-            await _repo.SaveRefreshTokenAsync(storedToken);
+            stored.Token = newRefreshToken;
+            stored.ExpiresAt = DateTime.UtcNow.AddDays(7);
+            stored.IsRevoked = false;
+
+            await _refreshRepo.SaveAsync(stored);
 
             return new LoginResponse
             {

@@ -21,17 +21,9 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .FirstOrDefaultAsync(a => a.Username == username);
         }
 
-        public async Task<RefreshToken?> GetRefreshTokenAsync(string token)
+        public async Task<Admin?> GetByIdAsync(int id)
         {
-            return await _context.RefreshTokens
-                .Include(r => r.Admin)
-                .FirstOrDefaultAsync(r => r.Token == token && !r.IsRevoked);
-        }
-
-        public async Task SaveRefreshTokenAsync(RefreshToken token)
-        {
-            _context.RefreshTokens.Update(token);
-            await _context.SaveChangesAsync();
+            return await _context.Admins.FindAsync(id);
         }
     }
 }

@@ -16,17 +16,43 @@ namespace UniversityRegistration.Api.Helpers
             _secretKey = secretKey;
         }
 
-        // Access Token
+        // =========================
+        // Access Token - Admin
+        // =========================
         public string GenerateToken(Admin admin)
+        {
+            return GenerateTokenInternal(
+                userId: admin.Id,
+                name: admin.Username,
+                role: admin.Role
+            );
+        }
+
+        // =========================
+        // Access Token - Generic (Student / Professor)
+        // =========================
+        public string GenerateToken(int userId, string name, string role)
+        {
+            return GenerateTokenInternal(
+                userId: userId,
+                name: name,
+                role: role
+            );
+        }
+
+        // =========================
+        // Internal Token Generator
+        // =========================
+        private string GenerateTokenInternal(int userId, string name, string role)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString()),
-                new Claim(ClaimTypes.Name, admin.Username),
-                new Claim(ClaimTypes.Role, admin.Role)
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(ClaimTypes.Name, name),
+                new Claim(ClaimTypes.Role, role)
             };
 
             var token = new JwtSecurityToken(
@@ -38,7 +64,9 @@ namespace UniversityRegistration.Api.Helpers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        // =========================
         // Refresh Token
+        // =========================
         public string GenerateRefreshToken()
         {
             var randomBytes = new byte[32];

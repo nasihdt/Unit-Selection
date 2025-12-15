@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UniversityRegistration.Api.Services.Interfaces;
 using UniversityRegistration.Api.Models.Auth;
+using UniversityRegistration.Api.Services.Interfaces;
 
 namespace UniversityRegistration.Api.Controllers
 {
@@ -22,7 +22,10 @@ namespace UniversityRegistration.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(new { message = "درخواست نامعتبر است" });
 
-            var result = await _adminService.LoginAsync(request.Username, request.Password);
+            var result = await _adminService.LoginAsync(
+                request.Username,
+                request.Password
+            );
 
             if (result == null)
                 return Unauthorized(new { message = "نام کاربری یا رمز عبور اشتباه است" });
@@ -46,6 +49,3 @@ namespace UniversityRegistration.Api.Controllers
         }
     }
 }
-
-
-

@@ -14,11 +14,13 @@ using UniversityRegistration.Api.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // ================================
-//          Add Services
+//          Add Controllers
 // ================================
 builder.Services.AddControllers();
 
-// ---------- CORS ----------
+// ================================
+//               CORS
+// ================================
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -32,24 +34,39 @@ builder.Services.AddCors(options =>
         });
 });
 
-// ---------- DbContext ----------
+// ================================
+//            DbContext
+// ================================
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// ---------- Repositories ----------
+// ================================
+//            Repositories
+// ================================
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IProfessorRepository, ProfessorRepository>();
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 
-// ---------- Services ----------
+// ================================
+//              Services
+// ================================
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 
-// ---------- JWT Helper ----------
+// ================================
+//            JWT Helper
+// ================================
 var secretKey = builder.Configuration["JwtSettings:Secret"]!;
 builder.Services.AddSingleton(new JwtHelper(secretKey));
 
-// ---------- Authentication ----------
+// ================================
+//         Authentication (JWT)
+// ================================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -58,20 +75,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-            ValidateLifetime = true
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(secretKey)
+            ),
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
         };
     });
 
 // ================================
-//         Swagger Security
+//        Swagger + JWT Support
 // ================================
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Enter JWT token",
+        Description = "Enter JWT token like: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
@@ -84,13 +104,13 @@ builder.Services.AddSwaggerGen(c =>
         {
             new OpenApiSecurityScheme
             {
-                 Reference = new OpenApiReference
-                 {
-                     Type = ReferenceType.SecurityScheme,
-                     Id = "Bearer"
-                 }
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
             },
-            new string[]{}
+            Array.Empty<string>()
         }
     });
 });
@@ -98,17 +118,20 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 // ================================
-//       RUN DB MIGRATION + SEED
+//       RUN MIGRATION + SEED
 // ================================
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
+
     DbSeeder.SeedAdmins(db);
+    DbSeeder.SeedStudents(db);
+    DbSeeder.SeedProfessors(db);
 }
 
 // ================================
-//        Middlewares
+//            Middlewares
 // ================================
 if (app.Environment.IsDevelopment())
 {
@@ -118,7 +141,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Enable CORS 
 app.UseCors("AllowFrontend");
 
 app.UseAuthentication();
