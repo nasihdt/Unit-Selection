@@ -4,7 +4,7 @@ import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/logo-chamran.png";
 import "./styles/AddCourse.css";
-
+import { FaBook } from "react-icons/fa"; 
 const AddCourse = () => {
   const navigate = useNavigate();
 
@@ -22,6 +22,20 @@ const AddCourse = () => {
 
   const [value, setValue] = useState("");
   const [dateTime, setDateTime] = useState(new Date());
+  const [allCourses, setAllCourses] = useState([]);
+  const [selectedPrerequisites, setSelectedPrerequisites] = useState([]);
+
+  useEffect(() => {
+  const fetchCourses = async () => {
+    const token = localStorage.getItem("token");
+    const res = await fetch("http://localhost:5127/api/Course", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    setAllCourses(data);
+  };
+   fetchCourses();
+  }, []);
 
   // بروزرسانی فرم
   const handleChange = (e) => {
@@ -30,7 +44,7 @@ const AddCourse = () => {
 
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
-
+  const handleLimitUnit = () => navigate("/limit");  
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
 
@@ -158,6 +172,41 @@ const AddCourse = () => {
           />
         </div>
 
+        <div className="field-description">
+          <label className="label-description">پیش‌نیازها <span className="assign9">*</span></label>
+
+          <input
+            type="text"
+            className="ipt-description"
+            onChange={(e) => setValue(e.target.value)}
+         />
+
+          <div className="prereq-list">
+            {allCourses
+           .filter(course =>
+            course.title.includes(value)
+            )
+           .map(course => (
+              <label key={course.id} className="prereq-item">
+                <input
+                  type="checkbox"
+                  value={course.id}
+                  checked={selectedPrerequisites.includes(course.id)}
+                  onChange={(e) => {
+                    const id = course.id;
+                    setSelectedPrerequisites(prev =>
+                      prev.includes(id)
+                      ? prev.filter(x => x !== id)
+                      : [...prev, id]
+                    );
+                  } }
+               />
+                {course.title}
+              </label>
+            ))}
+          </div>
+        </div>
+
         <div className="field-examtime">
           <label className="label-examtime">تاریخ امتحان <span className="assign8">*</span></label>
           <input
@@ -169,7 +218,7 @@ const AddCourse = () => {
           />
         </div>
 
-        <div className="field-description">
+        {/* <div className="field-description">
           <label className="label-description">پیش نیاز <span className="assign9">*</span></label>
           <input
             type="text"
@@ -178,7 +227,9 @@ const AddCourse = () => {
             value={course.description}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
+
+        
 
         <div className="dashboard">
           <button className="btn_dashdoard-add" onClick={handledashboard}>
@@ -194,6 +245,12 @@ const AddCourse = () => {
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
+
+          <button className="btn_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
+            <div className="icon_limitunit">
+              <FaBook className="icon" />
+            </div>
+
         </div>
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
