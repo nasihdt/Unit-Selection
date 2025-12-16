@@ -4,6 +4,7 @@ import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import Logo from "../components/logo-chamran.png";
 import "./styles/EditCourse.css";
+import { FaBook } from "react-icons/fa"; 
 
 const EditCourse = () => {
   const { courseId } = useParams();
@@ -109,7 +110,7 @@ const EditCourse = () => {
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
   const handleaddnewcourse = () => navigate("/add-new-course");
-
+  const handleLimitUnit = () => navigate("/limit");  
   return (
     <div className="container">
       <div className="frame">
@@ -230,6 +231,11 @@ const EditCourse = () => {
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
+
+          <button className="btn_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
+            <div className="icon_limitunit">
+              <FaBook className="icon" />
+            </div>
         </div>
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
