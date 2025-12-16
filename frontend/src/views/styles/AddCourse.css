@@ -52,6 +52,37 @@
   border: none;
 }
 
+/* button limit units */
+.btn_limitunit {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+}
+
 .icon_doshboard .icon{
   aspect-ratio: 1;
   height: 60px;
@@ -412,8 +443,8 @@
 .field-examtime{
     position: relative;
     width: 200px;
-    left: 150px;
-    top: 380px;
+    margin-top: 30px;
+    margin-left: 375px;
 }
 
 .label-examtime{
@@ -430,18 +461,56 @@
     position: absolute;
     width: 180px;
     height: 30px;
-    top: 20px;
-    left: 20px;
+    /* top: 20px;
+    left: 20px; */
     border-radius: 5px;
     direction: rtl;
 }
 
+/* باکس پیش نیاز */
+.field-description{
+    position: relative;
+    /* left: 255px;
+    top: 500px; */
+    /* margin-bottom: 200px;
+    margin-right: 600px; */
+    /* flex-direction: column; */
+    width: 200px; 
+} 
+
+.label-description{
+    position: relative;
+    /* margin-bottom: 90px;     */
+    /* right: 0px;     */
+    top: 50px;
+    direction: rtl;
+}
+
+.assign9{
+    color: red;
+    /* margin-bottom: -20px; */
+}
+.ipt-description{
+    position: relative;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    margin-left: -380px;
+    margin-top: -90px;
+    border-radius: 5px;
+    direction: rtl;
+}
+.prereq-list{
+    position: relative;
+    bottom: 20px;
+    right: 350px;
+}
 
 /*دکمه ثبت درس*/
 .register-course{
     position: absolute;
     left: 540px;
-    top: 550px;
+    top: 700px;
 }
 .btn-reg-course{
   width: 200px;
