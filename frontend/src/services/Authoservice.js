@@ -38,7 +38,7 @@
 //   }
 // };
 
-import axiosInstance from "./axiosInstance";
+/*import axiosInstance from "./axiosInstance";
 import axios from "axios";
 
 // =======================
@@ -92,4 +92,137 @@ export const refreshAccessToken = async () => {
     localStorage.clear();
     return null;
   }
+};*/
+
+
+
+
+
+// import axiosInstance from "./axiosInstance";
+// import axios from "axios";
+
+// // =======================
+// // LOGIN - ADMIN
+// // =======================
+// export const loginAdmin = async (username, password) => {
+//   const res = await axiosInstance.post("/admin/login", { username, password });
+
+//   localStorage.setItem("accessToken", res.data.token);
+//   localStorage.setItem("refreshToken", res.data.refreshToken);
+
+//   return res.data;
+// };
+
+// // =======================
+// // LOGIN - STUDENT
+// // =======================
+// export const loginStudent = async (username, password) => {
+//   const res = await axiosInstance.post("/student/login", { username, password });
+
+//   localStorage.setItem("accessToken", res.data.token);
+//   localStorage.setItem("refreshToken", res.data.refreshToken);
+
+//   return res.data;
+// };
+
+// // =======================
+// // LOGIN - PROFESSOR
+// // =======================
+// export const loginProfessor = async (username, password) => {
+//   const res = await axiosInstance.post("/professor/login", { username, password });
+
+//   localStorage.setItem("accessToken", res.data.token);
+//   localStorage.setItem("refreshToken", res.data.refreshToken);
+
+//   return res.data;
+// };
+
+// // =======================
+// // REFRESH TOKEN (ADMIN)
+// // =======================
+// export const refreshAccessToken = async () => {
+//   const refreshToken = localStorage.getItem("refreshToken");
+//   if (!refreshToken) return null;
+
+//   try {
+//     const res = await axios.post(
+//       "http://localhost:5127/api/admin/refresh",
+//       { refreshToken }
+//     );
+
+//     localStorage.setItem("accessToken", res.data.token);
+//     localStorage.setItem("refreshToken", res.data.refreshToken);
+
+//     return res.data.token;
+//   } catch {
+//     localStorage.clear();
+//     return null;
+//   }
+// };
+// src/services/Authoservice.js
+import axiosInstance from "./axiosInstance";
+import axios from "axios";
+
+// =======================
+// LOGIN - ADMIN
+// =======================
+export const loginAdmin = async (username, password) => {
+  const res = await axiosInstance.post("/Admin/login", { username, password });
+
+  localStorage.setItem("accessToken", res.data.token);
+  localStorage.setItem("refreshToken", res.data.refreshToken);
+  localStorage.setItem("role", res.data.role);
+
+  return res.data;
 };
+
+// =======================
+// LOGIN - STUDENT
+// =======================
+export const loginStudent = async (username, password) => {
+  const res = await axiosInstance.post("/student/login", { username, password });
+
+  localStorage.setItem("accessToken", res.data.token);
+  localStorage.setItem("refreshToken", res.data.refreshToken);
+  localStorage.setItem("role", res.data.role);
+
+  return res.data;
+};
+
+// =======================
+// LOGIN - PROFESSOR
+// =======================
+export const loginProfessor = async (username, password) => {
+  const res = await axiosInstance.post("/professor/login", { username, password });
+
+  localStorage.setItem("accessToken", res.data.token);
+  localStorage.setItem("refreshToken", res.data.refreshToken);
+  localStorage.setItem("role", res.data.role);
+
+  return res.data;
+};
+
+// =======================
+// REFRESH TOKEN (ADMIN)
+// =======================
+export const refreshAccessToken = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) return null;
+
+  try {
+    const res = await axios.post(
+      "http://localhost:7194/api/admin/refresh",
+      { refreshToken }
+    );
+
+    localStorage.setItem("accessToken", res.data.token);
+    localStorage.setItem("refreshToken", res.data.refreshToken);
+
+    return res.data.token;
+  } catch (err) {
+    console.error("REFRESH TOKEN FAILED:", err);
+    localStorage.clear();
+    return null;
+  }
+};
+

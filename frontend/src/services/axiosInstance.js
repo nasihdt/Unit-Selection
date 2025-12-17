@@ -1,60 +1,27 @@
-
-// import axios from 'axios';
-
-// const axiosInstance = axios.create({
-//   baseURL: "http://localhost:5127/api",
-// });
-
-
-// axiosInstance.interceptors.request.use(
-//   config => {
-//     const token = localStorage.getItem("token");
-//     if (token && !config.url.includes("login")) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   error => Promise.reject(error)
-// );
-
-// export default axiosInstance;
-//--------------------------------------
-// import axios from "axios";
-
-// const axiosInstance = axios.create({
-//   baseURL: "https://localhost:5127/api"
-// });
-
-// axiosInstance.interceptors.request.use(
-//   config => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   error => Promise.reject(error)
-// );
-
-// export default axiosInstance;
-//-----------------------------------
-
+// src/services/axiosInstance.js
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://localhost:5127/api", // ⬅️ HTTPS
+  baseURL: "https://localhost:7194/api", // ✅ HTTPS صحیح
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// اضافه کردن خودکار Authorization
+// اضافه کردن خودکار توکن
 axiosInstance.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem("token");
+  (config) => {
+    const token =
+      localStorage.getItem("accessToken") ||
+      localStorage.getItem("token");
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
-  error => Promise.reject(error)
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;
