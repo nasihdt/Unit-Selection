@@ -5,9 +5,8 @@ import delet from "../components/delete-course.png";
 import edit from "../components/edit-course.png";
 import Logo from "../components/logo-chamran.png";
 import "./styles/ManagementCourse.css";
-import { FaBook } from "react-icons/fa"; 
+
 import { useState, useEffect } from "react";
-import axiosInstance from "../services/axiosInstance";
 
 const ManagementCourse = () => {
   const [value, setValue] = useState("");
@@ -16,9 +15,7 @@ const ManagementCourse = () => {
   const [error, setError] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
 
-  const API_URL = "http://localhost:5127/api/course";
-  
-  // const API_URL = "https://localhost:5127/api/course";
+  const API_URL = "https://localhost:5127/api/Course";
   const navigate = useNavigate();
 
   const parseCourses = (data) =>
@@ -31,72 +28,45 @@ const ManagementCourse = () => {
       teacherName: c.TeacherName ?? c.teacherName,
       time: c.Time ?? c.time,
       location: c.Location ?? c.location,
-      description: c.description,
     }));
 
-  // useEffect(() => {
+  useEffect(() => {
  
-  //   const storedCourses = localStorage.getItem("courses");
-  //   if (storedCourses) {
-  //     setCourses(parseCourses(JSON.parse(storedCourses)));
-  //     setLoading(false);
-  //   }
-
-  
-  //   const fetchCourses = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       console.log("TOKEN:", localStorage.getItem("token"));
-  //       const res = await fetch(API_URL, {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           Accept: "application/json",
-  //         },
-  //       });
-  //       // const res = await axiosInstance.get("/course");
-  //       // const data = res.data;
-
-  //       if (!res.ok) throw new Error("خطا در دریافت دروس");
-
-  //       const data = await res.json();
-  //       console.log("COURSE RAW DATA:", data);
-  //       const formattedData = parseCourses(data);
-
-  //       setCourses(formattedData);
-  //       localStorage.setItem("courses", JSON.stringify(formattedData));
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCourses();
-  // }, []);
-
-
-useEffect(() => {
-  const fetchCourses = async () => {
-    try {
-      setLoading(true);
-
-      const res = await axiosInstance.get("/course");
-      const formattedData = parseCourses(res.data);
-
-      setCourses(formattedData);
-      localStorage.setItem("courses", JSON.stringify(formattedData));
-    } catch (err) {
-      console.error(err);
-      setError("خطا در دریافت دروس");
-    } finally {
+    const storedCourses = localStorage.getItem("courses");
+    if (storedCourses) {
+      setCourses(parseCourses(JSON.parse(storedCourses)));
       setLoading(false);
     }
-  };
 
-  fetchCourses();
-}, []);
+    //  بارگذاری از API
+    const fetchCourses = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(API_URL, {
+          // method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
 
+        if (!res.ok) throw new Error("خطا در دریافت دروس");
+
+        const data = await res.json();
+        console.log("COURSE RAW DATA:", data);
+        const formattedData = parseCourses(data);
+
+        setCourses(formattedData);
+        localStorage.setItem("courses", JSON.stringify(formattedData));
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   // بروزرسانی زمان
   useEffect(() => {
@@ -113,45 +83,31 @@ useEffect(() => {
   const handleEdit = (id) => {console.log("Editing courseId:", id);
     navigate(`/edit/${id}`)};
 
-  const handleLimitUnit = () => navigate("/limit");  
   // حذف درس
-//   const handleDelete = async (id) => {
-//   const confirmed = window.confirm("آیا مطمئن هستید؟");
+  const handleDelete = async (id) => {
+  const confirmed = window.confirm("آیا مطمئن هستید؟");
 
-//   if (!confirmed) return;
-
-//   try {
-//     const token = localStorage.getItem("token");
-
-//     const res = await fetch(`${API_URL}/${id}`, {
-//       method: "DELETE",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Accept: "application/json",
-//       },
-//     });
-
-//     if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
-
-//     const updatedCourses = courses.filter((c) => c.id !== id);
-//     setCourses(updatedCourses);
-//     localStorage.setItem("courses", JSON.stringify(updatedCourses));
-
-//   } catch (err) {
-//     alert(err.message);
-//   }
-// };
-const handleDelete = async (id) => {
-  if (!window.confirm("آیا مطمئن هستید؟")) return;
+  if (!confirmed) return;
 
   try {
-    await axiosInstance.delete(`/course/${id}`);
+    const token = localStorage.getItem("token");
 
-    const updatedCourses = courses.filter(c => c.id !== id);
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    });
+
+    if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
+
+    const updatedCourses = courses.filter((c) => c.id !== id);
     setCourses(updatedCourses);
     localStorage.setItem("courses", JSON.stringify(updatedCourses));
-  } catch {
-    alert("حذف درس انجام نشد");
+
+  } catch (err) {
+    alert(err.message);
   }
 };
 
@@ -171,7 +127,7 @@ const handleDelete = async (id) => {
         <div className="rectangle" />
 
         <div className="dashboard">
-          <button className="btn_dashdoard_admin" onClick={handleDashboard}>
+          <button className="btn_dashdoardadmin" onClick={handleDashboard}>
             داشبورد
           </button>
           <div className="icon_doshboard">
@@ -180,27 +136,15 @@ const handleDelete = async (id) => {
 
           <div className="div" />
 
-          <button className="btn_mng_course">مدیریت دروس</button>
+          <button className="btn_manage_course">لیست دروس ارائه شده</button>
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
-
-          <button className="botton_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
-            <div className="icon_limitunit">
-              <FaBook className="icon" />
-            </div>
         </div>
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
 
-        <div className="box">
-          <button
-            className="btn-addcoursemanage"
-            onClick={handleAddNewCourse}
-          >
-            افزودن درس جدید +
-          </button>
-        </div>
+       
 
         <div className="rectangle-3" />
 
@@ -223,16 +167,17 @@ const handleDelete = async (id) => {
         <div className="list-of-course">
           <div className="name">نام درس</div>
           <div className="code"> کد درس</div>
+          <div className="space-bet3"></div>
           <div className="unit"> واحد</div>
           <div className="capacity">ظرفیت</div>
           <div className="teachname">نام استاد</div>
           <div className="space-bet"></div>
           <div className="time">زمان</div>
-          
+          <div className="space-bet"></div>
           <div className="palace">مکان</div>
           <div className="space-bet1"></div>
           <div className="exam-date">تاریخ امتحان</div>
-          <div className="description">پیش نیاز</div>
+          
           <div className="space-bet1"></div>
           <div className="delete">حذف</div>
           <div className="space-bet1"></div>
@@ -253,9 +198,7 @@ const handleDelete = async (id) => {
               <div className="teacher-name">{course.teacherName}</div>
               <div className="time-name">{course.time}</div>
               <div className="course-palace">{course.location}</div>
-              
-              <div className="course-examdate"></div>
-              <div className="course-description">{course.description}</div>
+
 
               <div className="course-delete">
                 <button onClick={() => handleDelete(course.id)} className="btn-delete">

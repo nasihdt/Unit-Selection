@@ -19,6 +19,10 @@ namespace UniversityRegistration.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
+            Console.WriteLine("login initiated");
+
+            Console.WriteLine(request.Username + request.Password);
+            
             if (!ModelState.IsValid)
                 return BadRequest(new { message = "درخواست نامعتبر است" });
 

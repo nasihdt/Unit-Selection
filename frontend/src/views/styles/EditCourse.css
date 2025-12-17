@@ -52,6 +52,37 @@
   border: none;
 }
 
+/* button limit units */
+.btn_limitunit {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+}
+
 .icon_doshboard .icon{
   aspect-ratio: 1;
   height: 60px;
@@ -384,12 +415,13 @@
     border-radius: 5px;
     direction: rtl;
 }
+
 /*باکس تاریخ امتحان*/
 .field-examtime{
     position: relative;
     width: 200px;
     left: 150px;
-    top: 380px;
+    top: 470px;
 }
 
 .label-examtime{
@@ -408,12 +440,41 @@
     direction: rtl;
 }
 
+/* باکس پیش نیاز */
+.field-description{
+    position: relative;
+    width: 200px;
+    left: 525px;
+    top: 470px;
+}
+
+.label-description{
+    /* position: absolute; */
+    top: -107px;    
+    right: 240px;    
+    /* direction: rtl; */
+
+}
+
+.assign9{
+    color: red;
+}
+.ipt-description{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
 
 /*دکمه ثبت درس*/
 .register-course{
     position: absolute;
     left: 540px;
-    top: 550px;
+    top: 610px;
 }
 .btn-reg-course{
   width: 200px;
