@@ -1,0 +1,530 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\professor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\courseprerequisite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\courseprerequisite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\registrationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\registrationsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\services\\interfaces\\iregistrationsettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:services\\interfaces\\iregistrationsettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\services\\implementations\\registrationsettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:services\\implementations\\registrationsettingsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\repository\\interfaces\\iregistrationsettingsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:repository\\interfaces\\iregistrationsettingsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\repository\\implementations\\registrationsettingsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:repository\\implementations\\registrationsettingsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\repository\\implementations\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:repository\\implementations\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\dtos\\addprerequisiterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\dtos\\addprerequisiterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\dtos\\updatecourserequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\dtos\\updatecourserequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\controllers\\admincourseprerequisitescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:controllers\\admincourseprerequisitescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\auth\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\auth\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\dtos\\updateunitsettingsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\dtos\\updateunitsettingsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\repository\\interfaces\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:repository\\interfaces\\icourserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\data\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:data\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\models\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:models\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\controllers\\adminsettingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:controllers\\adminsettingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|c:\\users\\srd\\desktop\\final_project\\backend\\src\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9BC6309E-CB7D-4AAE-DA13-EED2EA661770}|UniversityRegistration.Api.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Models\\Teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251214182843_AddRegistrationSettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251205191426_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAAAH8AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:39:42.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "Models\\Course.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Course.cs",
+              "RelativeToolTip": "Models\\Course.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAowBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T15:42:45.834Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "Models\\Student.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Student.cs",
+              "RelativeToolTip": "Models\\Student.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwA8AAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T15:39:55.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RegistrationSettings.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\RegistrationSettings.cs",
+              "RelativeDocumentMoniker": "Models\\RegistrationSettings.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\RegistrationSettings.cs",
+              "RelativeToolTip": "Models\\RegistrationSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T16:22:50.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:42:30.779Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RegistrationSettingsService.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Services\\Implementations\\RegistrationSettingsService.cs",
+              "RelativeDocumentMoniker": "Services\\Implementations\\RegistrationSettingsService.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Services\\Implementations\\RegistrationSettingsService.cs",
+              "RelativeToolTip": "Services\\Implementations\\RegistrationSettingsService.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwCUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:37:00.363Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAAwKIAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T16:26:41.29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IRegistrationSettingsService.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Services\\Interfaces\\IRegistrationSettingsService.cs",
+              "RelativeDocumentMoniker": "Services\\Interfaces\\IRegistrationSettingsService.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Services\\Interfaces\\IRegistrationSettingsService.cs",
+              "RelativeToolTip": "Services\\Interfaces\\IRegistrationSettingsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:36:30.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Professor.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Professor.cs",
+              "RelativeDocumentMoniker": "Models\\Professor.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Professor.cs",
+              "RelativeToolTip": "Models\\Professor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T17:20:31.749Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAiwA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-17T17:22:20.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CoursePrerequisite.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\CoursePrerequisite.cs",
+              "RelativeDocumentMoniker": "Models\\CoursePrerequisite.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\CoursePrerequisite.cs",
+              "RelativeToolTip": "Models\\CoursePrerequisite.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:48:15.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RefreshToken.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\RefreshToken.cs",
+              "RelativeDocumentMoniker": "Models\\RefreshToken.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\RefreshToken.cs",
+              "RelativeToolTip": "Models\\RefreshToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T17:20:33.301Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Teacher.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Models\\Teacher.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Models\\Teacher.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Models\\Teacher.cs",
+              "RelativeToolTip": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Models\\Teacher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T15:45:55.214Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IRegistrationSettingsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Interfaces\\IRegistrationSettingsRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Interfaces\\IRegistrationSettingsRepository.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Interfaces\\IRegistrationSettingsRepository.cs",
+              "RelativeToolTip": "Repository\\Interfaces\\IRegistrationSettingsRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:22:01.869Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RegistrationSettingsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Implementations\\RegistrationSettingsRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Implementations\\RegistrationSettingsRepository.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Implementations\\RegistrationSettingsRepository.cs",
+              "RelativeToolTip": "Repository\\Implementations\\RegistrationSettingsRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCUAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:22:42.132Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "AdminRepository.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Implementations\\AdminRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Implementations\\AdminRepository.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Implementations\\AdminRepository.cs",
+              "RelativeToolTip": "Repository\\Implementations\\AdminRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T11:07:08.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AddPrerequisiteRequest.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\AddPrerequisiteRequest.cs",
+              "RelativeDocumentMoniker": "Models\\DTOs\\AddPrerequisiteRequest.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\AddPrerequisiteRequest.cs",
+              "RelativeToolTip": "Models\\DTOs\\AddPrerequisiteRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T22:41:12.198Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UpdateCourseRequest.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\UpdateCourseRequest.cs",
+              "RelativeDocumentMoniker": "Models\\DTOs\\UpdateCourseRequest.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\UpdateCourseRequest.cs",
+              "RelativeToolTip": "Models\\DTOs\\UpdateCourseRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T10:53:47.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "LoginResponse.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Auth\\LoginResponse.cs",
+              "RelativeDocumentMoniker": "Models\\Auth\\LoginResponse.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Auth\\LoginResponse.cs",
+              "RelativeToolTip": "Models\\Auth\\LoginResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:02:57.734Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AdminCoursePrerequisitesController.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminCoursePrerequisitesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminCoursePrerequisitesController.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminCoursePrerequisitesController.cs",
+              "RelativeToolTip": "Controllers\\AdminCoursePrerequisitesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T22:42:52.383Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UpdateUnitSettingsRequest.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\UpdateUnitSettingsRequest.cs",
+              "RelativeDocumentMoniker": "Models\\DTOs\\UpdateUnitSettingsRequest.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\DTOs\\UpdateUnitSettingsRequest.cs",
+              "RelativeToolTip": "Models\\DTOs\\UpdateUnitSettingsRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T16:23:37.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ICourseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Interfaces\\ICourseRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\Interfaces\\ICourseRepository.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Repository\\Interfaces\\ICourseRepository.cs",
+              "RelativeToolTip": "Repository\\Interfaces\\ICourseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T10:39:33.238Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DbSeeder.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Data\\DbSeeder.cs",
+              "RelativeDocumentMoniker": "Data\\DbSeeder.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Data\\DbSeeder.cs",
+              "RelativeToolTip": "Data\\DbSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:03:44.274Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Admin.cs",
+              "RelativeDocumentMoniker": "Models\\Admin.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Admin.cs",
+              "RelativeToolTip": "Models\\Admin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T15:42:41.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Auth\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "Models\\Auth\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Models\\Auth\\LoginRequest.cs",
+              "RelativeToolTip": "Models\\Auth\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:02:52.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AdminSettingsController.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminSettingsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminSettingsController.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\AdminSettingsController.cs",
+              "RelativeToolTip": "Controllers\\AdminSettingsController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T19:46:56.39Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "Controllers\\CourseController.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:42:50.427Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\Migrations\\AppDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\AppDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:03:14.632Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-14T21:10:06.684Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "20251214182843_AddRegistrationSettings.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251214182843_AddRegistrationSettings.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251214182843_AddRegistrationSettings.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251214182843_AddRegistrationSettings.cs",
+              "RelativeToolTip": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251214182843_AddRegistrationSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:03:10.555Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "20251205191426_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251205191426_InitialCreate.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251205191426_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251205191426_InitialCreate.cs",
+              "RelativeToolTip": "..\\..\\..\\UniversityProject\\UniversityRegistration.Api\\backend\\src\\Migrations\\20251205191426_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T21:03:04.829Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\SRD\\Desktop\\Final_Project\\backend\\src\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-14T20:40:42.485Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

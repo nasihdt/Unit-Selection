@@ -1,0 +1,522 @@
+.container .rectangle {
+  background-color: #edf1fc;
+  border-radius: 50px;
+  height: 650px;
+  left: 25px;
+  position: absolute;
+  top: 41px;
+  width: 1200px;
+}
+.dashboard{
+  position: absolute;
+  top: -70px;
+  left: 5px;
+}
+.btn_dashdoard-add{
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 20px;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1245px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 45px;
+  top: 250px;
+  width: 210px;
+  height: 80px;
+  border: none;
+} 
+ 
+.container .btn_manage_course {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #edf1fc;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 350px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+/* button limit units */
+.btn_limitunit {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+}
+
+.icon_doshboard .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 260px;
+  width: 96px;
+} 
+
+.container .shahid-chamran {
+  aspect-ratio: 1.12;
+  height: 100px;
+  left: 1300px;
+  object-fit: cover;
+  position: absolute;
+  top: 28px;
+  width: 110px;
+}
+
+.icon_manage_course .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 357px;
+  width: 96px;
+}
+
+.container .rectangle-2 {
+  background-color: #2e55ca;
+  border-radius: 40px;
+  height: 303px;
+  left: 100px;
+  position: absolute;
+  top: 176px;
+  width: 1070px;
+} 
+
+.container .login-page {
+  aspect-ratio: 1;
+  height: 421px;
+  left: 239px;
+  object-fit: cover;
+  position: absolute;
+  top: 117px;
+  width: 421px;
+}
+
+.container .rectangle-3 {
+  background-color: #ffffff;
+  border-radius: 30px;
+  height: 40px;
+  left: 100px;
+  position: absolute;
+  top: 57px;
+  width: 1060px;
+} 
+
+.container .clock {
+  color: #000000;
+  font-family: "Istok Web-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1075px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+}
+
+.container .date {
+  color: #000000;
+  font-family: "Webdings-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 960px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+  white-space: nowrap;
+}
+
+.icon_user .icon{
+  aspect-ratio: 1;
+  height: 25px;
+  left: 130px;
+  object-fit: cover;
+  position: absolute;
+  top: 62px;
+  width: 30px;
+} 
+
+.btn-addcourse-add{
+    height: 37px;
+    left: 700px;
+    position: absolute;
+    top: 130px;
+    /* border: 1px solid #333; */
+    cursor: pointer;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+    background: #D6AFE0;
+    width: 185px;
+}
+.text-addcourse{
+    color: #000000;
+    direction: rtl;
+    font-family: "Fahkwang-Regular", Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    left: 150px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: left;
+    top: 100px;
+    width: 207px;
+}
+
+.search-container{
+  position: absolute;
+  left: 340px;
+  top: 130px;
+  width: 310px;
+  
+  
+  
+}
+.search-input{
+  position: absolute;
+  width: 310px;
+  height: 34px;
+  clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+  padding-right: 40px;
+  padding-left: 2px;
+  /* border: 1px solid #333; */
+  border: none;
+  
+  direction: rtl;
+  text-align: right;
+  /* box-sizing: border-box; */
+  border-radius: 5px;
+  border: 2px solid #000;
+
+}
+.search-icon{
+  position: absolute;
+  left: 30px;            /* آیکون داخل input در سمت چپ */
+  top: 60%;
+  margin-top: 18px;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #000000;
+  pointer-events: none;  /* کاربر روی آیکون کلیک نکند */
+  z-index: 10;
+  
+}
+
+/*باکس نام درس*/
+.field-name{
+    position: relative;
+    width: 200px;
+    left: 900px;
+    top: 250px;
+}
+
+.label-name{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign1{
+    color: red;
+}
+.ipt-name{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+/*باکس کد درس*/
+.field-code{
+    position: relative;
+    width: 200px;
+    left: 650px;
+    top: 250px;
+}
+
+.label-code{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign2{
+    color: red;
+}
+.ipt-code{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
+/*باکس واحد*/
+.field-vahed{
+    position: relative;
+    width: 200px;
+    left: 400px;
+    top: 250px;
+}
+
+.label-vahed{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign3{
+    color: red;
+}
+.ipt-vahed{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
+/*باکس ظرفیت*/
+.field-capacity{
+    position: relative;
+    width: 200px;
+    left: 150px;
+    top: 250px;
+}
+
+.label-capacity{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign4{
+    color: red;
+}
+.ipt-capacity{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
+
+/*باکس نام استاد*/
+.field-teacher{
+    position: relative;
+    width: 200px;
+    left: 900px;
+    top: 380px;
+}
+
+.label-teacher{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign5{
+    color: red;
+}
+.ipt-teacher{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
+
+/*باکس زمان*/
+.field-time{
+    position: relative;
+    width: 200px;
+    left: 650px;
+    top: 380px;
+}
+
+.label-time{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign6{
+    color: red;
+}
+.ipt-time{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+
+/*باکس مکان*/
+.field-place{
+    position: relative;
+    width: 200px;
+    left: 400px;
+    top: 380px;
+}
+
+.label-place{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign7{
+    color: red;
+}
+.ipt-place{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    left: 20px;
+    border-radius: 5px;
+    direction: rtl;
+}
+/*باکس تاریخ امتحان*/
+.field-examtime{
+    position: relative;
+    width: 200px;
+    margin-top: 30px;
+    margin-left: 375px;
+}
+
+.label-examtime{
+    position: absolute;
+    top: -20px;    
+    right: 0px;    
+    direction: rtl;
+}
+
+.assign8{
+    color: red;
+}
+.ipt-examtime{
+    position: absolute;
+    width: 180px;
+    height: 30px;
+    /* top: 20px;
+    left: 20px; */
+    border-radius: 5px;
+    direction: rtl;
+}
+
+/* باکس پیش نیاز */
+.field-description{
+    position: relative;
+    /* left: 255px;
+    top: 500px; */
+    /* margin-bottom: 200px;
+    margin-right: 600px; */
+    /* flex-direction: column; */
+    width: 200px; 
+} 
+
+.label-description{
+    position: relative;
+    /* margin-bottom: 90px;     */
+    /* right: 0px;     */
+    top: 50px;
+    direction: rtl;
+}
+
+.assign9{
+    color: red;
+    /* margin-bottom: -20px; */
+}
+.ipt-description{
+    position: relative;
+    width: 180px;
+    height: 30px;
+    top: 20px;
+    margin-left: -380px;
+    margin-top: -90px;
+    border-radius: 5px;
+    direction: rtl;
+}
+.prereq-list{
+    position: relative;
+    bottom: 20px;
+    right: 350px;
+}
+
+/*دکمه ثبت درس*/
+.register-course{
+    position: absolute;
+    left: 540px;
+    top: 700px;
+}
+.btn-reg-course{
+  width: 200px;
+  height: 40px;
+  background-color: #2e55ca;
+  color: #ffffff;
+  border-radius: 5px;
+}
+
