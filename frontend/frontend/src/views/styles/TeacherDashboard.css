@@ -154,10 +154,10 @@
   white-space: nowrap;
 }
 
-.icon_user .icon{
+.icon_user_thr .icon_thr{
   aspect-ratio: 1;
   height: 25px;
-  left: 130px;
+  left: 160px;
   object-fit: cover;
   position: absolute;
   top: 62px;
@@ -165,3 +165,16 @@
 } 
 
 
+.exit-icon-thr{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-thr-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}

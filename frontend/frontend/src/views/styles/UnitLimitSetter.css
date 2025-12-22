@@ -198,10 +198,10 @@
   white-space: nowrap;
 }
 
-.icon_user .icon{
+.icon_user_limit .icon_limit{
   aspect-ratio: 1;
   height: 25px;
-  left: 130px;
+  left: 160px;
   object-fit: cover;
   position: absolute;
   top: 62px;
@@ -293,4 +293,18 @@
   background-color: #e6ffe6;
   padding: 8px 12px;
   border-radius: 8px;
+}
+
+.exit-icon-Unit-limit{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-unitlimit-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
 }

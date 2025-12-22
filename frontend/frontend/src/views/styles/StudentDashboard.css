@@ -40,9 +40,9 @@
   background-color: #ffffff;
   direction: rtl;
   font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
-  left: 1247px;
+  left: 1224px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -154,14 +154,31 @@
   white-space: nowrap;
 }
 
-.icon_user .icon{
+.icon_user_std .icon_std{
   aspect-ratio: 1;
   height: 25px;
-  left: 130px;
+  left: 150px;
   object-fit: cover;
   position: absolute;
   top: 62px;
   width: 30px;
 } 
+
+/* icon exit */
+.icon_exit_Std_dashboard{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  z-index: 11;
+}
+.exit_std{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
+
+
 
 
