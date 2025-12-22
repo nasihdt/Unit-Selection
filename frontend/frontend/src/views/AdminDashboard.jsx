@@ -7,13 +7,17 @@ import dashboard from "../components/dashboard_img.webp";
 import Logo from "../components/logo-chamran.png"
 import "./styles/AdminDashboard.css";
 import { useState, useEffect } from "react";
-import { FaBook } from "react-icons/fa"; 
+import { FaBook} from "react-icons/fa"; 
+import { FiLogOut } from "react-icons/fi";
 
  
 const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
+  const handlelogin = () =>{
+    navigate('/login')
+  }
   const handleManageCourse = () => {
     navigate('/management');
   };
@@ -66,8 +70,12 @@ const AdminDashboard = () => {
 
         <div className="rectangle-3" />
 
+        <button className="icon_exit" onClick={handlelogin}>
+          <FiLogOut className="exit"/>     
+        </button>  
+
         <div className="icon_user">
-            <FaUser className="icon" />
+            <FaUser className="user-icon" />
         </div>
 
         {/* برای نمایش تاریخ و زمان */}
