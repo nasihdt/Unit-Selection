@@ -417,29 +417,31 @@
 }
 
 /*باکس تاریخ امتحان*/
-.field-examtime{
-    position: relative;
+.field-examtime-edit{
+    position: absolute;
     width: 200px;
-    left: 150px;
-    top: 470px;
+    /* margin-top: -20px; */
+    top: 540px;
+    /* margin-left: 375px; */
+    left: 545px;
 }
 
-.label-examtime{
+.label-examtime-edit{
     position: absolute;
-    top: -20px;    
-    right: 0px;    
+    top: -50px;    
+    right: 15px;    
     direction: rtl;
 }
-.ipt-examtime{
+
+.ipt-examtime-edit{
     position: absolute;
     width: 180px;
     height: 30px;
-    top: 20px;
-    left: 20px;
+    /* top: 20px;
+    left: 20px; */
     border-radius: 5px;
     direction: rtl;
 }
-
 /* باکس پیش نیاز */
 .field-description{
     position: relative;
@@ -471,16 +473,32 @@
 
 
 /*دکمه ثبت درس*/
-.register-course{
+.course-edit-btn{
     position: absolute;
     left: 540px;
     top: 610px;
 }
-.btn-reg-course{
+.course-edit{
   width: 200px;
   height: 40px;
   background-color: #2e55ca;
   color: #ffffff;
   border-radius: 5px;
 }
+
+/* icon exit */
+.icon_exit_edit_course{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  z-index: 11;
+}
+.exit_edit_course{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
+
 
