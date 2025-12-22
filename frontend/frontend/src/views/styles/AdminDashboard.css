@@ -187,14 +187,31 @@
   white-space: nowrap;
 }
 
-.icon_user .icon{
+.icon_user {
   aspect-ratio: 1;
   height: 25px;
-  left: 130px;
+  left: 180px;
   object-fit: cover;
   position: absolute;
-  top: 62px;
-  width: 30px;
-} 
+  top: 66px;
 
+} 
+.user-icon{
+  width: 30px;
+  height: 20px;
+}
+/* icon exit */
+.icon_exit{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  
+}
+.exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
 
