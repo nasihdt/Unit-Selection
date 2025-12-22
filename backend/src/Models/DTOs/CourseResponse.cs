@@ -1,4 +1,6 @@
-﻿namespace UniversityRegistration.Api.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UniversityRegistration.Api.Models.DTOs
 {
     public class CourseResponse
     {
@@ -10,6 +12,6 @@
         public string TeacherName { get; set; } = null!;
         public string Time { get; set; } = null!;
         public string Location { get; set; } = null!;
-        public string? Description { get; set; }
+        public DateTime? ExamDateTime { get; set; }
     }
 }

@@ -32,7 +32,6 @@ namespace UniversityRegistration.Api.Models.DTOs
         [MaxLength(100)]
         public string Location { get; set; } = null!;
 
-        [MaxLength(500)]
-        public string? Description { get; set; }
+        public DateTime? ExamDateTime { get; set; }
     }
 }

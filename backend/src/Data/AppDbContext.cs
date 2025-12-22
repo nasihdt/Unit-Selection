@@ -115,8 +115,9 @@ namespace UniversityRegistration.Api.Data
                       .IsRequired()
                       .HasMaxLength(100);
 
-                entity.Property(x => x.Description)
-                      .HasMaxLength(500);
+                entity.Property(x => x.ExamDateTime)
+                      .HasColumnType("timestamp with time zone");
+
             });
 
             // ===== CoursePrerequisite =====

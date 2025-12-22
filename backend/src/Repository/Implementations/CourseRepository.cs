@@ -54,7 +54,7 @@ namespace UniversityRegistration.Api.Repository.Implementations
             existing.TeacherName = course.TeacherName;
             existing.Time = course.Time;
             existing.Location = course.Location;
-            existing.Description = course.Description;
+            existing.ExamDateTime = course.ExamDateTime;
 
             await _context.SaveChangesAsync();
             return true;

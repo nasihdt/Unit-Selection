@@ -40,7 +40,7 @@ namespace UniversityRegistration.Api.Controllers
                     TeacherName = x.PrerequisiteCourse.TeacherName,
                     Time = x.PrerequisiteCourse.Time,
                     Location = x.PrerequisiteCourse.Location,
-                    Description = x.PrerequisiteCourse.Description
+                    ExamDateTime = x.PrerequisiteCourse.ExamDateTime
                 })
                 .ToListAsync();
 

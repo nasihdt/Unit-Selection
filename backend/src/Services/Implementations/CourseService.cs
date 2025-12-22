@@ -40,7 +40,11 @@ namespace UniversityRegistration.Api.Services.Implementations
                 TeacherName = dto.TeacherName,
                 Time = dto.Time,
                 Location = dto.Location,
-                Description = dto.Description
+
+                ExamDateTime = dto.ExamDateTime.HasValue
+                ? DateTime.SpecifyKind(dto.ExamDateTime.Value, DateTimeKind.Utc)
+                : null
+
             };
 
             var created = await _repo.AddAsync(course);
@@ -60,7 +64,14 @@ namespace UniversityRegistration.Api.Services.Implementations
             existing.TeacherName = dto.TeacherName;
             existing.Time = dto.Time;
             existing.Location = dto.Location;
-            existing.Description = dto.Description;
+
+            if (dto.ExamDateTime.HasValue)
+            {
+                existing.ExamDateTime = DateTime.SpecifyKind(
+                    dto.ExamDateTime.Value,
+                    DateTimeKind.Utc
+                );
+            }
 
             return await _repo.UpdateAsync(existing);
         }
@@ -85,7 +96,7 @@ namespace UniversityRegistration.Api.Services.Implementations
                 TeacherName = course.TeacherName,
                 Time = course.Time,
                 Location = course.Location,
-                Description = course.Description
+                ExamDateTime = course.ExamDateTime
             };
         }
 

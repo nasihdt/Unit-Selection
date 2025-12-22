@@ -27,9 +27,9 @@
         public ICollection<CoursePrerequisite> Prerequisites { get; set; } = new List<CoursePrerequisite>();
         public ICollection<CoursePrerequisite> IsPrerequisiteFor { get; set; } = new List<CoursePrerequisite>();
 
-
         // توضیحات اختیاری
-        public string? Description { get; set; }
+        public DateTime? ExamDateTime { get; set; }
+
     }
 }
     
