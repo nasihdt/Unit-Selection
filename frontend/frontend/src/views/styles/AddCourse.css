@@ -443,14 +443,15 @@
 .field-examtime{
     position: relative;
     width: 200px;
-    margin-top: 30px;
-    margin-left: 375px;
+    margin-top: 480px;
+    margin-left: 543px;
+
 }
 
 .label-examtime{
     position: absolute;
-    top: -20px;    
-    right: 0px;    
+    top: -35px;    
+    right: 13px;    
     direction: rtl;
 }
 
@@ -468,51 +469,14 @@
 }
 
 /* باکس پیش نیاز */
-.field-description{
-    position: relative;
-    /* left: 255px;
-    top: 500px; */
-    /* margin-bottom: 200px;
-    margin-right: 600px; */
-    /* flex-direction: column; */
-    width: 200px; 
-} 
-
-.label-description{
-    position: relative;
-    /* margin-bottom: 90px;     */
-    /* right: 0px;     */
-    top: 50px;
-    direction: rtl;
-}
-
-.assign9{
-    color: red;
-    /* margin-bottom: -20px; */
-}
-.ipt-description{
-    position: relative;
-    width: 180px;
-    height: 30px;
-    top: 20px;
-    margin-left: -380px;
-    margin-top: -90px;
-    border-radius: 5px;
-    direction: rtl;
-}
-.prereq-list{
-    position: relative;
-    bottom: 20px;
-    right: 350px;
-}
 
 /*دکمه ثبت درس*/
-.register-course{
+.register-course-add-new{
     position: absolute;
     left: 540px;
-    top: 700px;
-}
-.btn-reg-course{
+    top: 600px;
+  }
+.btn-reg-course-add-new{
   width: 200px;
   height: 40px;
   background-color: #2e55ca;
@@ -520,3 +484,78 @@
   border-radius: 5px;
 }
 
+/* icon exit */
+.icon_exit_add_course{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  z-index: 11;
+}
+.exit_add_course{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
+
+
+
+/* پیش نیاز */
+
+.prereq-dropdown {
+  position: absolute;
+  width: 94%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  z-index: 10;
+  margin-left: -355px;
+  margin-top: -55px;
+  top: 20px;
+}
+
+.prereq-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.prereq-item:hover {
+  background-color: #f5f5f5;
+}
+
+.field-description{
+    position: relative;
+    width: 200px; 
+} 
+
+.label-description{
+    position: relative;
+    
+    top: 70px;
+    direction: rtl;
+}
+.ipt-description{
+    position: relative;
+    width: 180px;
+    height: 30px;
+    top: 50px;
+    /* bottom: 100px; */
+    margin-left: -375px;
+    margin-top: -90px;
+    border-radius: 5px;
+    direction: rtl;
+}
+/*
+.prereq-list{
+    position: relative;
+    bottom: 20px;
+    right: 350px;
+} */
