@@ -297,3 +297,81 @@
 .space-bet1{
   right: 40px;
 }
+
+/*------------------------*/
+
+.courses-table {
+  width: 70%;
+  overflow-x: auto;
+  position: absolute;
+  direction: rtl;
+  top: 190px;
+  left: 100px;
+  
+}
+
+.courses-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* برای جدول گسترده */
+}
+
+.courses-table th,
+.courses-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.courses-table th {
+  background-color: #2e55ca;
+  font-weight: bold;
+}
+
+.courses-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.btn-delete,
+.btn-edit {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.img-delete,
+.img-edit {
+  width: 20px;
+  height: 20px;
+}
+.column1{
+  color: #f9f9f9;
+}
+
+/* button logout */
+/* .exit-icon-manage {
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  
+}
+.icon-manage-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+} */
+.exit-icon-manage{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-manage-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
