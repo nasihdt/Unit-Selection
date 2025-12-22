@@ -1,66 +1,57 @@
-import { FaSearch } from "react-icons/fa";
+// this is new file
+
+import { FaSearch, FaBook } from "react-icons/fa";
 import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+import axiosInstance from "../services/axiosInstance";
+
 import delet from "../components/delete-course.png";
 import edit from "../components/edit-course.png";
 import Logo from "../components/logo-chamran.png";
+
 import "./styles/ManagementCourse.css";
 
-import { useState, useEffect } from "react";
-
 const ManagementCourse = () => {
+  const navigate = useNavigate();
+
   const [value, setValue] = useState("");
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
 
-  const API_URL = "http://localhost:5127/api/Course";
-  const navigate = useNavigate();
-
+  // ===============================
+  // Helpers
+  // ===============================
   const parseCourses = (data) =>
     data.map((c) => ({
-      id: c.courseId ?? c.Id ?? c.id,
-      title: c.Title ?? c.title,
-      code: c.Code ?? c.code,
-      units: c.Units ?? c.units,
-      capacity: c.Capacity ?? c.capacity,
-      teacherName: c.TeacherName ?? c.teacherName,
-      time: c.Time ?? c.time,
-      location: c.Location ?? c.location,
+      id: c.id ?? c.Id,
+      title: c.title ?? c.Title,
+      code: c.code ?? c.Code,
+      units: c.units ?? c.Units,
+      capacity: c.capacity ?? c.Capacity,
+      teacherName: c.teacherName ?? c.TeacherName,
+      time: c.time ?? c.Time,
+      location: c.location ?? c.Location,
+      description: c.description ?? "",
     }));
 
+  // ===============================
+  // Fetch Courses
+  // ===============================
   useEffect(() => {
- 
-    const storedCourses = localStorage.getItem("courses");
-    if (storedCourses) {
-      setCourses(parseCourses(JSON.parse(storedCourses)));
-      setLoading(false);
-    }
-
-    //  بارگذاری از API
     const fetchCourses = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await fetch(API_URL, {
-          // method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-        });
-
-        if (!res.ok) throw new Error("خطا در دریافت دروس");
-
-        const data = await res.json();
-        console.log("COURSE RAW DATA:", data);
-        const formattedData = parseCourses(data);
-
-        setCourses(formattedData);
-        localStorage.setItem("courses", JSON.stringify(formattedData));
-        setLoading(false);
+        setLoading(true);
+        const res = await axiosInstance.get("/course");
+        const formatted = parseCourses(res.data);
+        setCourses(formatted);
       } catch (err) {
-        setError(err.message);
+        console.error("FETCH COURSES ERROR:", err);
+        setError("خطا در دریافت دروس");
+      } finally {
         setLoading(false);
       }
     };
@@ -68,50 +59,37 @@ const ManagementCourse = () => {
     fetchCourses();
   }, []);
 
-  // بروزرسانی زمان
+  // ===============================
+  // Clock
+  // ===============================
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // جستجو
-  const handleChange = (e) => setValue(e.target.value);
+  // ===============================
+  // Actions
+  // ===============================
+  const handleDelete = async (id) => {
+    if (!window.confirm("آیا مطمئن هستید؟")) return;
 
-  // روتینگ
+    try {
+      await axiosInstance.delete(`/course/${id}`);
+      setCourses((prev) => prev.filter((c) => c.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert("حذف درس انجام نشد");
+    }
+  };
+
+  const handleEdit = (id) => navigate(`/edit/${id}`);
   const handleAddNewCourse = () => navigate("/add-new-course");
   const handleDashboard = () => navigate("/dashboard");
-  const handleEdit = (id) => {console.log("Editing courseId:", id);
-    navigate(`/edit/${id}`)};
+  const handleLimitUnit = () => navigate("/limit");
 
-  // حذف درس
-  const handleDelete = async (id) => {
-  const confirmed = window.confirm("آیا مطمئن هستید؟");
-
-  if (!confirmed) return;
-
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch(`${API_URL}/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    });
-
-    if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
-
-    const updatedCourses = courses.filter((c) => c.id !== id);
-    setCourses(updatedCourses);
-    localStorage.setItem("courses", JSON.stringify(updatedCourses));
-
-  } catch (err) {
-    alert(err.message);
-  }
-};
-
-  // فیلتر جستجو
+  // ===============================
+  // Search
+  // ===============================
   const displayedCourses =
     value.trim() === ""
       ? courses
@@ -121,98 +99,97 @@ const ManagementCourse = () => {
             c.code.toLowerCase().includes(value.toLowerCase())
         );
 
+  // ===============================
+  // Render
+  // ===============================
   return (
     <div className="container">
       <div className="frame">
         <div className="rectangle" />
 
+        {/* Sidebar */}
         <div className="dashboard">
-          <button className="btn_dashdoardadmin" onClick={handleDashboard}>
+          <button className="btn_dashdoard_admin" onClick={handleDashboard}>
             داشبورد
           </button>
           <div className="icon_doshboard">
             <MdDashboard className="icon" />
           </div>
 
-          <div className="div" />
-
-          <button className="btn_manage_course">مدیریت دروس</button>
+          <button className="btn_mng_course">مدیریت دروس</button>
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
-        </div>
 
-        <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
-
-        <div className="box">
-          <button
-            className="btn-addcoursemanage"
-            onClick={handleAddNewCourse}
-          >
-            افزودن درس جدید +
+          <button className="botton_limitunit" onClick={handleLimitUnit}>
+            تعیین حد واحد
           </button>
+          <div className="icon_limitunit">
+            <FaBook className="icon" />
+          </div>
         </div>
+
+        <img className="shahid-chamran" src={Logo} alt="logo" />
+
+        <button className="btn-addcoursemanage" onClick={handleAddNewCourse}>
+          افزودن درس جدید +
+        </button>
 
         <div className="rectangle-3" />
 
-        {/* تاریخ و زمان */}
+        {/* Date & Time */}
         <div className="date">{dateTime.toLocaleDateString("fa-IR")}</div>
         <div className="clock">{dateTime.toLocaleTimeString("fa-IR")}</div>
 
-        {/* جستجو */}
+        {/* Search */}
         <div className="search-container">
           <FaSearch className="search-icon" />
           <input
             type="text"
             placeholder="جستجو کنید..."
             value={value}
-            onChange={handleChange}
+            onChange={(e) => setValue(e.target.value)}
             className="search-input"
           />
         </div>
 
+        {/* Header */}
         <div className="list-of-course">
-          <div className="name">نام درس</div>
-          <div className="code"> کد درس</div>
-          <div className="unit"> واحد</div>
-          <div className="capacity">ظرفیت</div>
-          <div className="teachname">نام استاد</div>
-          <div className="space-bet"></div>
-          <div className="time">زمان</div>
-          <div className="space-bet1"></div>
-          <div className="palace">مکان</div>
-          <div className="space-bet1"></div>
-          <div className="delete">حذف</div>
-          <div className="space-bet1"></div>
-          <div className="edit">ویرایش</div>
-        </div> 
+          <div>نام درس</div>
+          <div>کد درس</div>
+          <div>واحد</div>
+          <div>ظرفیت</div>
+          <div>نام استاد</div>
+          <div>زمان</div>
+          <div>مکان</div>
+          <div>پیش‌نیاز</div>
+          <div>حذف</div>
+          <div>ویرایش</div>
+        </div>
 
-        {/* نمایش دروس */}
-        {loading && <p>در حال بارگذاری دروس...</p>}
+        {/* Content */}
+        {loading && <p>در حال بارگذاری...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         {!loading &&
           displayedCourses.map((course) => (
             <div key={course.id} className="item-course">
-              <div className="course-name">{course.title}</div>
-              <div className="course-code">{course.code}</div>
-              <div className="course-vahed">{course.units}</div>
-              <div className="course-capacity">{course.capacity}</div>
-              <div className="teacher-name">{course.teacherName}</div>
-              <div className="time-name">{course.time}</div>
-              <div className="course-palace">{course.location}</div>
+              <div>{course.title}</div>
+              <div>{course.code}</div>
+              <div>{course.units}</div>
+              <div>{course.capacity}</div>
+              <div>{course.teacherName}</div>
+              <div>{course.time}</div>
+              <div>{course.location}</div>
+              <div>{course.description}</div>
 
-              <div className="course-delete">
-                <button onClick={() => handleDelete(course.id)} className="btn-delete">
-                <img src={delet} alt="delete" className="img-delete"/>
-                </button>
-              </div>
+              <button onClick={() => handleDelete(course.id)}>
+                <img src={delet} alt="delete" className="img-delete" />
+              </button>
 
-              <div className="course-edit">
-                <button onClick={() => handleEdit(course.id)}>
-                  <img src={edit} alt="edit" className="img_edit" />
-                </button>
-              </div>
+              <button onClick={() => handleEdit(course.id)}>
+                <img src={edit} alt="edit" className="img_edit" />
+              </button>
             </div>
           ))}
       </div>
@@ -221,4 +198,3 @@ const ManagementCourse = () => {
 };
 
 export default ManagementCourse;
-

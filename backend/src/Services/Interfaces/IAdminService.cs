@@ -5,5 +5,7 @@ namespace UniversityRegistration.Api.Services.Interfaces
     public interface IAdminService
     {
         Task<LoginResponse?> LoginAsync(string username, string password);
+        Task<LoginResponse?> RefreshTokenAsync(string refreshToken);
+
     }
 }

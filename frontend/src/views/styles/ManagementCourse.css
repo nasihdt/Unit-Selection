@@ -12,7 +12,7 @@
   top: -70px;
   left: 5px;
 }
-.btn_dashdoardadmin{
+.btn_dashdoard_admin{
   color: #000000;
   background-color: #ffffff;
   border-radius: 20px;
@@ -32,7 +32,7 @@
   border: none;
 } 
  
-.container .btn_manage_course {
+.container .btn_mng_course {
   color: #000000;
   border-radius: 20px;
   background-color: #edf1fc;
@@ -51,6 +51,38 @@
   height: 80px;
   border: none;
 }
+
+/* button limit units */
+.botton_limitunit{
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+}
+
 
 .icon_doshboard .icon{
   aspect-ratio: 1;
@@ -201,13 +233,13 @@
 }
 .search-icon{
   position: absolute;
-  left: 30px;            /* آیکون داخل input در سمت چپ */
+  left: 30px;            
   top: 60%;
   margin-top: 18px;
   transform: translateY(-50%);
   font-size: 18px;
   color: #000000;
-  pointer-events: none;  /* کاربر روی آیکون کلیک نکند */
+  pointer-events: none; 
   z-index: 10;
   
 }
@@ -216,19 +248,19 @@
     position: relative;   
     display: flex;
     flex-wrap: nowrap;
-    gap: 40;
+    gap: 30;
     padding: 10px;
     justify-content: space-between;
     background: white;
     direction: rtl;
-    width: 915px;
+    width: 1120px;
     margin: 20px auto;  
     border-radius: 10px;
     align-items: center;
     box-sizing: border-box;
     top: 240px;
     height: 60px;
-    right: 100px;
+    right: 110px;
 
 }
 .item-course .course-name{
@@ -253,10 +285,10 @@
     font-weight: bold;
     direction: rtl;
     top: 160px;
-    width: 900px;
+    width: 1100px;
     margin: 40px auto;
     border-radius: 10px;
-    right: 400px;
+    right: 300px;
     
 }
 .space-bet{

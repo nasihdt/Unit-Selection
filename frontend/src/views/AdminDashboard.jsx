@@ -7,6 +7,8 @@ import dashboard from "../components/dashboard_img.webp";
 import Logo from "../components/logo-chamran.png"
 import "./styles/AdminDashboard.css";
 import { useState, useEffect } from "react";
+import { FaBook } from "react-icons/fa"; 
+
  
 const AdminDashboard = () => {
 
@@ -15,6 +17,7 @@ const AdminDashboard = () => {
   const handleManageCourse = () => {
     navigate('/management');
   };
+  const handlelimit = () =>{navigate('/limit')};
   //پارامتر های تایم
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -44,13 +47,20 @@ const AdminDashboard = () => {
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
+
+          <button className="btn_limitunit" onClick={handlelimit}>تعیین حد واحد</button>
+          <div className="icon_limitunit">
+            <FaBook className="icon" />
+          </div>
         </div>
+
+
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo}/>
 
         <div className="rectangle-2" />
 
-        <p className="p">کاربر عزیز به داشبورد خود خوش آمدید</p>
+        <p className="p">مدیر عزیز به داشبورد خود خوش آمدید</p>
 
         <img className="login-page" alt="Login page" src={dashboard} />
 

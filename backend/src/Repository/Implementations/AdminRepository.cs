@@ -20,5 +20,10 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Username == username);
         }
+
+        public async Task<Admin?> GetByIdAsync(int id)
+        {
+            return await _context.Admins.FindAsync(id);
+        }
     }
 }
