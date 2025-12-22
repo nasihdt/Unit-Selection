@@ -61,6 +61,8 @@ builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IRegistrationSettingsService, RegistrationSettingsService>();
 builder.Services.AddScoped<ICoursePrerequisiteService, CoursePrerequisiteService>();
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+
 
 // ================================
 // JWT Helper
