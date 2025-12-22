@@ -8,6 +8,7 @@ import "./styles/ManagementCourse.css";
 import { FaBook } from "react-icons/fa"; 
 import { useState, useEffect } from "react";
 import axiosInstance from "../services/axiosInstance";
+import { FiLogOut } from "react-icons/fi";
 
 const ManagementCourse = () => {
   const [value, setValue] = useState("");
@@ -18,7 +19,7 @@ const ManagementCourse = () => {
 
   const API_URL = "http://localhost:5127/api/course";
   
-  // const API_URL = "https://localhost:5127/api/course";
+  
   const navigate = useNavigate();
 
   const parseCourses = (data) =>
@@ -32,49 +33,10 @@ const ManagementCourse = () => {
       time: c.Time ?? c.time,
       location: c.Location ?? c.location,
       description: c.description,
+      prerequisites: c.prerequisites || []
     }));
 
-  // useEffect(() => {
- 
-  //   const storedCourses = localStorage.getItem("courses");
-  //   if (storedCourses) {
-  //     setCourses(parseCourses(JSON.parse(storedCourses)));
-  //     setLoading(false);
-  //   }
-
   
-  //   const fetchCourses = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       console.log("TOKEN:", localStorage.getItem("token"));
-  //       const res = await fetch(API_URL, {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           Accept: "application/json",
-  //         },
-  //       });
-  //       // const res = await axiosInstance.get("/course");
-  //       // const data = res.data;
-
-  //       if (!res.ok) throw new Error("خطا در دریافت دروس");
-
-  //       const data = await res.json();
-  //       console.log("COURSE RAW DATA:", data);
-  //       const formattedData = parseCourses(data);
-
-  //       setCourses(formattedData);
-  //       localStorage.setItem("courses", JSON.stringify(formattedData));
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCourses();
-  // }, []);
-
 
 useEffect(() => {
   const fetchCourses = async () => {
@@ -108,6 +70,9 @@ useEffect(() => {
   const handleChange = (e) => setValue(e.target.value);
 
   // روتینگ
+  const handlelogin = () =>{
+    navigate('/login')
+  }
   const handleAddNewCourse = () => navigate("/add-new-course");
   const handleDashboard = () => navigate("/dashboard");
   const handleEdit = (id) => {console.log("Editing courseId:", id);
@@ -166,112 +131,142 @@ const handleDelete = async (id) => {
         );
 
   return (
+
     <div className="container">
-      <div className="frame">
-        <div className="rectangle" />
+  <div className="frame">
+    <div className="rectangle" />
 
-        <div className="dashboard">
-          <button className="btn_dashdoard_admin" onClick={handleDashboard}>
-            داشبورد
-          </button>
-          <div className="icon_doshboard">
-            <MdDashboard className="icon" />
-          </div>
+    <div className="dashboard">
+      <button className="btn_dashdoard_admin" onClick={handleDashboard}>
+        داشبورد
+      </button>
+      <div className="icon_doshboard">
+        <MdDashboard className="icon" />
+      </div>
 
-          <div className="div" />
+      <div className="div" />
 
-          <button className="btn_mng_course">مدیریت دروس</button>
-          <div className="icon_manage_course">
-            <MdMenuBook className="icon" />
-          </div>
+      <button className="btn_mng_course">مدیریت دروس</button>
+      <div className="icon_manage_course">
+        <MdMenuBook className="icon" />
+      </div>
 
-          <button className="botton_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
-            <div className="icon_limitunit">
-              <FaBook className="icon" />
-            </div>
-        </div>
-
-        <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
-
-        <div className="box">
-          <button
-            className="btn-addcoursemanage"
-            onClick={handleAddNewCourse}
-          >
-            افزودن درس جدید +
-          </button>
-        </div>
-
-        <div className="rectangle-3" />
-
-        {/* تاریخ و زمان */}
-        <div className="date">{dateTime.toLocaleDateString("fa-IR")}</div>
-        <div className="clock">{dateTime.toLocaleTimeString("fa-IR")}</div>
-
-        {/* جستجو */}
-        <div className="search-container">
-          <FaSearch className="search-icon" />
-          <input
-            type="text"
-            placeholder="جستجو کنید..."
-            value={value}
-            onChange={handleChange}
-            className="search-input"
-          />
-        </div>
-
-        <div className="list-of-course">
-          <div className="name">نام درس</div>
-          <div className="code"> کد درس</div>
-          <div className="unit"> واحد</div>
-          <div className="capacity">ظرفیت</div>
-          <div className="teachname">نام استاد</div>
-          <div className="space-bet"></div>
-          <div className="time">زمان</div>
-          
-          <div className="palace">مکان</div>
-          <div className="space-bet1"></div>
-          <div className="exam-date">تاریخ امتحان</div>
-          <div className="description">پیش نیاز</div>
-          <div className="space-bet1"></div>
-          <div className="delete">حذف</div>
-          <div className="space-bet1"></div>
-          <div className="edit">ویرایش</div>
-        </div> 
-
-        {/* نمایش دروس */}
-        {loading && <p>در حال بارگذاری دروس...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        {!loading &&
-          displayedCourses.map((course) => (
-            <div key={course.id} className="item-course">
-              <div className="course-name">{course.title}</div>
-              <div className="course-code">{course.code}</div>
-              <div className="course-vahed">{course.units}</div>
-              <div className="course-capacity">{course.capacity}</div>
-              <div className="teacher-name">{course.teacherName}</div>
-              <div className="time-name">{course.time}</div>
-              <div className="course-palace">{course.location}</div>
-              
-              <div className="course-examdate"></div>
-              <div className="course-description">{course.description}</div>
-
-              <div className="course-delete">
-                <button onClick={() => handleDelete(course.id)} className="btn-delete">
-                <img src={delet} alt="delete" className="img-delete"/>
-                </button>
-              </div>
-
-              <div className="course-edit">
-                <button onClick={() => handleEdit(course.id)}>
-                  <img src={edit} alt="edit" className="img_edit" />
-                </button>
-              </div>
-            </div>
-          ))}
+      <button className="botton_limitunit" onClick={handleLimitUnit}>
+        تعیین حد واحد
+      </button>
+      <div className="icon_limitunit">
+        <FaBook className="icon" />
       </div>
     </div>
+
+    <button className="exit-icon-manage" onClick={handlelogin}>
+      <FiLogOut className="icon-manage-exit"/>   
+    </button>  
+    
+
+    <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
+
+    <div className="box">
+      <button className="btn-addcoursemanage" onClick={handleAddNewCourse}>
+        افزودن درس جدید +
+      </button>
+    </div>
+
+    <div className="rectangle-3" />
+
+    {/* تاریخ و زمان */}
+    <div className="date">{dateTime.toLocaleDateString("fa-IR")}</div>
+    <div className="clock">{dateTime.toLocaleTimeString("fa-IR")}</div>
+
+    {/* جستجو */}
+    <div className="search-container">
+      <FaSearch className="search-icon" />
+      <input
+        type="text"
+        placeholder="جستجو کنید..."
+        value={value}
+        onChange={handleChange}
+        className="search-input"
+      />
+    </div>
+
+    {/* جدول دروس */}
+    <div className="courses-table">
+      <table>
+        <thead>
+          <tr className="column1">
+            <th>نام درس</th>
+            <th>کد درس</th>
+            <th>واحد</th>
+            <th>ظرفیت</th>
+            <th>نام استاد</th>
+            <th>زمان</th>
+            <th>مکان</th>
+            <th>تاریخ امتحان</th>
+            <th>پیش نیاز</th>
+            <th>حذف</th>
+            <th>ویرایش</th>
+          </tr>
+        </thead>
+        <tbody>
+          {loading && (
+            <tr>
+              <td colSpan="11" style={{ textAlign: "center" }}>
+                در حال بارگذاری دروس...
+              </td>
+            </tr>
+          )}
+          {error && (
+            <tr>
+              <td colSpan="11" style={{ color: "red", textAlign: "center" }}>
+                {error}
+              </td>
+            </tr>
+          )}
+          {!loading &&
+            displayedCourses.map((course) => (
+              <tr key={course.id}>
+                <td>{course.title}</td>
+                <td>{course.code}</td>
+                <td>{course.units}</td>
+                <td>{course.capacity}</td>
+                <td>{course.teacherName}</td>
+                <td>{course.time}</td>
+                <td>{course.location}</td>
+                <td>{course.examDate}</td>
+                {/* <td>{course.description}</td> */}
+                
+  <td>
+  {Array.isArray(course.prerequisites) && course.prerequisites.length > 0
+    ? course.prerequisites
+        .map(prId => courses.find(c => c.id === prId)?.title)
+        .filter(Boolean)
+        .join("، ")
+    : "-"}
+</td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(course.id)}
+                    className="btn-delete"
+                  >
+                    <img src={delet} alt="delete" className="img-delete" />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleEdit(course.id)}
+                    className="btn-edit">
+                    <img src={edit} alt="edit" className="img-edit" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
   );
 };
 
