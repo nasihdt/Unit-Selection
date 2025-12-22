@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import { FaUser} from "react-icons/fa"
 import { MdDashboard } from "react-icons/md";
@@ -9,8 +7,7 @@ import Logo from "../components/logo-chamran.png"
 import "./styles/UnitLimitSetter.css";
 import { useState, useEffect } from "react";
 import { FaBook } from "react-icons/fa"; 
-import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md"; // آیکون فلش
-
+import { FiLogOut } from "react-icons/fi";
  
 const UnitLimitSetter = () => {
 
@@ -18,7 +15,9 @@ const UnitLimitSetter = () => {
 
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
-
+  const handlelogin = () =>{
+    navigate('/login')
+  }
   const handlelimit = () =>{navigate('/limit')};
   //پارامتر های تایم
   const [dateTime, setDateTime] = useState(new Date());
@@ -56,28 +55,41 @@ const UnitLimitSetter = () => {
   };
 
   const saveSettings = async () => {
-    if (minUnits > maxUnits) {
-      setMessage("⚠ حداقل نباید بزرگتر از حداکثر باشد");
-      return;
+  if (minUnits > maxUnits) {
+    setMessage("⚠ حداقل نباید بزرگتر از حداکثر باشد");
+    return;
+  }
+
+  setLoading(true);
+  setMessage("");
+
+  try {
+    const token = localStorage.getItem("token");
+
+const response = await fetch(
+  "http://localhost:5127/api/admin/settings/units",
+  {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({ minUnits, maxUnits }),
+  }
+);
+
+    if (!response.ok) {
+      throw new Error(`خطای سرور: ${response.status}`);
     }
 
-    setLoading(true);
-    setMessage("");
-
-    try {
-      const response = await fetch("https://localhost:5127/api/unitLimits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ minUnits, maxUnits }),
-      });
-      if (!response.ok) throw new Error(`خطا در ذخیره‌سازی: ${response.status}`);
-      setMessage("تنظیمات با موفقیت ذخیره شد ✅");
-    } catch (error) {
-      setMessage(`⚠ خطا در اتصال به سرور: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+    setMessage("تنظیمات با موفقیت ذخیره شد ✅");
+  } catch (error) {
+    setMessage("⚠ خطا در ارتباط با سرور");
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   
 
@@ -106,12 +118,15 @@ const UnitLimitSetter = () => {
           </div>
         </div>
 
+        <button className="exit-icon-Unit-limit" onClick={handlelogin}>
+         <FiLogOut className="icon-unitlimit-exit"/>   
+        </button> 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo}/>
 
         <div className="rectangle-3" />
 
-        <div className="icon_user">
-            <FaUser className="icon" />
+        <div className="icon_user_limit">
+            <FaUser className="icon_limit" />
         </div>
 
         {/* برای نمایش تاریخ و زمان */}
