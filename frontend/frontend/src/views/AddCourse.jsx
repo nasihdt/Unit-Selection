@@ -4,8 +4,8 @@ import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Logo from "../components/logo-chamran.png";
 import "./styles/AddCourse.css";
-// وارد کردن axiosInstance برای ارتباط درست با بک‌اِند
 import axios from 'axios';
+import { FiLogOut } from "react-icons/fi";
 
 const axiosInstance = axios.create({
   baseURL: "https://localhost:7194/api",
@@ -43,7 +43,13 @@ const AddCourse = () => {
   const [dateTime, setDateTime] = useState(new Date());
   const [allCourses, setAllCourses] = useState([]);
   const [selectedPrerequisites, setSelectedPrerequisites] = useState([]);
+  const [open, setOpen] = useState(false);
 
+  const selectedTitles = allCourses
+  .filter(c => selectedPrerequisites.includes(c.id))
+  .map(c => c.title)
+  .join("، ");
+  
   // ۱. دریافت لیست دروس برای بخش پیش‌نیازها
   useEffect(() => {
     const fetchCourses = async () => {
@@ -63,11 +69,12 @@ const AddCourse = () => {
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
+  const handlelogin = () =>{ navigate('/login')}
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
   const handleLimitUnit = () => navigate("/limit");
 
-  // ۲. تابع ثبت درس جدید
+
   const handleSubmit = async () => {
     const body = {
       title: course.name,
@@ -79,15 +86,22 @@ const AddCourse = () => {
       location: course.place,
       description: course.description,
       examDate: course.examDate,
-      // اگر بک‌اِند لیست آیدی پیش‌نیازها را می‌خواهد:
-      prerequisiteIds: selectedPrerequisites 
+      // prerequisiteIds: selectedPrerequisites 
     };
 
     try {
-      // ارسال درخواست POST به بک‌اِند
       const res = await axiosInstance.post("/Course", body);
 
       if (res.status === 200 || res.status === 201) {
+        
+        const courseId = res.data.id;   
+        if (selectedPrerequisites.length > 0) {
+          await axiosInstance.post(
+           `/Course/${courseId}/prerequisites`,
+           { prerequisiteIds: selectedPrerequisites } 
+          );
+        }
+
         alert("درس با موفقیت ثبت شد!");
         navigate("/management");
       }
@@ -97,7 +111,7 @@ const AddCourse = () => {
     }
   };
 
-  // نمایش تاریخ و زمان زنده
+
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -185,7 +199,7 @@ const AddCourse = () => {
           />
         </div>
 
-        <div className="field-description">
+        {/* <div className="field-description">
           <label className="label-description">پیش‌نیازها <span className="assign9">*</span></label>
           <input
             type="text"
@@ -214,7 +228,50 @@ const AddCourse = () => {
                 </label>
               ))}
           </div>
-        </div>
+        </div> */}
+        <div className="field-description">
+          <label className="label-description">
+           پیش‌نیازها <span className="assign9">*</span>
+          </label>
+
+          <input
+            type="text"
+            className="ipt-description"
+            placeholder="جستجو در دروس..."
+            value={value}
+            onFocus={() => setOpen(true)}
+            onChange={(e) => {
+            setValue(e.target.value);
+            setOpen(true);
+            }}
+            onBlur={() => {
+            setTimeout(() => setOpen(false), 200);
+            }}
+         />
+
+          {open && (
+            <div className="prereq-dropdown">
+            {allCourses
+            .filter(c => c.title && c.title.includes(value))
+            .map(c => (
+            <label key={c.id} className="prereq-item">
+            <input
+              type="checkbox"
+              checked={selectedPrerequisites.includes(c.id)}
+              onChange={() => {
+                setSelectedPrerequisites(prev =>
+                  prev.includes(c.id)
+                    ? prev.filter(x => x !== c.id)
+                    : [...prev, c.id]
+                );
+              }}
+            />
+            {c.title}
+          </label>
+        ))}
+    </div>
+          )}
+</div>
 
         <div className="field-examtime">
           <label className="label-examtime">تاریخ امتحان <span className="assign8">*</span></label>
@@ -237,6 +294,10 @@ const AddCourse = () => {
           <button className="btn_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
           <div className="icon_limitunit"><FaBook className="icon" /></div>
         </div>
+
+        <button className="icon_exit_add_course" onClick={handlelogin}>
+          <FiLogOut className="exit_add_course"/>     
+        </button> 
 
         <img className="shahid-chamran" alt="Logo" src={Logo} />
 
@@ -261,8 +322,8 @@ const AddCourse = () => {
           />
         </div>
 
-        <div className="register-course">
-          <button className="btn-reg-course" onClick={handleSubmit}>
+        <div className="register-course-add-new">
+          <button className="btn-reg-course-add-new" onClick={handleSubmit}>
             ثبت درس
           </button>
         </div>
