@@ -53,5 +53,19 @@ namespace UniversityRegistration.Api.Repository.Implementations
             _context.CoursePrerequisites.Remove(entity);
             await _context.SaveChangesAsync();
         }
+
+        // آیا این درس خودش پیش‌نیاز دارد؟
+        public async Task<bool> HasPrerequisitesAsync(int courseId)
+        {
+            return await _context.CoursePrerequisites
+                .AnyAsync(x => x.CourseId == courseId);
+        }
+
+        // این درس پیش‌نیاز چند درس دیگر است؟
+        public async Task<int> DependentCoursesCountAsync(int courseId)
+        {
+            return await _context.CoursePrerequisites
+                .CountAsync(x => x.PrerequisiteCourseId == courseId);
+        }
     }
 }

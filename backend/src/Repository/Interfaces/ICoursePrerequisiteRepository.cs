@@ -15,5 +15,9 @@ namespace UniversityRegistration.Api.Repository.Interfaces
         Task AddAsync(CoursePrerequisite entity);
 
         Task RemoveAsync(CoursePrerequisite entity);
+
+        Task<bool> HasPrerequisitesAsync(int courseId);
+
+        Task<int> DependentCoursesCountAsync(int courseId);
     }
 }

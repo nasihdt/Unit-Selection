@@ -16,6 +16,7 @@ namespace UniversityRegistration.Api.Controllers
             _service = service;
         }
 
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] CourseQueryParameters query)
@@ -23,6 +24,7 @@ namespace UniversityRegistration.Api.Controllers
             var courses = await _service.GetFilteredAsync(query);
             return Ok(courses);
         }
+
 
         [HttpGet("{id}")]
         [Authorize]
@@ -34,6 +36,7 @@ namespace UniversityRegistration.Api.Controllers
             return Ok(course);
         }
 
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Add([FromBody] CreateCourseRequest dto)
@@ -44,6 +47,19 @@ namespace UniversityRegistration.Api.Controllers
             var created = await _service.AddAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
+
+
+        [HttpPatch("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Patch(int id, [FromBody] PatchCourseRequest dto)
+        {
+            var success = await _service.PatchAsync(id, dto);
+            if (!success)
+                return NotFound();
+
+            return NoContent();
+        }
+
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
@@ -59,6 +75,20 @@ namespace UniversityRegistration.Api.Controllers
             return NoContent();
         }
 
+        // GET: api/course/{id}/delete-info
+
+        [HttpGet("{id}/delete-info")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetDeleteInfo(int id)
+        {
+            var info = await _service.GetDeleteInfoAsync(id);
+
+            if (info == null)
+                return NotFound();
+
+            return Ok(info);
+        }
+
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
@@ -69,5 +99,6 @@ namespace UniversityRegistration.Api.Controllers
 
             return NoContent();
         }
+
     }
 }

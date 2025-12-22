@@ -9,9 +9,13 @@ namespace UniversityRegistration.Api.Services.Implementations
     {
         private readonly ICourseRepository _repo;
 
-        public CourseService(ICourseRepository repo)
+        private readonly ICoursePrerequisiteRepository _prereqRepo;
+
+        public CourseService(ICourseRepository repo, ICoursePrerequisiteRepository prereqRepo)
         {
             _repo = repo;
+            _prereqRepo = prereqRepo;
+
         }
 
         public async Task<List<CourseResponse>> GetAllAsync()
@@ -51,6 +55,45 @@ namespace UniversityRegistration.Api.Services.Implementations
             return MapToResponse(created);
         }
 
+        public async Task<bool> PatchAsync(int id, PatchCourseRequest dto)
+        {
+            var course = await _repo.GetByIdAsync(id);
+            if (course == null)
+                return false;
+
+            if (dto.Title != null)
+                course.Title = dto.Title;
+
+            if (dto.Code != null)
+                course.Code = dto.Code;
+
+            if (dto.Units.HasValue)
+                course.Units = dto.Units.Value;
+
+            if (dto.Capacity.HasValue)
+                course.Capacity = dto.Capacity.Value;
+
+            if (dto.TeacherName != null)
+                course.TeacherName = dto.TeacherName;
+
+            if (dto.Time != null)
+                course.Time = dto.Time;
+
+            if (dto.Location != null)
+                course.Location = dto.Location;
+
+            if (dto.ExamDateTime.HasValue)
+            {
+                course.ExamDateTime = DateTime.SpecifyKind(
+                    dto.ExamDateTime.Value,
+                    DateTimeKind.Utc
+                );
+            }
+
+            return await _repo.UpdateAsync(course);
+        }
+
+
         public async Task<bool> UpdateAsync(int id, UpdateCourseRequest dto)
         {
             var existing = await _repo.GetByIdAsync(id);
@@ -79,6 +122,30 @@ namespace UniversityRegistration.Api.Services.Implementations
         public async Task<bool> DeleteAsync(int id)
         {
             return await _repo.DeleteAsync(id);
+        }
+
+        public async Task<CourseDeleteInfoResponse?> GetDeleteInfoAsync(int courseId)
+        {
+            // اگر خود درس وجود نداشت
+            var course = await _repo.GetByIdAsync(courseId);
+            if (course == null)
+                return null;
+
+            // آیا این درس خودش پیش‌نیاز دارد؟
+            var hasPrerequisites =
+                await _prereqRepo.HasPrerequisitesAsync(courseId);
+
+            // آیا این درس پیش‌نیاز درس‌های دیگر است؟
+            var dependentCount =
+                await _prereqRepo.DependentCoursesCountAsync(courseId);
+
+            return new CourseDeleteInfoResponse
+            {
+                CourseId = courseId,
+                HasPrerequisites = hasPrerequisites,
+                IsPrerequisiteForOthers = dependentCount > 0,
+                DependentCoursesCount = dependentCount
+            };
         }
 
         // ==========================

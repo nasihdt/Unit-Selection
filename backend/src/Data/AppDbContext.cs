@@ -128,12 +128,12 @@ namespace UniversityRegistration.Api.Data
                 entity.HasOne(x => x.Course)
                       .WithMany(c => c.Prerequisites)
                       .HasForeignKey(x => x.CourseId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(x => x.PrerequisiteCourse)
                       .WithMany(c => c.IsPrerequisiteFor)
                       .HasForeignKey(x => x.PrerequisiteCourseId)
-                      .OnDelete(DeleteBehavior.Restrict);
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // ===== RegistrationSettings =====
