@@ -17,6 +17,8 @@ namespace UniversityRegistration.Api.Data
         public DbSet<CoursePrerequisite> CoursePrerequisites => Set<CoursePrerequisite>();
         public DbSet<RegistrationSettings> RegistrationSettings => Set<RegistrationSettings>();
         public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+        public DbSet<CourseEnrollment> CourseEnrollments => Set<CourseEnrollment>();
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -134,6 +136,25 @@ namespace UniversityRegistration.Api.Data
                       .WithMany(c => c.IsPrerequisiteFor)
                       .HasForeignKey(x => x.PrerequisiteCourseId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ===== CourseEnrollment =====
+            modelBuilder.Entity<CourseEnrollment>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.HasOne(x => x.Student)
+                      .WithMany()
+                      .HasForeignKey(x => x.StudentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(x => x.Course)
+                      .WithMany()
+                      .HasForeignKey(x => x.CourseId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(x => new { x.StudentId, x.CourseId })
+                      .IsUnique();
             });
 
             // ===== RegistrationSettings =====

@@ -49,6 +49,8 @@ builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<IRegistrationSettingsRepository, RegistrationSettingsRepository>();
 builder.Services.AddScoped<ICoursePrerequisiteRepository, CoursePrerequisiteRepository>();
+builder.Services.AddScoped<ICourseEnrollmentRepository, CourseEnrollmentRepository>();
+
 
 // ================================
 // Services
