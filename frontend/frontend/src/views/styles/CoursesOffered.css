@@ -12,7 +12,7 @@
   top: -70px;
   left: 5px;
 }
-.btn_dashdoardadmin{
+.btn_dashdoard_admin{
   color: #000000;
   background-color: #ffffff;
   border-radius: 20px;
@@ -32,15 +32,15 @@
   border: none;
 } 
  
-.container .btn_manage_course {
+.container .btn_offer_course {
   color: #000000;
   border-radius: 20px;
   background-color: #edf1fc;
   direction: rtl;
   font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
-  left: 1247px;
+  left: 1237px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -51,6 +51,38 @@
   height: 80px;
   border: none;
 }
+
+/* button limit units */
+.botton_limitunit{
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+}
+
 
 .icon_doshboard .icon{
   aspect-ratio: 1;
@@ -72,7 +104,7 @@
   width: 110px;
 }
 
-.icon_manage_course .icon{
+.icon_offer_course .icon{
   aspect-ratio: 1;
   height: 60px;
   left: 1360px;
@@ -147,17 +179,6 @@
   width: 30px;
 } 
 
-.btn-addcoursemanage{
-    height: 37px;
-    left: 700px;
-    position: absolute;
-    top: 130px;
-    /* border: 1px solid #333; */
-    cursor: pointer;
-    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
-    background: white;
-    width: 185px;
-}
 .text-addcourse{
     color: #000000;
     direction: rtl;
@@ -173,14 +194,12 @@
     width: 207px;
 }
 
-.search-container{
+/* for search */
+.search-container-courseoffer{
   position: absolute;
-  left: 340px;
+  left: 450px;
   top: 130px;
   width: 310px;
-  
-  
-  
 }
 .search-input{
   position: absolute;
@@ -201,13 +220,13 @@
 }
 .search-icon{
   position: absolute;
-  left: 30px;            /* آیکون داخل input در سمت چپ */
+  left: 30px;            
   top: 60%;
   margin-top: 18px;
   transform: translateY(-50%);
   font-size: 18px;
   color: #000000;
-  pointer-events: none;  /* کاربر روی آیکون کلیک نکند */
+  pointer-events: none; 
   z-index: 10;
   
 }
@@ -264,4 +283,82 @@
 }
 .space-bet1{
   right: 40px;
+}
+
+/*------------------------*/
+
+.courses-table {
+  width: 70%;
+  overflow-x: auto;
+  position: absolute;
+  direction: rtl;
+  top: 190px;
+  left: 100px;
+  
+}
+
+.courses-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* برای جدول گسترده */
+}
+
+.courses-table th,
+.courses-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.courses-table th {
+  background-color: #2e55ca;
+  font-weight: bold;
+}
+
+.courses-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.btn-delete,
+.btn-edit {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.img-delete,
+.img-edit {
+  width: 20px;
+  height: 20px;
+}
+.column1{
+  color: #f9f9f9;
+}
+
+/* button logout */
+/* .exit-icon-manage {
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  background-color: #ffffff;
+  border: none;
+  
+}
+.icon-manage-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+} */
+.exit-icon-offer{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-offer-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
 }
