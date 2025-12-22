@@ -7,12 +7,17 @@ import dashboard from "../components/dashboard_img.webp";
 import Logo from "../components/logo-chamran.png"
 import "./styles/StudentDashboard.css";
 import { useState, useEffect } from "react";
+import { FiLogOut } from "react-icons/fi";
  
 const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
-  const handleManageCourse = () => {
+
+  const handlelogin = () =>{
+    navigate('/login')
+  }
+  const handleOfferCourse = () => {
     navigate('/courseoffere');
   };
   //پارامتر های تایم
@@ -40,11 +45,15 @@ const AdminDashboard = () => {
 
           <div className="div" />
 
-          <button className="btn_offercourse_student" onClick={handleManageCourse}>لیست دروس ارائه شده</button>
+          <button className="btn_offercourse_student" onClick={handleOfferCourse}>لیست دروس ارائه شده</button>
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
         </div>
+
+        <button className="icon_exit_Std_dashboard" onClick={handlelogin}>
+          <FiLogOut className="exit_std"/>     
+        </button>
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo}/>
 
@@ -56,8 +65,8 @@ const AdminDashboard = () => {
 
         <div className="rectangle-3" />
 
-        <div className="icon_user">
-            <FaUser className="icon" />
+        <div className="icon_user_std">
+            <FaUser className="icon_std" />
         </div>
 
         {/* برای نمایش تاریخ و زمان */}
