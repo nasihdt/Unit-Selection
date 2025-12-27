@@ -1,14 +1,12 @@
 import { FaSearch } from "react-icons/fa";
 import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import delet from "../components/delete-course.png";
-import edit from "../components/edit-course.png";
 import Logo from "../components/logo-chamran.png";
 import "./styles/CoursesOffered.css";
-import { FaBook } from "react-icons/fa"; 
 import { useState, useEffect } from "react";
 import axiosInstance from "../services/axiosInstance";
 import { FiLogOut } from "react-icons/fi";
+import { FaClipboardList } from "react-icons/fa"
 
 const CoursesOffered = () => {
   const [value, setValue] = useState("");
@@ -73,59 +71,19 @@ useEffect(() => {
     navigate('/login')
   }
  
-  const handleDashboard = () => navigate("/dashboard");
+  const handleDashboard = () => navigate("/dashboardstd");
   
 
-  const handleLimitUnit = () => navigate("/limit");  
-  // حذف درس
-//   const handleDelete = async (id) => {
-//   const confirmed = window.confirm("آیا مطمئن هستید؟");
-
-//   if (!confirmed) return;
-
-//   try {
-//     const token = localStorage.getItem("token");
-
-//     const res = await fetch(`${API_URL}/${id}`, {
-//       method: "DELETE",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Accept: "application/json",
-//       },
-//     });
-
-//     if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
-
-//     const updatedCourses = courses.filter((c) => c.id !== id);
-//     setCourses(updatedCourses);
-//     localStorage.setItem("courses", JSON.stringify(updatedCourses));
-
-//   } catch (err) {
-//     alert(err.message);
-//   }
-// };
-const handleDelete = async (id) => {
-  if (!window.confirm("آیا مطمئن هستید؟")) return;
-
-  try {
-    await axiosInstance.delete(`/course/${id}`);
-
-    const updatedCourses = courses.filter(c => c.id !== id);
-    setCourses(updatedCourses);
-    localStorage.setItem("courses", JSON.stringify(updatedCourses));
-  } catch {
-    alert("حذف درس انجام نشد");
-  }
-};
-
-  // فیلتر جستجو
+  const handleSelect = () => navigate("/selectunit");  
+ 
+ // فیلتر جستجو
   const displayedCourses =
     value.trim() === ""
       ? courses
       : courses.filter(
           (c) =>
             c.title.toLowerCase().includes(value.toLowerCase()) ||
-            c.code.toLowerCase().includes(value.toLowerCase())
+            c.teacherName.toLowerCase().includes(value.toLowerCase())
         );
 
   return (
@@ -135,7 +93,7 @@ const handleDelete = async (id) => {
     <div className="rectangle" />
 
     <div className="dashboard">
-      <button className="btn_dashdoard_admin" onClick={handleDashboard}>
+      <button className="btn_dashdoard_student" onClick={handleDashboard}>
         داشبورد
       </button>
       <div className="icon_doshboard">
@@ -147,6 +105,11 @@ const handleDelete = async (id) => {
       <button className="btn_offer_course">لیست دروس ارائه شده</button>
       <div className="icon_offer_course">
         <MdMenuBook className="icon" />
+      </div>
+
+      <button className="btn_choose_unit" onClick={handleSelect}>انتخاب واحد</button>
+      <div className="icon_selection_unit">
+         <FaClipboardList className="icon"/>
       </div>
     </div>
 
