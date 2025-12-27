@@ -12,7 +12,7 @@ const EditCourse = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+ 
   const [course, setCourse] = useState({
     name: "",
     code: "",
@@ -21,7 +21,7 @@ const EditCourse = () => {
     teacher: "",
     time: "",
     place: "",
-    // examdate: "",
+    examDate: "",
     description: "",
   });
 
@@ -30,44 +30,75 @@ const EditCourse = () => {
   const [allCourses, setAllCourses] = useState([]);
   const [selectedPrerequisites, setSelectedPrerequisites] = useState([]);
 
-  useEffect(() => {
+ useEffect(() => {
   const fetchPrereq = async () => {
-    const res = await axiosInstance.get(
-      `/admin/courses/${courseId}/prerequesties`
-    );
-    setSelectedPrerequisites(res.data);
+    try {
+      const res = await axiosInstance.get(
+        `/admin/courses/${courseId}/prerequisites`
+      );
+      // فقط id پیش‌نیازها رو بگیر
+      setSelectedPrerequisites(res.data.map(p => p.id));
+    } catch (err) {
+      console.error("خطا در دریافت پیش‌نیازها", err);
+    }
   };
+
   fetchPrereq();
 }, [courseId]);
 
+  // useEffect(() => {
+  //   const fetchCourse = async () => {
+  //     try {
+  //       const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       if (res.ok) {
+  //         const data = await res.json();
+  //         setCourse({
+  //           name: String(data.title || ""),
+  //           code: String(data.code || ""),
+  //           vahed: String(data.units || ""),
+  //           capacity: String(data.capacity || ""),
+  //           teacher: String(data.teacherName || ""),
+  //           time: String(data.time || ""),
+  //           place: String(data.location || ""),
+  //           // examDate: String(data.examDate || ""),
+  //           description: String(data.description || ""),
+  //         });
+  //       } else {
+  //         console.error("خطا در دریافت داده درس");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchCourse();
+  // }, [courseId, token]);
+
   useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setCourse({
-            name: String(data.title || ""),
-            code: String(data.code || ""),
-            vahed: String(data.units || ""),
-            capacity: String(data.capacity || ""),
-            teacher: String(data.teacherName || ""),
-            time: String(data.time || ""),
-            place: String(data.location || ""),
-            // examDate: String(data.examDate || ""),
-            description: String(data.description || ""),
-          });
-        } else {
-          console.error("خطا در دریافت داده درس");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCourse();
-  }, [courseId, token]);
+  const fetchCourse = async () => {
+    try {
+      const res = await axiosInstance.get(`/Course/${courseId}`);
+
+      const data = res.data;
+      setCourse({
+        name: data.title ?? "",
+        code: data.code ?? "",
+        vahed: String(data.units ?? ""),
+        capacity: String(data.capacity ?? ""),
+        teacher: data.teacherName ?? "",
+        time: data.time ?? "",
+        place: data.location ?? "",
+        examDate: data.examDate ?? "",
+        description: data.description ?? "",
+      });
+    } catch (error) {
+      console.error("خطا در دریافت درس:", error);
+    }
+  };
+
+  fetchCourse();
+}, [courseId]);
 
   // تایمر تاریخ و ساعت
   useEffect(() => {
@@ -122,12 +153,21 @@ const EditCourse = () => {
   // };
   const handleUpdate = async () => {
   // اعتبارسنجی فرم
-  for (let key in course) {
-    if (course[key].trim() === "") {
-      alert(`لطفاً فیلد ${key} را پر کنید!`);
-      return;
-    }
+  // for (let key in course) {
+  //   if (course[key].trim() === "") {
+  //     alert(`لطفاً فیلد ${key} را پر کنید!`);
+  //     return;
+  //   }
+  // }
+
+  const requiredFields = ["name", "code", "vahed", "capacity", "teacher"];
+
+for (let key of requiredFields) {
+  if (!course[key] || course[key].toString().trim() === "") {
+    alert(`لطفاً فیلد ${key} را پر کنید`);
+    return;
   }
+}
 
   // آماده‌سازی payload برای PUT
   const payload = {
@@ -152,11 +192,15 @@ const EditCourse = () => {
     if (res.status === 200 || res.status === 204) {
       // 2️⃣ بعد از موفقیت PUT، آپدیت پیش‌نیازها
       if (selectedPrerequisites.length > 0) {
-        await axiosInstance.post(
-          `/admin/courses/${courseId}/prerequesties`,
-          selectedPrerequisites // یا { prerequisiteIds: [...] } بسته به بک‌اند
-        );
+  for (const prereqId of selectedPrerequisites) {
+    await axiosInstance.post(
+      `/admin/courses/${courseId}/prerequisites`,
+      {
+        prerequisiteCourseId: prereqId
       }
+    );
+  }
+}
 
       alert("ویرایش درس با موفقیت انجام شد!");
       navigate("/management");
@@ -175,6 +219,8 @@ const EditCourse = () => {
   const handlemanagecourse = () => navigate("/management");
   const handleaddnewcourse = () => navigate("/add-new-course");
   const handleLimitUnit = () => navigate("/limit");  
+
+
   return (
     <div className="container">
       <div className="frame">
