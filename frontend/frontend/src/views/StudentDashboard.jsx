@@ -8,6 +8,7 @@ import Logo from "../components/logo-chamran.png"
 import "./styles/StudentDashboard.css";
 import { useState, useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { FaClipboardList } from "react-icons/fa"
  
 const AdminDashboard = () => {
 
@@ -20,6 +21,10 @@ const AdminDashboard = () => {
   const handleOfferCourse = () => {
     navigate('/courseoffere');
   };
+
+  const handleselectionunit = () =>{
+    navigate('/selectunit')
+  }
   //پارامتر های تایم
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -49,6 +54,11 @@ const AdminDashboard = () => {
           <div className="icon_manage_course">
             <MdMenuBook className="icon" />
           </div>
+
+          <button className="btn_choose_unit_dash" onClick={handleselectionunit}>انتخاب واحد</button>
+          <div className="icon_selection_unit_dash">
+            <FaClipboardList className="icon"/>
+          </div> 
         </div>
 
         <button className="icon_exit_Std_dashboard" onClick={handlelogin}>
