@@ -10,6 +10,8 @@ import DashboardStd from './views/StudentDashboard'
 import DashboardThs from './views/TeacherDashboard'
 import UnitLimit from './views/UnitLimitSetter'
 import Offercourse from './views/CoursesOffered'
+/*-----------------------------------*/
+import  SelectedUnitsPanel  from './views/UnitSelectionPage';
 function App() {
   return (
     <Router>
@@ -19,11 +21,12 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/management" element={<Managementcourse />} />
         <Route path="/add-new-course" element={<Addcourse />} />
-        <Route path="/edit/:courseId" element={<Editcourse />} />
+        <Route path="/edit/:id" element={<Editcourse />} />
         <Route path="/dashboardstd" element={<DashboardStd />} />
         <Route path="/dashboardproff" element={<DashboardThs />} />
         <Route path="/limit" element={<UnitLimit />} />
         <Route path="/courseoffere" element={<Offercourse/>}/>
+        <Route path="/selectunit" element={<SelectedUnitsPanel />} />
       </Routes>
     </Router>
   );
