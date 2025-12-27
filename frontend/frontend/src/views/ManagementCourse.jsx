@@ -75,36 +75,38 @@ useEffect(() => {
   }
   const handleAddNewCourse = () => navigate("/add-new-course");
   const handleDashboard = () => navigate("/dashboard");
-  const handleEdit = (id) => {console.log("Editing courseId:", id);
-    navigate(`/edit/${id}`)};
+  const handleEdit = (id) => {
+    console.log("Editing courseId:", id);
+    navigate(`/edit/${id}`)
+  };
 
   const handleLimitUnit = () => navigate("/limit");  
   // حذف درس
-//   const handleDelete = async (id) => {
-//   const confirmed = window.confirm("آیا مطمئن هستید؟");
+  // const handleDelete = async (id) => {
+  // const confirmed = window.confirm("آیا مطمئن هستید؟");
 
-//   if (!confirmed) return;
+  // if (!confirmed) return;
 
-//   try {
-//     const token = localStorage.getItem("token");
+  // try {
+  //   const token = localStorage.getItem("token");
 
-//     const res = await fetch(`${API_URL}/${id}`, {
-//       method: "DELETE",
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//         Accept: "application/json",
-//       },
-//     });
+  //   const res = await fetch(`${API_URL}/${id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       Accept: "application/json",
+  //     },
+  //   });
 
-//     if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
+  //   if (!res.ok) throw new Error("حذف درس موفقیت‌آمیز نبود");
 
-//     const updatedCourses = courses.filter((c) => c.id !== id);
-//     setCourses(updatedCourses);
-//     localStorage.setItem("courses", JSON.stringify(updatedCourses));
+  //   const updatedCourses = courses.filter((c) => c.id !== id);
+  //   setCourses(updatedCourses);
+  //   localStorage.setItem("courses", JSON.stringify(updatedCourses));
 
-//   } catch (err) {
-//     alert(err.message);
-//   }
+  // } catch (err) {
+  //   alert(err.message);
+  // }
 // };
 const handleDelete = async (id) => {
   if (!window.confirm("آیا مطمئن هستید؟")) return;
