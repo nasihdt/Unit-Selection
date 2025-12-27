@@ -5,8 +5,9 @@
   margin: 50px auto; 
   border-radius: 10px;
   overflow: hidden;
-  
+
 }
+
 
 .login-image {
   flex: 1; 
@@ -91,4 +92,7 @@
 .logo img {
   width: 100px;
   height: auto;         
+}
+.role-selector{
+  margin-left: 156px;
 }

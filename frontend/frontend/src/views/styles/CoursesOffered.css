@@ -12,7 +12,7 @@
   top: -70px;
   left: 5px;
 }
-.btn_dashdoard_admin{
+.btn_dashdoard_student{
   color: #000000;
   background-color: #ffffff;
   border-radius: 20px;
@@ -52,16 +52,16 @@
   border: none;
 }
 
-/* button limit units */
-.botton_limitunit{
+/* button of selection unit */
+.container .btn_choose_unit {
   color: #000000;
   border-radius: 20px;
   background-color: #ffffff;
   direction: rtl;
   font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
-  left: 1247px;
+  left: 1250px;
   letter-spacing: 0;
   line-height: normal;
   position: absolute;
@@ -73,15 +73,6 @@
   border: none;
 }
 
-.icon_limitunit .icon{
-  aspect-ratio: 1;
-  height: 55px;
-  left: 1360px;
-  object-fit: cover;
-  position: absolute;
-  top: 460px;
-  width: 95px;
-}
 
 
 .icon_doshboard .icon{
@@ -111,7 +102,17 @@
   object-fit: cover;
   position: absolute;
   top: 357px;
-  width: 96px;
+  width: 96px; 
+}
+
+.icon_selection_unit .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 450px;
+  width: 90px; 
 }
 
 .container .rectangle-2 {
@@ -335,20 +336,7 @@
   color: #f9f9f9;
 }
 
-/* button logout */
-/* .exit-icon-manage {
-  position: absolute;
-  top: 66px;
-  left: 110px;
-  background-color: #ffffff;
-  border: none;
-  
-}
-.icon-manage-exit{
-  width: 30px;
-  height: 20px;
-  transform: scalex(-1);
-} */
+
 .exit-icon-offer{
   position: absolute;
   top: 66px;
