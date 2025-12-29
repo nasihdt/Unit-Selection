@@ -6,11 +6,11 @@ namespace UniversityRegistration.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class StudentController : ControllerBase
+    public class StudentAuthController : ControllerBase
     {
         private readonly IStudentService _studentService;
 
-        public StudentController(IStudentService studentService)
+        public StudentAuthController(IStudentService studentService)
         {
             _studentService = studentService;
         }
