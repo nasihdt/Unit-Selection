@@ -1,0 +1,180 @@
+.container .rectangle {
+  background-color: #edf1fc;
+  border-radius: 50px;
+  height: 650px;
+  left: 25px;
+  position: absolute;
+  top: 41px;
+  width: 1200px;
+}
+.dashboard{
+  position: absolute;
+  top: -70px;
+  left: 5px;
+}
+
+/*button dashboard*/
+.btn_dashboardadmin{
+  color: #000000;
+  background-color: #edf1fc;
+  border-radius: 20px;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1245px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 45px;
+  top: 250px;
+  width: 210px;
+  height: 80px;
+  border: none;
+} 
+ 
+.btn_managecourse {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 350px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+.icon_doshboard .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 260px;
+  width: 96px;
+} 
+
+.container .shahid-chamran {
+  aspect-ratio: 1.12;
+  height: 100px;
+  left: 1300px;
+  object-fit: cover;
+  position: absolute;
+  top: 28px;
+  width: 110px;
+}
+
+.icon_manage_course .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 357px;
+  width: 96px;
+}
+
+.container .rectangle-2 {
+  background-color: #2e55ca;
+  border-radius: 40px;
+  height: 303px;
+  left: 100px;
+  position: absolute;
+  top: 176px;
+  width: 1070px;
+} 
+
+.container .p {
+  color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 35px;
+  font-weight: 400;
+  left: 650px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  top: 200px;
+  white-space: nowrap;
+}
+
+.container .login-page {
+  aspect-ratio: 1;
+  height: 421px;
+  left: 239px;
+  object-fit: cover;
+  position: absolute;
+  top: 117px;
+  width: 421px;
+}
+
+.container .rectangle-3 {
+  background-color: #ffffff;
+  border-radius: 30px;
+  height: 40px;
+  left: 100px;
+  position: absolute;
+  top: 57px;
+  width: 1060px;
+} 
+
+.container .clock {
+  color: #000000;
+  font-family: "Istok Web-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1075px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+}
+
+.container .date {
+  color: #000000;
+  font-family: "Webdings-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 960px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+  white-space: nowrap;
+}
+
+.icon_user_thr .icon_thr{
+  aspect-ratio: 1;
+  height: 25px;
+  left: 160px;
+  object-fit: cover;
+  position: absolute;
+  top: 62px;
+  width: 30px;
+} 
+
+
+.exit-icon-thr{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-thr-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}

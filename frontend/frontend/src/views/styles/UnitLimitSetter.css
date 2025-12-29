@@ -1,0 +1,310 @@
+.container .rectangle {
+  background-color: #edf1fc;
+  border-radius: 50px;
+  height: 650px;
+  left: 25px;
+  position: absolute;
+  top: 41px;
+  width: 1200px;
+  pointer-events: none;
+   z-index: 0;
+}
+.dashboard{
+  position: absolute;
+  top: -70px;
+  left: 5px;
+}
+
+/*button dashboard*/
+.btn_dash_admin_unit{
+  color: #000000;
+  background-color: #ffffff;
+  border-radius: 20px;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1245px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 45px;
+  top: 250px;
+  width: 210px;
+  height: 80px;
+  border: none;
+  z-index: 1;
+  position: absolute;
+  
+} 
+ 
+/* button manage course */
+.btn_manage_course_unit {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 350px;
+  width: 210px;
+  height: 80px;
+  border: none;
+  z-index: 1;
+  position: absolute;
+}
+
+/* button limit units */
+.btn_limit_unit_unit {
+  color: #000000;
+  border-radius: 20px;
+  background-color: #edf1fc;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1247px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  padding: 20px 20px;
+  top: 450px;
+  width: 210px;
+  height: 80px;
+  border: none;
+}
+
+
+
+.icon_limitunit .icon{
+  aspect-ratio: 1;
+  height: 55px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 460px;
+  width: 95px;
+    z-index: 2;
+  position: absolute;
+
+}
+
+.icon_doshboard .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: absolute;
+  top: 260px;
+  width: 96px;
+    z-index: 2;
+  position: absolute;
+  
+} 
+
+.container .shahid-chamran {
+  aspect-ratio: 1.12;
+  height: 100px;
+  left: 1300px;
+  object-fit: cover;
+  position: absolute;
+  top: 28px;
+  width: 110px;
+ 
+}
+
+
+.icon_manage_course .icon{
+  aspect-ratio: 1;
+  height: 60px;
+  left: 1360px;
+  object-fit: cover;
+  position: relative;
+  top: 357px;
+  width: 96px;
+    z-index: 2;
+  position: absolute;
+
+}
+
+
+
+.container .p {
+  color: #ffffff;
+  direction: rtl;
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 35px;
+  font-weight: 400;
+  left: 650px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  text-align: left;
+  top: 200px;
+  white-space: nowrap;
+}
+
+.container .login-page {
+  aspect-ratio: 1;
+  height: 421px;
+  left: 239px;
+  object-fit: cover;
+  position: absolute;
+  top: 117px;
+  width: 421px;
+}
+
+.container .rectangle-3 {
+  background-color: #ffffff;
+  border-radius: 30px;
+  height: 40px;
+  left: 100px;
+  position: absolute;
+  top: 57px;
+  width: 1060px;
+} 
+
+.container .clock {
+  color: #000000;
+  font-family: "Istok Web-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 1075px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+}
+
+.container .date {
+  color: #000000;
+  font-family: "Webdings-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  left: 960px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 65px;
+  white-space: nowrap;
+}
+
+.icon_user_limit .icon_limit{
+  aspect-ratio: 1;
+  height: 25px;
+  left: 160px;
+  object-fit: cover;
+  position: absolute;
+  top: 62px;
+  width: 30px;
+} 
+
+
+/* حد واحد های اخذ شده */
+
+.unit-limit-container{
+  position: relative;
+  margin-left: 500px;
+  margin-top: 200px;
+}
+.unit-limit-title{
+  position: relative;
+  margin-bottom: 50px;
+  /* margin-left: 20px; */
+}
+.unit-input{
+  position: relative;
+  margin-bottom: 50px;
+  margin-left: 23px;
+  /* width: 100px;
+  border-radius: 10px; */
+}
+.labmax{
+  position: relative;
+  margin-left: 140px;
+  display: block;
+
+  margin-bottom: 20px;
+  
+  /* direction: rtl; */
+}
+.labmin{
+  position: relative;
+  margin-left: 140px;
+  display: block;
+
+  margin-bottom: 20px;
+}
+.inp-max{
+  width: 200px;    
+  height: 30px;    
+  border-radius: 12px;
+  padding: 0 12px;
+  font-size: 16px;
+  
+}
+.inp-min{
+  width: 200px;
+  height: 30px;  
+  border-radius: 12px;
+  padding: 0 12px;
+  font-size: 16px;
+}
+
+.save-btn{
+  margin-left: 38px;
+  margin-top: 30px;
+  width: 200px;
+  height: 35px;
+  border-radius: 10px;
+  background-color: #2e55ca;
+  color: #ffffff;
+}
+
+/* استایل های متن ارور */
+
+.message {
+  font-family: "Italiana-Regular", Helvetica;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.message.error {
+  color: red;          
+
+  background-color: #ffe6e6; 
+  width: 250px;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.message.success {
+  color: green;         
+  font-weight: bold;
+  background-color: #e6ffe6;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.exit-icon-Unit-limit{
+  position: absolute;
+  top: 66px;
+  left: 110px;
+  z-index: 11;
+  background-color: #ffffff;
+  border: none;
+}
+.icon-unitlimit-exit{
+  width: 30px;
+  height: 20px;
+  transform: scalex(-1);
+}
