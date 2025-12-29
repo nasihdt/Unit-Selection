@@ -1,180 +1,171 @@
-.container .rectangle {
-  background-color: #edf1fc;
-  border-radius: 50px;
-  height: 650px;
-  left: 25px;
-  position: absolute;
-  top: 41px;
-  width: 1200px;
-}
-.dashboard{
-  position: absolute;
-  top: -70px;
-  left: 5px;
+body {
+  margin: 0;
+  font-family: sans-serif;
+  direction: rtl;
+  background: #f7f9fc;
 }
 
-/*button dashboard*/
-.btn_dashboardadmin{
-  color: #000000;
-  background-color: #edf1fc;
-  border-radius: 20px;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1245px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  padding: 20px 45px;
-  top: 250px;
-  width: 210px;
-  height: 80px;
-  border: none;
-} 
- 
-.btn_managecourse {
-  color: #000000;
-  border-radius: 20px;
-  background-color: #ffffff;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1247px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  padding: 20px 20px;
-  top: 350px;
-  width: 210px;
-  height: 80px;
-  border: none;
+/* menu */
+.menu-panel-teach {
+  background: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  /* display: flex; */
+  align-items: center;
+  justify-content: space-between; 
 }
-
-.icon_doshboard .icon{
-  aspect-ratio: 1;
+.logo-subtitle {
+  display: flex;
+}
+.logo{
+  margin-right: 100px;
+  font-size: 20px;
+  /* font: bold; */
+  font-weight: bold;
+}
+.subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-top: 40px;
+  margin-right: 100px;
+}
+.btn-icon-deader {
+  width: 60px;
   height: 60px;
-  left: 1360px;
-  object-fit: cover;
-  position: absolute;
-  top: 260px;
-  width: 96px;
-} 
+  background-color: #2563eb;
+  border-radius: 15px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1070px;
+  margin-top: -60px;
+}
+.icon-teaschdash {
+  color: #fff;
+}
 
-.container .shahid-chamran {
-  aspect-ratio: 1.12;
+/* course card */
+
+.courses {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 20px;
+  margin-top: 50px;
+  justify-items: start;
+}
+
+.course-card {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 400px;
   height: 100px;
-  left: 1300px;
-  object-fit: cover;
-  position: absolute;
-  top: 28px;
-  width: 110px;
+  box-shadow: 0 4px 12px #c3e7f6;
+  border: 2px solid transparent;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.icon_manage_course .icon{
-  aspect-ratio: 1;
-  height: 60px;
-  left: 1360px;
-  object-fit: cover;
-  position: absolute;
-  top: 357px;
-  width: 96px;
+.course-card:hover {
+  border: 2px solid #8fd4f1;
+  box-shadow: 0 6px 16px rgba(215, 239, 245, 0.15);
+  transform: translateY(-3px);
+}
+.title-course-card{
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+.code-course-card{
+  font-size: 12px;
+  color: #555;
+  margin: 0;
+  top: 10px;
+}
+.term-course-card{
+  font-size: 12px;
 }
 
-.container .rectangle-2 {
-  background-color: #2e55ca;
-  border-radius: 40px;
-  height: 303px;
-  left: 100px;
-  position: absolute;
-  top: 176px;
-  width: 1070px;
-} 
-
-.container .p {
-  color: #ffffff;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 35px;
-  font-weight: 400;
-  left: 650px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
+/* .badge {
+  display: inline-block;
+  margin-top: 8px;
+  background: #efefef;
+  padding: 2px 10px;
+  border-radius: 8px;
+  width: 80px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 20px;
   text-align: left;
-  top: 200px;
-  white-space: nowrap;
+}
+.icon-users-card{
+  width: 80px;
+  height: 80px;
+  top: 20px;
+} */
+
+.students-info {
+  display: flex;
+  align-items: center;  /* عمودی وسط چین */
+  gap: 5px;             /* فاصله بین عدد و آیکون */
+  margin-top: 10px;
 }
 
-.container .login-page {
-  aspect-ratio: 1;
-  height: 421px;
-  left: 239px;
-  object-fit: cover;
-  position: absolute;
-  top: 117px;
-  width: 421px;
-}
-
-.container .rectangle-3 {
-  background-color: #ffffff;
-  border-radius: 30px;
-  height: 40px;
-  left: 100px;
-  position: absolute;
-  top: 57px;
-  width: 1060px;
-} 
-
-.container .clock {
-  color: #000000;
-  font-family: "Istok Web-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1075px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-}
-
-.container .date {
-  color: #000000;
-  font-family: "Webdings-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 960px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-  white-space: nowrap;
-}
-
-.icon_user_thr .icon_thr{
-  aspect-ratio: 1;
-  height: 25px;
-  left: 160px;
-  object-fit: cover;
-  position: absolute;
-  top: 62px;
-  width: 30px;
-} 
-
-
-.exit-icon-thr{
-  position: absolute;
-  top: 66px;
-  left: 110px;
-  z-index: 11;
-  background-color: #ffffff;
-  border: none;
-}
-.icon-thr-exit{
-  width: 30px;
+/* آیکون کاربران */
+.icon-users-card {
+  width: 20px;
   height: 20px;
-  transform: scalex(-1);
+  color: #2563eb;
+}
+
+/* آیکون کتاب */
+.icon-book-card {
+  width: 20px;
+  height: 20px;
+  color: #4caf50;
+  margin-top: 10px;
+}
+
+.student-card {
+  background: white;
+  padding: 14px;
+  margin: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.student-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score {
+  font-weight: bold;
+}
+
+.delete-btn {
+  background: #e11d48;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back-btn {
+  margin: 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
 }
