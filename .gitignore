@@ -1,0 +1,14 @@
+# Backend (.NET)
+backend/src/bin/
+backend/src/obj/
+
+# Frontend (React)
+frontend/frontend/node_modules/
+
+# Logs & temp
+*.log
+*.tmp
+
+# Env
+.env
+.env.*
