@@ -1,73 +1,54 @@
-import React from "react";
-import { FaUser} from "react-icons/fa"
-import { MdDashboard } from "react-icons/md";
-import { MdMenuBook } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import dashboard from "../components/dashboard_img.webp";
-import Logo from "../components/logo-chamran.png"
-import "./styles/TeacherDashboard.css";
-import { useState, useEffect } from "react";
-import { FiLogOut } from "react-icons/fi";
- 
-const AdminDashboard = () => {
+import { useState } from "react";
 
-  const navigate = useNavigate();
+import Courses from "./Courses";
+import Students from "./Student";
+import { coursesData } from "./data";
+import "./styles/TeacherDashboard.css"
+import { FaChalkboardTeacher } from "react-icons/fa";
 
-  const handlelogin = () =>{
-    navigate('/login')
-  }
- 
-  //پارامتر های تایم
-  const [dateTime, setDateTime] = useState(new Date());
+export default function TeacherDashboard() {
+  const [courses, setCourses] = useState(coursesData);
+  const [selectedCourseId, setSelectedCourseId] = useState(null);
 
-  // برای نمایش تاریخ و زمان
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDateTime(new Date());
-    }, 1000);
+  const selectedCourse = courses.find(c => c.id === selectedCourseId);
 
-    return () => clearInterval(timer); 
-  }, []);
+  const removeStudent = (studentId) => {
+    setCourses(prev =>
+      prev.map(course =>
+        course.id === selectedCourseId
+          ? {
+              ...course,
+              students: course.students.filter(s => s.id !== studentId)
+            }
+          : course
+      )
+    );
+  };
 
   return (
-    <div className="container">
-      <div className="frame">
-        <div className="rectangle" />
+    <div className="app">
 
-        <div className="dashboard">
-          <button className="btn_dashboardadmin">داشبورد</button>
-          <div className="icon_doshboard">
-            <MdDashboard className="icon" />
-          </div>
-
-          <div className="div" />
-
+      <div className="menu-panel-teach">
+        <div className="logo-subtitle">
+          <div className="logo">پنل استاد</div>
+          <span className="subtitle">مدیریت دروس و دانشجویان</span>
         </div>
-        <button className="exit-icon-thr" onClick={handlelogin}>
-         <FiLogOut className="icon-thr-exit"/>   
-        </button> 
-
-        <img className="shahid-chamran" alt="Shahid chamran" src={Logo}/>
-
-        <div className="rectangle-2" />
-
-        <p className="p">استاد عزیز به داشبورد خود خوش آمدید</p>
-
-        <img className="login-page" alt="Login page" src={dashboard} />
-
-        <div className="rectangle-3" />
-
-        <div className="icon_user_thr">
-            <FaUser className="icon_thr" />
-        </div>
-
-        {/* برای نمایش تاریخ و زمان */}
-        <div className="date">{dateTime.toLocaleDateString('fa-IR')}</div>
-        <div className="clock">{dateTime.toLocaleTimeString('fa-IR')}</div>
-
+        <button className="btn-icon-deader">
+          <FaChalkboardTeacher size={35} className="icon-teaschdash"/>
+        </button>
       </div>
+
+      {!selectedCourse && (
+        <Courses courses={courses} onSelect={setSelectedCourseId} />
+      )}
+
+      {selectedCourse && (
+        <Students
+          course={selectedCourse}
+          onBack={() => setSelectedCourseId(null)}
+          onRemove={removeStudent}
+        />
+      )}
     </div>
   );
-};
-
-export default AdminDashboard;
+}
