@@ -25,10 +25,12 @@ const EditCourse = () => {
     description: "",
   });
 
+  const [value, setValue] = useState("");
   const [dateTime, setDateTime] = useState(new Date());
   const [searchValue, setSearchValue] = useState("");
   const [allCourses, setAllCourses] = useState([]);
   const [selectedPrerequisites, setSelectedPrerequisites] = useState([]);
+  const [open, setOpen] = useState(false);
 
  useEffect(() => {
   const fetchPrereq = async () => {
@@ -152,14 +154,7 @@ const EditCourse = () => {
   //   }
   // };
   const handleUpdate = async () => {
-  // اعتبارسنجی فرم
-  // for (let key in course) {
-  //   if (course[key].trim() === "") {
-  //     alert(`لطفاً فیلد ${key} را پر کنید!`);
-  //     return;
-  //   }
-  // }
-
+  
   const requiredFields = ["name", "code", "vahed", "capacity", "teacher"];
 
 for (let key of requiredFields) {
@@ -226,104 +221,137 @@ for (let key of requiredFields) {
       <div className="frame">
         <div className="rectangle" />
 
-        <div className="field-name">
-          <label className="label-name">نام درس</label>
+        <div className="field-name-editcourse">
+          <label className="label-name-editcourse">نام درس</label>
           <input
             type="text"
             name="name"
-            className="ipt-name"
+            className="ipt-name-editcourse"
             value={course.name}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-code">
-          <label className="label-code">کد درس</label>
+        <div className="field-code-editcourse">
+          <label className="label-code-editcourse">کد درس</label>
           <input
             type="text"
             name="code"
-            className="ipt-code"
+            className="ipt-code-editcourse"
             value={course.code}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-vahed">
-          <label className="label-vahed">واحد</label>
+        <div className="field-vahed-editcourse">
+          <label className="label-vahed-editcourse">واحد</label>
           <input
             type="text"
             name="vahed"
-            className="ipt-vahed"
+            className="ipt-vahed-editcourse"
             value={course.vahed}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-capacity">
-          <label className="label-capacity">ظرفیت</label>
+        <div className="field-capacity-editcourse">
+          <label className="label-capacity-editcourse">ظرفیت</label>
           <input
             type="text"
             name="capacity"
-            className="ipt-capacity"
+            className="ipt-capacity-editcourse"
             value={course.capacity}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-teacher">
-          <label className="label-teacher">نام استاد</label>
+        <div className="field-teacher-editcourse">
+          <label className="label-teacher-editcourse">نام استاد</label>
           <input
             type="text"
             name="teacher"
-            className="ipt-teacher"
+            className="ipt-teacher-editcourse"
             value={course.teacher}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-time">
-          <label className="label-time">زمان</label>
+        <div className="field-time-editcourse">
+          <label className="label-time-editcourse">زمان</label>
           <input
             type="text"
             name="time"
-            className="ipt-time"
+            className="ipt-time-editcourse"
             value={course.time}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-place">
-          <label className="label-place">مکان</label>
+        <div className="field-place-editcourse">
+          <label className="label-place-editcourse">مکان</label>
           <input
             type="text"
             name="place"
-            className="ipt-place"
+            className="ipt-place-editcourse"
             value={course.place}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-examtime-edit">
-          <label className="label-examtime-edit">تاریخ امتحان </label>
+        <div className="field-examtime-editcourse">
+          <label className="label-examtime-editcourse">تاریخ امتحان </label>
           <input
             type="date"
             name="examDate"
-            className="ipt-examtime-edit"
+            className="ipt-examtime-editcourse"
             value={course.examDate}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-description">
-          <label className="label-description">پیش نیاز </label>
+        <div className="field-description-editcourse">
+          <label className="label-description-editcourse">
+           پیش‌نیازها 
+          </label>
+
           <input
             type="text"
-            name="description"
-            className="ipt-description"
-            value={course.description}
-            onChange={handleChange}
-          />
-        </div>
+            className="ipt-description-editcourse"
+            placeholder="جستجو در دروس..."
+            value={value}
+            onFocus={() => setOpen(true)}
+            onChange={(e) => {
+            setValue(e.target.value);
+            setOpen(true);
+            }}
+            onBlur={() => {
+            setTimeout(() => setOpen(false), 200);
+            }}
+         />
+
+          {open && (
+            <div className="prereq-dropdown-editcourse">
+            {allCourses
+            .filter(c => c.title && c.title.includes(value))
+            .map(c => (
+            <label key={c.id} className="prereq-item-editcourse">
+            <input
+              type="checkbox"
+              checked={selectedPrerequisites.includes(c.id)}
+              onChange={() => {
+                setSelectedPrerequisites(prev =>
+                  prev.includes(c.id)
+                    ? prev.filter(x => x !== c.id)
+                    : [...prev, c.id]
+                );
+              }}
+            />
+            {c.title}
+          </label>
+        ))}
+    </div>
+          )}
+</div>
 
 
 
@@ -342,7 +370,7 @@ for (let key of requiredFields) {
             <MdMenuBook className="icon" />
           </div>
 
-          <button className="btn_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
+          <button className="btn_limitunit_inedit_course" onClick={handleLimitUnit}>تعیین حد واحد</button>
             <div className="icon_limitunit">
               <FaBook className="icon" />
             </div>
@@ -351,7 +379,7 @@ for (let key of requiredFields) {
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
 
         <div className="box">
-          <button className="btn-addcourseedit" onClick={handleaddnewcourse}>
+          <button className="btn-editcourse-edit" onClick={handleaddnewcourse}>
             افزودن درس جدید +
           </button>
         </div>
