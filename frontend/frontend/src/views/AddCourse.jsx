@@ -122,78 +122,87 @@ const AddCourse = () => {
       <div className="frame">
         <div className="rectangle" />
 
-        <div className="field-name">
-          <label className="label-name">نام درس <span className="assign1">*</span></label>
+
+        
+        <div className="field-name-addcourse">
+          <label className="label-name-addcourse">نام درس <span className="assign1">*</span></label>
           <input
             type="text"
             name="name"
             className="ipt-name"
+            placeholder="مثال:سیستم عامل"
             value={course.name}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-code">
-          <label className="label-code">کد درس <span className="assign2">*</span></label>
+        <div className="field-code-addcourse">
+          <label className="label-code-addcourse">کد درس <span className="assign2">*</span></label>
           <input
             type="text"
             name="code"
-            className="ipt-code"
+            className="ipt-code-addcourse"
+            placeholder="مثال: 7777145"
             value={course.code}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-vahed">
-          <label className="label-vahed">واحد <span className="assign3">*</span></label>
+        <div className="field-vahed-addcourse">
+          <label className="label-vahed-addcourse">واحد <span className="assign3">*</span></label>
           <input
             type="text"
             name="vahed"
-            className="ipt-vahed"
+            className="ipt-vahed-addcourse"
+            placeholder="مثال : 3"
             value={course.vahed}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-capacity">
-          <label className="label-capacity">ظرفیت <span className="assign4">*</span></label>
+        <div className="field-capacity-addcourse">
+          <label className="label-capacity-addcourse">ظرفیت <span className="assign4">*</span></label>
           <input
             type="text"
             name="capacity"
-            className="ipt-capacity"
+            className="ipt-capacity-addcourse"
+            placeholder="مثال : 40"
             value={course.capacity}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-teacher">
-          <label className="label-teacher">نام استاد <span className="assign5">*</span></label>
+        <div className="field-teacher-addcourse">
+          <label className="label-teacher-addcourse">نام استاد <span className="assign5">*</span></label>
           <input
             type="text"
             name="teacher"
-            className="ipt-teacher"
+            className="ipt-teacher-addcourse"
+            placeholder="مثال : رضا بهرامی"
             value={course.teacher}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-time">
-          <label className="label-time">زمان <span className="assign6">*</span></label>
+        <div className="field-time-addcourse">
+          <label className="label-time-addcourse">زمان <span className="assign6">*</span></label>
           <input
             type="text"
             name="time"
-            className="ipt-time"
+            className="ipt-time-addcourse"
+            placeholder="مثال : شنبه و دوشنبه 10:00"
             value={course.time}
             onChange={handleChange}
           />
         </div>
 
-        <div className="field-place">
-          <label className="label-place">مکان <span className="assign7">*</span></label>
+        <div className="field-place-addcourse">
+          <label className="label-place-addcourse">مکان <span className="assign7">*</span></label>
           <input
             type="text"
             name="place"
-            className="ipt-place"
+            className="ipt-place-addcourse"
+            placeholder="مثال : مهندسی 103"
             value={course.place}
             onChange={handleChange}
           />
@@ -229,14 +238,14 @@ const AddCourse = () => {
               ))}
           </div>
         </div> */}
-        <div className="field-description">
-          <label className="label-description">
+        <div className="field-description-addcourse">
+          <label className="label-description-addcourse">
            پیش‌نیازها <span className="assign9">*</span>
           </label>
 
           <input
             type="text"
-            className="ipt-description"
+            className="ipt-description-addcourse"
             placeholder="جستجو در دروس..."
             value={value}
             onFocus={() => setOpen(true)}
@@ -250,11 +259,11 @@ const AddCourse = () => {
          />
 
           {open && (
-            <div className="prereq-dropdown">
+            <div className="prereq-dropdown-addcourse">
             {allCourses
             .filter(c => c.title && c.title.includes(value))
             .map(c => (
-            <label key={c.id} className="prereq-item">
+            <label key={c.id} className="prereq-item-addcourse">
             <input
               type="checkbox"
               checked={selectedPrerequisites.includes(c.id)}
@@ -273,12 +282,12 @@ const AddCourse = () => {
           )}
 </div>
 
-        <div className="field-examtime">
-          <label className="label-examtime">تاریخ امتحان <span className="assign8">*</span></label>
+        <div className="field-examtime-addcourse">
+          <label className="label-examtime-addcourse">تاریخ امتحان <span className="assign8">*</span></label>
           <input
             type="date"
             name="examDate"
-            className="ipt-examtime"
+            className="ipt-examtime-addcourse"
             value={course.examDate}
             onChange={handleChange}
           />
@@ -291,7 +300,7 @@ const AddCourse = () => {
           <button className="btn_manage_course" onClick={handlemanagecourse}>مدیریت دروس</button>
           <div className="icon_manage_course"><MdMenuBook className="icon" /></div>
 
-          <button className="btn_limitunit" onClick={handleLimitUnit}>تعیین حد واحد</button>
+          <button className="btn_limitunit_inadd_course" onClick={handleLimitUnit}>تعیین حد واحد</button>
           <div className="icon_limitunit"><FaBook className="icon" /></div>
         </div>
 
@@ -316,8 +325,7 @@ const AddCourse = () => {
           <input
             type="text"
             placeholder="جستجو کنید..."
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+          
             className="search-input"
           />
         </div>
