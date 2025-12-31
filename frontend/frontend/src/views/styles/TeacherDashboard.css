@@ -169,3 +169,11 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
+.icon_exit_pro_dashboard {
+  margin-right: 1300px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transform: scaley(-1);
+}
