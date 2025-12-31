@@ -1,310 +1,131 @@
-.container .rectangle {
-  background-color: #edf1fc;
-  border-radius: 50px;
-  height: 650px;
-  left: 25px;
-  position: absolute;
-  top: 41px;
-  width: 1200px;
-  pointer-events: none;
-   z-index: 0;
-}
-.dashboard{
-  position: absolute;
-  top: -70px;
-  left: 5px;
+/* ساختار کلی */
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: #edf1fc;
+  direction: rtl;
 }
 
-/*button dashboard*/
-.btn_dash_admin_unit{
-  color: #000000;
-  background-color: #ffffff;
+/* سایدبار */
+.sidebar {
+  width: 260px;
+  margin-top: 150px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;   /* خیلی مهم */
+  align-items: center;
+}
+
+.logo {
+  width: 120px;
+  margin-bottom: 40px;      /* فاصله لوگو از دکمه‌ها */
+}
+
+.sidebar-menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;              
+}
+
+.side-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
   border-radius: 20px;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1245px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  padding: 20px 45px;
-  top: 250px;
-  width: 210px;
-  height: 80px;
   border: none;
-  z-index: 1;
-  position: absolute;
-  
-} 
- 
-/* button manage course */
-.btn_manage_course_unit {
-  color: #000000;
+  background: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  justify-content: flex-start;
+  height: 65px;
+}
+
+.side-btn.active {
+  background: #edf1fc;
+}
+
+.side-btn .icon {
+  font-size: 24px;
+}
+
+/* محتوای اصلی */
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* نوار بالا */
+.top-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  padding: 15px 25px;
   border-radius: 20px;
-  background-color: #ffffff;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1247px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  padding: 20px 20px;
-  top: 350px;
-  width: 210px;
-  height: 80px;
+  margin-bottom: 40px;
+}
+
+.logout {
+  margin-right: auto;
+  background: none;
   border: none;
-  z-index: 1;
-  position: absolute;
-}
-
-/* button limit units */
-.btn_limit_unit_unit {
-  color: #000000;
-  border-radius: 20px;
-  background-color: #edf1fc;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
   font-size: 20px;
-  font-weight: 400;
-  left: 1247px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  padding: 20px 20px;
-  top: 450px;
-  width: 210px;
-  height: 80px;
-  border: none;
+  cursor: pointer;
+  transform: scalex(-1);
 }
 
-
-
-.icon_limitunit .icon{
-  aspect-ratio: 1;
-  height: 55px;
-  left: 1360px;
-  object-fit: cover;
-  position: absolute;
-  top: 460px;
-  width: 95px;
-    z-index: 2;
-  position: absolute;
-
+/* فرم */
+.unit-limit-container {
+  background: #fff;
+  padding: 40px;
+  border-radius: 25px;
+  width: 400px;
+  margin-right: 250px;
 }
 
-.icon_doshboard .icon{
-  aspect-ratio: 1;
-  height: 60px;
-  left: 1360px;
-  object-fit: cover;
-  position: absolute;
-  top: 260px;
-  width: 96px;
-    z-index: 2;
-  position: absolute;
-  
-} 
-
-.container .shahid-chamran {
-  aspect-ratio: 1.12;
-  height: 100px;
-  left: 1300px;
-  object-fit: cover;
-  position: absolute;
-  top: 28px;
-  width: 110px;
- 
+.unit-input {
+  margin-bottom: 25px;
 }
 
-
-.icon_manage_course .icon{
-  aspect-ratio: 1;
-  height: 60px;
-  left: 1360px;
-  object-fit: cover;
-  position: relative;
-  top: 357px;
-  width: 96px;
-    z-index: 2;
-  position: absolute;
-
-}
-
-
-
-.container .p {
-  color: #ffffff;
-  direction: rtl;
-  font-family: "Italiana-Regular", Helvetica;
-  font-size: 35px;
-  font-weight: 400;
-  left: 650px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  text-align: left;
-  top: 200px;
-  white-space: nowrap;
-}
-
-.container .login-page {
-  aspect-ratio: 1;
-  height: 421px;
-  left: 239px;
-  object-fit: cover;
-  position: absolute;
-  top: 117px;
-  width: 421px;
-}
-
-.container .rectangle-3 {
-  background-color: #ffffff;
-  border-radius: 30px;
-  height: 40px;
-  left: 100px;
-  position: absolute;
-  top: 57px;
-  width: 1060px;
-} 
-
-.container .clock {
-  color: #000000;
-  font-family: "Istok Web-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1075px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-}
-
-.container .date {
-  color: #000000;
-  font-family: "Webdings-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 960px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-  white-space: nowrap;
-}
-
-.icon_user_limit .icon_limit{
-  aspect-ratio: 1;
-  height: 25px;
-  left: 160px;
-  object-fit: cover;
-  position: absolute;
-  top: 62px;
-  width: 30px;
-} 
-
-
-/* حد واحد های اخذ شده */
-
-.unit-limit-container{
-  position: relative;
-  margin-left: 500px;
-  margin-top: 200px;
-}
-.unit-limit-title{
-  position: relative;
-  margin-bottom: 50px;
-  /* margin-left: 20px; */
-}
-.unit-input{
-  position: relative;
-  margin-bottom: 50px;
-  margin-left: 23px;
-  /* width: 100px;
-  border-radius: 10px; */
-}
-.labmax{
-  position: relative;
-  margin-left: 140px;
+.unit-input label {
   display: block;
-
-  margin-bottom: 20px;
-  
-  /* direction: rtl; */
-}
-.labmin{
-  position: relative;
-  margin-left: 140px;
-  display: block;
-
-  margin-bottom: 20px;
-}
-.inp-max{
-  width: 200px;    
-  height: 30px;    
-  border-radius: 12px;
-  padding: 0 12px;
-  font-size: 16px;
-  
-}
-.inp-min{
-  width: 200px;
-  height: 30px;  
-  border-radius: 12px;
-  padding: 0 12px;
-  font-size: 16px;
+  margin-bottom: 8px;
 }
 
-.save-btn{
-  margin-left: 38px;
-  margin-top: 30px;
-  width: 200px;
+.unit-input input {
+  width: 100%;
   height: 35px;
   border-radius: 10px;
-  background-color: #2e55ca;
-  color: #ffffff;
-}
-
-/* استایل های متن ارور */
-
-.message {
-  font-family: "Italiana-Regular", Helvetica;
+  padding: 0 12px;
   font-size: 16px;
-  margin-top: 10px;
 }
 
-.message.error {
-  color: red;          
+/* دکمه ذخیره */
+.save-btn {
+  width: 100%;
+  height: 40px;
+  background: #2e55ca;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+}
 
-  background-color: #ffe6e6; 
-  width: 250px;
-  padding: 6px 12px;
+/* پیام‌ها */
+.message.error {
+  color: red;
+  background: #ffe6e6;
+  padding: 8px;
   border-radius: 8px;
 }
 
 .message.success {
-  color: green;         
-  font-weight: bold;
-  background-color: #e6ffe6;
-  padding: 8px 12px;
+  color: green;
+  background: #e6ffe6;
+  padding: 8px;
   border-radius: 8px;
-}
-
-.exit-icon-Unit-limit{
-  position: absolute;
-  top: 66px;
-  left: 110px;
-  z-index: 11;
-  background-color: #ffffff;
-  border: none;
-}
-.icon-unitlimit-exit{
-  width: 30px;
-  height: 20px;
-  transform: scalex(-1);
 }
