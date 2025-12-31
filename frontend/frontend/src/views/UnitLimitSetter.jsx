@@ -96,76 +96,73 @@ const response = await fetch(
 
   return (
     <div className="container">
-      <div className="frame">
-        <div className="rectangle" />
+  {/* سایدبار */}
+  <aside className="sidebar">
+  <img className="logo" src={Logo} alt="Shahid Chamran Logo" />
 
-        <div className="dashboard">
-          <button className="btn_dash_admin_unit" onClick={handledashboard}>داشبورد</button>
-          <div className="icon_doshboard">
-            <MdDashboard className="icon" />
-          </div>
+  <nav className="sidebar-menu">
+    <button onClick={handledashboard} className="side-btn">
+      <MdDashboard className="icon" />
+      داشبورد
+    </button>
 
-          <div className="div" />
+    <button onClick={handlemanagecourse} className="side-btn">
+      <MdMenuBook className="icon" />
+      مدیریت دروس
+    </button>
 
-          <button className="btn_manage_course_unit" onClick={handlemanagecourse}>مدیریت دروس</button>
-          <div className="icon_manage_course">
-            <MdMenuBook className="icon" />
-          </div>
+    <button onClick={handlelimit} className="side-btn active">
+      <FaBook className="icon" />
+      تعیین حد واحد
+    </button>
+  </nav>
+</aside>
 
-          <button className="btn_limit_unit_unit" onClick={handlelimit}>تعیین حد واحد</button>
-          <div className="icon_limitunit">
-            <FaBook className="icon" />
-          </div>
-        </div>
+  {/* محتوای اصلی */}
+  <main className="main-content">
+    <header className="top-bar">
+      <FaUser />
+      <span>{dateTime.toLocaleDateString('fa-IR')}</span>
+      <span>{dateTime.toLocaleTimeString('fa-IR')}</span>
 
-        <button className="exit-icon-Unit-limit" onClick={handlelogin}>
-         <FiLogOut className="icon-unitlimit-exit"/>   
-        </button> 
-        <img className="shahid-chamran" alt="Shahid chamran" src={Logo}/>
+      <button className="logout" onClick={handlelogin}>
+        <FiLogOut />
+      </button>
+    </header>
 
-        <div className="rectangle-3" />
+    <section className="unit-limit-container">
+      <h2>تعیین حد واحدهای اخذ شده</h2>
 
-        <div className="icon_user_limit">
-            <FaUser className="icon_limit" />
-        </div>
-
-        {/* برای نمایش تاریخ و زمان */}
-        <div className="date">{dateTime.toLocaleDateString('fa-IR')}</div>
-        <div className="clock">{dateTime.toLocaleTimeString('fa-IR')}</div>
-
-           {/*  UI تعیین حد واحد */}
-           <div className="unit-limit-container">
-           <h2 className="unit-limit-title">تعیین حد واحدهای اخذ شده</h2>
-
-           {/* حداقل واحد */}
-           <div className="unit-input">
-           <label className="labmax">حداقل واحد</label>
-             <div className="input-controls">
-               
-               <input className="inp-max" type="number" value={minUnits} onChange={(e) => handleMinChange(Number(e.target.value))} disabled={loading} />
-               
-             </div>
-           </div>
-
-           {/* حداکثر واحد */}
-           <div className="unit-input">
-             <label className="labmin">حداکثر واحد</label>
-            <div className="input-controls">
-              
-               <input className="inp-min" type="number" value={maxUnits} onChange={(e) => handleMaxChange(Number(e.target.value))} disabled={loading} />
-              
-             </div>
-           </div>
-
-           {message && <p className={`message ${message.includes("⚠") ? "error" : "success"}`}>{message}</p>}
-
-           <button className="save-btn" onClick={saveSettings} disabled={loading}>
-             {loading ? "در حال ذخیره..." : "ذخیره"}
-           </button>
-         </div>
-
+      <div className="unit-input">
+        <label>حداقل واحد</label>
+        <input
+          type="number"
+          value={minUnits}
+          onChange={(e) => handleMinChange(+e.target.value)}
+        />
       </div>
-    </div>
+
+      <div className="unit-input">
+        <label>حداکثر واحد</label>
+        <input
+          type="number"
+          value={maxUnits}
+          onChange={(e) => handleMaxChange(+e.target.value)}
+        />
+      </div>
+
+      {message && (
+        <p className={`message ${message.includes("⚠") ? "error" : "success"}`}>
+          {message}
+        </p>
+      )}
+
+      <button className="save-btn" onClick={saveSettings} disabled={loading}>
+        {loading ? "در حال ذخیره..." : "ذخیره"}
+      </button>
+    </section>
+  </main>
+</div>
   );
 };
 
