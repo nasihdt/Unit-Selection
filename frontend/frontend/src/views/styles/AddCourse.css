@@ -12,6 +12,7 @@
   top: -70px;
   left: 5px;
 }
+
 .btn_dashdoard-add{
   color: #000000;
   background-color: #ffffff;
@@ -31,7 +32,7 @@
   height: 80px;
   border: none;
 } 
- 
+
 .container .btn_manage_course {
   color: #000000;
   border-radius: 20px;
@@ -52,8 +53,7 @@
   border: none;
 }
 
-/* button limit units */
-.btn_limitunit {
+.btn_limitunit_inadd_course{
   color: #000000;
   border-radius: 20px;
   background-color: #ffffff;
@@ -102,7 +102,6 @@
   top: 28px;
   width: 110px;
 }
-
 .icon_manage_course .icon{
   aspect-ratio: 1;
   height: 60px;
@@ -112,72 +111,6 @@
   top: 357px;
   width: 96px;
 }
-
-.container .rectangle-2 {
-  background-color: #2e55ca;
-  border-radius: 40px;
-  height: 303px;
-  left: 100px;
-  position: absolute;
-  top: 176px;
-  width: 1070px;
-} 
-
-.container .login-page {
-  aspect-ratio: 1;
-  height: 421px;
-  left: 239px;
-  object-fit: cover;
-  position: absolute;
-  top: 117px;
-  width: 421px;
-}
-
-.container .rectangle-3 {
-  background-color: #ffffff;
-  border-radius: 30px;
-  height: 40px;
-  left: 100px;
-  position: absolute;
-  top: 57px;
-  width: 1060px;
-} 
-
-.container .clock {
-  color: #000000;
-  font-family: "Istok Web-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 1075px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-}
-
-.container .date {
-  color: #000000;
-  font-family: "Webdings-Regular", Helvetica;
-  font-size: 20px;
-  font-weight: 400;
-  left: 960px;
-  letter-spacing: 0;
-  line-height: normal;
-  position: absolute;
-  top: 65px;
-  white-space: nowrap;
-}
-
-.icon_user .icon{
-  aspect-ratio: 1;
-  height: 25px;
-  left: 130px;
-  object-fit: cover;
-  position: absolute;
-  top: 62px;
-  width: 30px;
-} 
-
 .btn-addcourse-add{
     height: 37px;
     left: 700px;
@@ -189,6 +122,7 @@
     background: #D6AFE0;
     width: 185px;
 }
+
 .text-addcourse{
     color: #000000;
     direction: rtl;
@@ -204,63 +138,23 @@
     width: 207px;
 }
 
-.search-container{
-  position: absolute;
-  left: 340px;
-  top: 130px;
-  width: 310px;
-  
-  
-  
-}
-.search-input{
-  position: absolute;
-  width: 310px;
-  height: 34px;
-  clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
-  padding-right: 40px;
-  padding-left: 2px;
-  /* border: 1px solid #333; */
-  border: none;
-  
-  direction: rtl;
-  text-align: right;
-  /* box-sizing: border-box; */
-  border-radius: 5px;
-  border: 2px solid #000;
-
-}
-.search-icon{
-  position: absolute;
-  left: 30px;            /* آیکون داخل input در سمت چپ */
-  top: 60%;
-  margin-top: 18px;
-  transform: translateY(-50%);
-  font-size: 18px;
-  color: #000000;
-  pointer-events: none;  /* کاربر روی آیکون کلیک نکند */
-  z-index: 10;
-  
-}
-
-/*باکس نام درس*/
-.field-name{
-    position: relative;
+/* field name course */
+.field-name-addcourse{
+    position: absolute;
     width: 200px;
     left: 900px;
     top: 250px;
 }
-
-.label-name{
+.label-name-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
     direction: rtl;
 }
-
 .assign1{
     color: red;
 }
+
 .ipt-name{
     position: absolute;
     width: 180px;
@@ -270,25 +164,26 @@
     border-radius: 5px;
     direction: rtl;
 }
-/*باکس کد درس*/
-.field-code{
-    position: relative;
+
+/* field code */
+
+.field-code-addcourse{
+    position: absolute;
     width: 200px;
     left: 650px;
     top: 250px;
 }
 
-.label-code{
+.label-code-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
     direction: rtl;
 }
-
 .assign2{
     color: red;
 }
-.ipt-code{
+.ipt-code-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -298,25 +193,25 @@
     direction: rtl;
 }
 
-/*باکس واحد*/
-.field-vahed{
-    position: relative;
+/* field vahed */
+
+.field-vahed-addcourse{
+    position: absolute;
     width: 200px;
     left: 400px;
     top: 250px;
 }
 
-.label-vahed{
+.label-vahed-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
     direction: rtl;
 }
-
 .assign3{
     color: red;
 }
-.ipt-vahed{
+.ipt-vahed-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -326,15 +221,16 @@
     direction: rtl;
 }
 
-/*باکس ظرفیت*/
-.field-capacity{
-    position: relative;
+/* field capacity */
+
+.field-capacity-addcourse{
+    position: absolute;
     width: 200px;
     left: 150px;
     top: 250px;
 }
 
-.label-capacity{
+.label-capacity-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
@@ -344,7 +240,7 @@
 .assign4{
     color: red;
 }
-.ipt-capacity{
+.ipt-capacity-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -354,16 +250,15 @@
     direction: rtl;
 }
 
-
-/*باکس نام استاد*/
-.field-teacher{
-    position: relative;
+/* field teacher name */
+.field-teacher-addcourse{
+    position: absolute;
     width: 200px;
     left: 900px;
     top: 380px;
 }
 
-.label-teacher{
+.label-teacher-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
@@ -373,7 +268,7 @@
 .assign5{
     color: red;
 }
-.ipt-teacher{
+.ipt-teacher-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -383,16 +278,16 @@
     direction: rtl;
 }
 
+/* field time */
 
-/*باکس زمان*/
-.field-time{
-    position: relative;
+.field-time-addcourse{
+    position: absolute;
     width: 200px;
     left: 650px;
     top: 380px;
 }
 
-.label-time{
+.label-time-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
@@ -402,7 +297,7 @@
 .assign6{
     color: red;
 }
-.ipt-time{
+.ipt-time-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -412,15 +307,15 @@
     direction: rtl;
 }
 
-/*باکس مکان*/
-.field-place{
-    position: relative;
+/* field palace */
+.field-place-addcourse{
+    position: absolute;
     width: 200px;
     left: 400px;
     top: 380px;
 }
 
-.label-place{
+.label-place-addcourse{
     position: absolute;
     top: -20px;    
     right: 0px;    
@@ -430,7 +325,7 @@
 .assign7{
     color: red;
 }
-.ipt-place{
+.ipt-place-addcourse{
     position: absolute;
     width: 180px;
     height: 30px;
@@ -439,49 +334,95 @@
     border-radius: 5px;
     direction: rtl;
 }
-/*باکس تاریخ امتحان*/
-.field-examtime{
-    position: relative;
-    width: 200px;
-    margin-top: 480px;
-    margin-left: 543px;
 
+/* field examtime */
+.field-examtime-addcourse{
+    position: relative;
+    width: 220px; 
+    margin-top: 40px; 
+    margin-right: 715px;
 }
 
-.label-examtime{
-    position: absolute;
-    top: -35px;    
-    right: 13px;    
-    direction: rtl;
+.label-examtime-addcourse{
+    display: flex;
+    align-items: center;
+    gap: 4px; /* فاصله بین ستاره و متن */
+    font-weight: 500;
+    direction: rtl; 
+    margin-bottom: 6px;
 }
 
 .assign8{
     color: red;
 }
-.ipt-examtime{
-    position: absolute;
+
+.ipt-examtime-addcourse{
     width: 180px;
-    height: 30px;
-    /* top: 20px;
-    left: 20px; */
-    border-radius: 5px;
-    direction: rtl;
+  height: 30px;
+  /* top: 20px;
+  left: 20px; */
+  border-radius: 5px;
+  
+  direction: rtl;
 }
 
-/* باکس پیش نیاز */
 
-/*دکمه ثبت درس*/
-.register-course-add-new{
-    position: absolute;
-    left: 540px;
-    top: 600px;
-  }
-.btn-reg-course-add-new{
-  width: 200px;
-  height: 40px;
-  background-color: #2e55ca;
-  color: #ffffff;
+/* پیش نیاز */
+
+.prereq-dropdown-addcourse{
+  position: absolute;
+  width: 94%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  z-index: 10;
+  margin-left: -355px;
+  margin-top: 45px;
+  top: 20px;
+}
+
+.prereq-item-addcourse {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.prereq-item-addcourse:hover {
+  background-color: #f5f5f5;
+}
+
+.field-description-addcourse{
+  position: relative; /* قبلش absolute بود */
+  width: 220px; 
+  margin-top: 370px; /* فاصله از بالای فرم */
+  margin-right: 1128px;
+}
+
+.label-description-addcourse{
+  display: flex;
+  align-items: center;
+  gap: 4px; /* فاصله بین ستاره و متن */
+  font-weight: 500;
+  direction: rtl; 
+  margin-bottom: 6px;
+}
+
+.ipt-description-addcourse{
+    
+
+  width: 180px;
+  height: 30px;
+  /* top: 20px;
+  left: 20px; */
   border-radius: 5px;
+  
+  direction: rtl;
 }
 
 /* icon exit */
@@ -498,64 +439,17 @@
   height: 20px;
   transform: scalex(-1);
 }
-
-
-
-/* پیش نیاز */
-
-.prereq-dropdown {
-  position: absolute;
-  width: 94%;
-  max-height: 200px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 4px;
-  z-index: 10;
-  margin-left: -355px;
-  margin-top: -55px;
-  top: 20px;
+  
+  /*دکمه ثبت درس*/
+.register-course-add-new{
+      position: absolute;
+      left: 540px;
+      top: 600px;
 }
-
-.prereq-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.prereq-item:hover {
-  background-color: #f5f5f5;
-}
-
-.field-description{
-    position: relative;
-    width: 200px; 
-} 
-
-.label-description{
-    position: relative;
-    
-    top: 70px;
-    direction: rtl;
-}
-.ipt-description{
-    position: relative;
-    width: 180px;
-    height: 30px;
-    top: 50px;
-    /* bottom: 100px; */
-    margin-left: -375px;
-    margin-top: -90px;
+.btn-reg-course-add-new{
+    width: 200px;
+    height: 40px;
+    background-color: #2e55ca;
+    color: #ffffff;
     border-radius: 5px;
-    direction: rtl;
 }
-/*
-.prereq-list{
-    position: relative;
-    bottom: 20px;
-    right: 350px;
-} */
