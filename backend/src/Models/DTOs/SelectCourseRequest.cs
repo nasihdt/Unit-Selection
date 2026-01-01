@@ -1,8 +1,10 @@
-﻿namespace UniversityRegistration.Api.Models.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UniversityRegistration.Api.Models.DTOs
 {
     public class SelectCourseRequest
     {
-        public int StudentId { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "شناسه درس نامعتبر است")]
         public int CourseId { get; set; }
     }
 }

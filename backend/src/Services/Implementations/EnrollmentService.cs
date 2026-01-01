@@ -31,7 +31,7 @@ namespace UniversityRegistration.Api.Services.Implementations
         // =========================
         public async Task SelectCourseAsync(int studentId, int courseId)
         {
-            var student = await _studentRepo.GetByStudentNumberAsync(studentId.ToString());
+            var student = await _studentRepo.GetByIdAsync(studentId);
             if (student == null)
                 throw new Exception("دانشجو یافت نشد");
 
