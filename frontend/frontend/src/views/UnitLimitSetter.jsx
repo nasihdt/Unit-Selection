@@ -8,6 +8,8 @@ import "./styles/UnitLimitSetter.css";
 import { useState, useEffect } from "react";
 import { FaBook } from "react-icons/fa"; 
 import { FiLogOut } from "react-icons/fi";
+import axiosInstance from "../services/axiosInstance";
+
  
 const UnitLimitSetter = () => {
 
@@ -38,7 +40,7 @@ const UnitLimitSetter = () => {
   const [loading, setLoading] = useState(false);
 
   const MIN_LIMIT = 0;
-  const MAX_LIMIT = 30;
+  const MAX_LIMIT = 24;
 
   const handleMinChange = (value) => {
     const newVal = Math.max(MIN_LIMIT, Math.min(value, MAX_LIMIT));
@@ -54,7 +56,8 @@ const UnitLimitSetter = () => {
     else setMessage("");
   };
 
-  const saveSettings = async () => {
+const saveSettings = async () => {
+  // چک فرانت برای جلوگیری از درخواست اشتباه
   if (minUnits > maxUnits) {
     setMessage("⚠ حداقل نباید بزرگتر از حداکثر باشد");
     return;
@@ -64,34 +67,23 @@ const UnitLimitSetter = () => {
   setMessage("");
 
   try {
-    const token = localStorage.getItem("token");
-
-const response = await fetch(
-  "http://localhost:5127/api/admin/settings/units",
-  {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
-    body: JSON.stringify({ minUnits, maxUnits }),
-  }
-);
-
-    if (!response.ok) {
-      throw new Error(`خطای سرور: ${response.status}`);
-    }
+    // ارسال درخواست به بک‌اند با axiosInstance
+    await axiosInstance.put("/admin/settings/units", { minUnits, maxUnits });
 
     setMessage("تنظیمات با موفقیت ذخیره شد ✅");
   } catch (error) {
-    setMessage("⚠ خطا در ارتباط با سرور");
-    console.error(error);
+    // گرفتن پیام خطا از بک‌اند (مثلاً 400 BadRequest)
+    const backendMsg =
+      error?.response?.data?.message ||
+      error?.response?.data ||
+      "⚠ مقدار وارد شده نامعتبر است";
+
+    setMessage(backendMsg);
+    console.error("Save settings error:", error);
   } finally {
     setLoading(false);
   }
 };
-
-  
 
 
   return (

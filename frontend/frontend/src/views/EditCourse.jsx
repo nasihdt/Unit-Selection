@@ -4,15 +4,14 @@ import { MdDashboard, MdMenuBook } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import Logo from "../components/logo-chamran.png";
 import "./styles/EditCourse.css";
-import { FaBook } from "react-icons/fa"; 
+import { FaBook } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import axiosInstance from "../services/axiosInstance";
 
 const EditCourse = () => {
-  const { courseId } = useParams();
+  const { id: courseId } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
- 
+
   const [course, setCourse] = useState({
     name: "",
     code: "",
@@ -32,189 +31,154 @@ const EditCourse = () => {
   const [selectedPrerequisites, setSelectedPrerequisites] = useState([]);
   const [open, setOpen] = useState(false);
 
- useEffect(() => {
-  const fetchPrereq = async () => {
-    try {
-      const res = await axiosInstance.get(
-        `/admin/courses/${courseId}/prerequisites`
-      );
-      // فقط id پیش‌نیازها رو بگیر
-      setSelectedPrerequisites(res.data.map(p => p.id));
-    } catch (err) {
-      console.error("خطا در دریافت پیش‌نیازها", err);
-    }
-  };
-
-  fetchPrereq();
-}, [courseId]);
-
-  // useEffect(() => {
-  //   const fetchCourse = async () => {
-  //     try {
-  //       const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       if (res.ok) {
-  //         const data = await res.json();
-  //         setCourse({
-  //           name: String(data.title || ""),
-  //           code: String(data.code || ""),
-  //           vahed: String(data.units || ""),
-  //           capacity: String(data.capacity || ""),
-  //           teacher: String(data.teacherName || ""),
-  //           time: String(data.time || ""),
-  //           place: String(data.location || ""),
-  //           // examDate: String(data.examDate || ""),
-  //           description: String(data.description || ""),
-  //         });
-  //       } else {
-  //         console.error("خطا در دریافت داده درس");
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   fetchCourse();
-  // }, [courseId, token]);
-
+  // ✅ دریافت لیست همه دروس برای انتخاب پیش‌نیاز
   useEffect(() => {
-  const fetchCourse = async () => {
-    try {
-      const res = await axiosInstance.get(`/Course/${courseId}`);
+    const fetchCourses = async () => {
+      try {
+        const res = await axiosInstance.get("/Course");
+        setAllCourses(res.data);
+      } catch (err) {
+        console.error("خطا در دریافت لیست دروس", err);
+      }
+    };
+    fetchCourses();
+  }, []);
 
-      const data = res.data;
-      setCourse({
-        name: data.title ?? "",
-        code: data.code ?? "",
-        vahed: String(data.units ?? ""),
-        capacity: String(data.capacity ?? ""),
-        teacher: data.teacherName ?? "",
-        time: data.time ?? "",
-        place: data.location ?? "",
-        examDate: data.examDate ?? "",
-        description: data.description ?? "",
-      });
-    } catch (error) {
-      console.error("خطا در دریافت درس:", error);
-    }
-  };
+  // ✅ دریافت اطلاعات درس فعلی
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const res = await axiosInstance.get(`/Course/${courseId}`);
+        const data = res.data;
 
-  fetchCourse();
-}, [courseId]);
+        setCourse({
+          name: data.title ?? "",
+          code: data.code ?? "",
+          vahed: String(data.units ?? ""),
+          capacity: String(data.capacity ?? ""),
+          teacher: data.teacherName ?? "",
+          time: data.time ?? "",
+          place: data.location ?? "",
+          examDate: data.examDateTime ? data.examDateTime.split("T")[0] : "",
+          description: data.description ?? "",
+        });
+      } catch (error) {
+        console.error("خطا در دریافت درس:", error);
+      }
+    };
+    fetchCourse();
+  }, [courseId]);
 
-  // تایمر تاریخ و ساعت
+  // ✅ دریافت پیش‌نیازهای درس فعلی
+  useEffect(() => {
+    const fetchPrereq = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/admin/courses/${courseId}/prerequisites`
+        );
+
+        // ✅ پشتیبانی از هر دو مدل: p.id یا p.prerequisiteCourseId
+        const ids = res.data.map((p) => p.prerequisiteCourseId ?? p.id);
+        setSelectedPrerequisites(ids);
+      } catch (err) {
+        console.error("خطا در دریافت پیش‌نیازها", err);
+      }
+    };
+
+    fetchPrereq();
+  }, [courseId]);
+
+  // ✅ تایمر تاریخ و ساعت
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // بروزرسانی فرم
+  // ✅ تغییر فرم
   const handleChange = (e) => {
     setCourse({ ...course, [e.target.name]: e.target.value });
   };
 
-  // اعتبارسنجی
-  // const handleUpdate = async () => {
-  //   for (let key in course) {
-  //     if (course[key].trim() === "") {
-  //       alert(`لطفاً فیلد ${key} را پر کنید!`);
-  //       return;
-  //     }
-  //   }
-  //  // map کردن داده‌ها مطابق API
-  //   const payload = {
-  //     title: course.name,
-  //     code: course.code,
-  //     units: parseInt(course.vahed),
-  //     capacity: parseInt(course.capacity),
-  //     teacherName: course.teacher,
-  //     time: course.time,
-  //     location: course.place,
-  //     // examDate: course.examDate,
-  //     description: course.description,
-  //   };
-
-  //   try {
-  //     const res = await fetch(`http://localhost:5127/api/Course/${courseId}`, {
-  //       method: "PUT",
-  //       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     if (res.ok) {
-  //       alert("ویرایش درس با موفقیت انجام شد!");
-  //       navigate("/management");
-  //     } else {
-  //       const errorText = await res.text();
-  //       alert("خطا در ویرایش درس: " + errorText);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("مشکل در ارتباط با سرور");
-  //   }
-  // };
+  // ✅ آپدیت درس + آپدیت پیش‌نیازها
   const handleUpdate = async () => {
-  
-  const requiredFields = ["name", "code", "vahed", "capacity", "teacher"];
+    const requiredFields = [
+      "name",
+      "code",
+      "vahed",
+      "capacity",
+      "teacher",
+      "time",
+      "place",
+    ];
 
-for (let key of requiredFields) {
-  if (!course[key] || course[key].toString().trim() === "") {
-    alert(`لطفاً فیلد ${key} را پر کنید`);
-    return;
-  }
-}
+    for (let key of requiredFields) {
+      if (!course[key] || course[key].toString().trim() === "") {
+        alert(`لطفاً فیلد ${key} را پر کنید`);
+        return;
+      }
+    }
 
-  // آماده‌سازی payload برای PUT
-  const payload = {
-    title: course.name,
-    code: course.code,
-    units: parseInt(course.vahed),
-    capacity: parseInt(course.capacity),
-    teacherName: course.teacher,
-    time: course.time,
-    location: course.place,
-    description: course.description,
-    examDate: course.examDate,
+    const payload = {
+      title: course.name,
+      code: course.code,
+      units: parseInt(course.vahed),
+      capacity: parseInt(course.capacity),
+      teacherName: course.teacher,
+      time: course.time,
+      location: course.place,
+      description: course.description,
+      examDateTime: course.examDate
+        ? new Date(course.examDate).toISOString()
+        : null,
+    };
+
+    try {
+      // ✅ 1) آپدیت درس
+      const res = await axiosInstance.put(`/Course/${courseId}`, payload);
+
+      if (!(res.status === 200 || res.status === 204)) {
+        alert("خطا در ویرایش درس!");
+        return;
+      }
+
+      // ✅ 2) گرفتن پیش‌نیازهای قبلی
+      const existing = await axiosInstance.get(
+        `/admin/courses/${courseId}/prerequisites`
+      );
+
+      // ✅ 3) حذف پیش‌نیازهای قبلی
+      for (const p of existing.data) {
+        const prereqId = p.prerequisiteCourseId ?? p.id;
+        await axiosInstance.delete(
+          `/admin/courses/${courseId}/prerequisites/${prereqId}`
+        );
+      }
+
+      // ✅ 4) ثبت پیش‌نیازهای جدید
+      for (const prereqId of selectedPrerequisites) {
+        await axiosInstance.post(`/admin/courses/${courseId}/prerequisites`, {
+          prerequisiteCourseId: prereqId,
+        });
+      }
+
+      alert("ویرایش درس با موفقیت انجام شد ✅");
+      navigate("/management");
+    } catch (error) {
+      console.log("FULL ERROR:", error);
+
+      const data = error?.response?.data;
+      const msg =
+        typeof data === "string" ? data : JSON.stringify(data, null, 2);
+
+      alert(msg || "مشکل در ارتباط با سرور");
+    }
   };
 
-  try {
-    // 1️⃣ آپدیت درس اصلی
-    const res = await axiosInstance.put(
-      `/Course/${courseId}`,
-      payload
-    );
-
-    if (res.status === 200 || res.status === 204) {
-      // 2️⃣ بعد از موفقیت PUT، آپدیت پیش‌نیازها
-      if (selectedPrerequisites.length > 0) {
-  for (const prereqId of selectedPrerequisites) {
-    await axiosInstance.post(
-      `/admin/courses/${courseId}/prerequisites`,
-      {
-        prerequisiteCourseId: prereqId
-      }
-    );
-  }
-}
-
-      alert("ویرایش درس با موفقیت انجام شد!");
-      navigate("/management");
-    } else {
-      alert("خطا در ویرایش درس!");
-    }
-  } catch (error) {
-    console.error(error);
-    alert("مشکل در ارتباط با سرور");
-  }
-};
-
-
-  const handlelogin = () =>{ navigate('/login')}
+  const handlelogin = () => navigate("/login");
   const handledashboard = () => navigate("/dashboard");
   const handlemanagecourse = () => navigate("/management");
   const handleaddnewcourse = () => navigate("/add-new-course");
-  const handleLimitUnit = () => navigate("/limit");  
-
+  const handleLimitUnit = () => navigate("/limit");
 
   return (
     <div className="container">
@@ -299,7 +263,7 @@ for (let key of requiredFields) {
         </div>
 
         <div className="field-examtime-editcourse">
-          <label className="label-examtime-editcourse">تاریخ امتحان </label>
+          <label className="label-examtime-editcourse">تاریخ امتحان</label>
           <input
             type="date"
             name="examDate"
@@ -310,9 +274,7 @@ for (let key of requiredFields) {
         </div>
 
         <div className="field-description-editcourse">
-          <label className="label-description-editcourse">
-           پیش‌نیازها 
-          </label>
+          <label className="label-description-editcourse">پیش‌نیازها</label>
 
           <input
             type="text"
@@ -321,39 +283,35 @@ for (let key of requiredFields) {
             value={value}
             onFocus={() => setOpen(true)}
             onChange={(e) => {
-            setValue(e.target.value);
-            setOpen(true);
+              setValue(e.target.value);
+              setOpen(true);
             }}
-            onBlur={() => {
-            setTimeout(() => setOpen(false), 200);
-            }}
-         />
+            onBlur={() => setTimeout(() => setOpen(false), 200)}
+          />
 
           {open && (
             <div className="prereq-dropdown-editcourse">
-            {allCourses
-            .filter(c => c.title && c.title.includes(value))
-            .map(c => (
-            <label key={c.id} className="prereq-item-editcourse">
-            <input
-              type="checkbox"
-              checked={selectedPrerequisites.includes(c.id)}
-              onChange={() => {
-                setSelectedPrerequisites(prev =>
-                  prev.includes(c.id)
-                    ? prev.filter(x => x !== c.id)
-                    : [...prev, c.id]
-                );
-              }}
-            />
-            {c.title}
-          </label>
-        ))}
-    </div>
+              {allCourses
+                .filter((c) => c.title && c.title.includes(value))
+                .map((c) => (
+                  <label key={c.id} className="prereq-item-editcourse">
+                    <input
+                      type="checkbox"
+                      checked={selectedPrerequisites.includes(c.id)}
+                      onChange={() => {
+                        setSelectedPrerequisites((prev) =>
+                          prev.includes(c.id)
+                            ? prev.filter((x) => x !== c.id)
+                            : [...prev, c.id]
+                        );
+                      }}
+                    />
+                    {c.title}
+                  </label>
+                ))}
+            </div>
           )}
-</div>
-
-
+        </div>
 
         <div className="dashboard">
           <button className="btn_dashdoard-edit" onClick={handledashboard}>
@@ -370,10 +328,15 @@ for (let key of requiredFields) {
             <MdMenuBook className="icon" />
           </div>
 
-          <button className="btn_limitunit_inedit_course" onClick={handleLimitUnit}>تعیین حد واحد</button>
-            <div className="icon_limitunit">
-              <FaBook className="icon" />
-            </div>
+          <button
+            className="btn_limitunit_inedit_course"
+            onClick={handleLimitUnit}
+          >
+            تعیین حد واحد
+          </button>
+          <div className="icon_limitunit">
+            <FaBook className="icon" />
+          </div>
         </div>
 
         <img className="shahid-chamran" alt="Shahid chamran" src={Logo} />
@@ -401,7 +364,7 @@ for (let key of requiredFields) {
         </div>
 
         <button className="icon_exit_edit_course" onClick={handlelogin}>
-          <FiLogOut className="exit_edit_course"/>     
+          <FiLogOut className="exit_edit_course" />
         </button>
 
         <div className="course-edit-btn">

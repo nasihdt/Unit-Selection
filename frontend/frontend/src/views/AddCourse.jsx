@@ -85,7 +85,7 @@ const AddCourse = () => {
       time: course.time,
       location: course.place,
       description: course.description,
-      examDate: course.examDate,
+      examDateTime: course.examDate ? new Date(course.examDate).toISOString() : null,
       // prerequisiteIds: selectedPrerequisites 
     };
 
@@ -95,12 +95,15 @@ const AddCourse = () => {
       if (res.status === 200 || res.status === 201) {
         
         const courseId = res.data.id;   
-        if (selectedPrerequisites.length > 0) {
-          await axiosInstance.post(
-           `/Course/${courseId}/prerequisites`,
-           { prerequisiteIds: selectedPrerequisites } 
-          );
-        }
+ if (selectedPrerequisites.length > 0) {
+  for (const preId of selectedPrerequisites) {
+    await axiosInstance.post(
+      `/admin/courses/${courseId}/prerequisites`,
+      { prerequisiteCourseId: preId }
+    );
+  }
+}
+
 
         alert("درس با موفقیت ثبت شد!");
         navigate("/management");

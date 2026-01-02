@@ -17,7 +17,6 @@ const ManagementCourse = () => {
   const [error, setError] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
 
-  const API_URL = "http://localhost:5127/api/course";
   
   
   const navigate = useNavigate();
@@ -33,7 +32,8 @@ const ManagementCourse = () => {
       time: c.Time ?? c.time,
       location: c.Location ?? c.location,
       description: c.description,
-      prerequisites: c.prerequisites || []
+      examDateTime: c.ExamDateTime ?? c.examDateTime ?? null,
+
     }));
 
   
@@ -46,8 +46,21 @@ useEffect(() => {
       const res = await axiosInstance.get("/course");
       const formattedData = parseCourses(res.data);
 
-      setCourses(formattedData);
-      localStorage.setItem("courses", JSON.stringify(formattedData));
+      const coursesWithPrereqs = await Promise.all(
+        formattedData.map(async (c) => {
+          try {
+            const prereqRes = await axiosInstance.get(
+              `/admin/courses/${c.id}/prerequisites`
+            );
+            return { ...c, prerequisites: prereqRes.data };
+          } catch (e) {
+            return { ...c, prerequisites: [] };
+          }
+        })
+      );
+
+      setCourses(coursesWithPrereqs);
+      localStorage.setItem("courses", JSON.stringify(coursesWithPrereqs));
     } catch (err) {
       console.error(err);
       setError("خطا در دریافت دروس");
@@ -58,7 +71,6 @@ useEffect(() => {
 
   fetchCourses();
 }, []);
-
 
   // بروزرسانی زمان
   useEffect(() => {
@@ -235,17 +247,20 @@ const handleDelete = async (id) => {
                 <td>{course.teacherName}</td>
                 <td>{course.time}</td>
                 <td>{course.location}</td>
-                <td>{course.examDate}</td>
-                {/* <td>{course.description}</td> */}
-                
-  <td>
-  {Array.isArray(course.prerequisites) && course.prerequisites.length > 0
-    ? course.prerequisites
-        .map(prId => courses.find(c => c.id === prId)?.title)
-        .filter(Boolean)
-        .join("، ")
+                <td>
+  {course.examDateTime
+    ? new Date(course.examDateTime).toLocaleDateString("fa-IR")
     : "-"}
 </td>
+
+                {/* <td>{course.description}</td> */}
+                
+<td>
+  {Array.isArray(course.prerequisites) && course.prerequisites.length > 0
+    ? course.prerequisites.map(p => p.title).join("، ")
+    : "-"}
+</td>
+
                 <td>
                   <button
                     onClick={() => handleDelete(course.id)}
