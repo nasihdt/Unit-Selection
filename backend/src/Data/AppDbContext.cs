@@ -102,6 +102,9 @@ namespace UniversityRegistration.Api.Data
                 entity.Property(x => x.Units)
                       .IsRequired();
 
+                entity.Property(x => x.GroupNumber)
+                      .IsRequired();
+
                 entity.Property(x => x.Capacity)
                       .IsRequired();
 
@@ -119,6 +122,8 @@ namespace UniversityRegistration.Api.Data
 
                 entity.Property(x => x.ExamDateTime)
                       .HasColumnType("timestamp with time zone");
+
+                entity.HasIndex(x => new { x.Code, x.GroupNumber }).IsUnique();
 
             });
 

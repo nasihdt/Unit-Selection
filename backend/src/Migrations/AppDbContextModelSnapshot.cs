@@ -69,6 +69,9 @@ namespace UniversityRegistration.Api.Migrations
                     b.Property<DateTime?>("ExamDateTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("GroupNumber")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -93,6 +96,9 @@ namespace UniversityRegistration.Api.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code", "GroupNumber")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });

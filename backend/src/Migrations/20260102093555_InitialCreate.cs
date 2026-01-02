@@ -36,11 +36,12 @@ namespace UniversityRegistration.Api.Migrations
                     Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Code = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Units = table.Column<int>(type: "integer", nullable: false),
+                    GroupNumber = table.Column<int>(type: "integer", nullable: false),
                     Capacity = table.Column<int>(type: "integer", nullable: false),
                     TeacherName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Time = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Location = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
+                    ExamDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,19 +127,63 @@ namespace UniversityRegistration.Api.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CoursePrerequisites_Courses_PrerequisiteCourseId",
                         column: x => x.PrerequisiteCourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "CourseEnrollments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    StudentId = table.Column<int>(type: "integer", nullable: false),
+                    CourseId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseEnrollments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CourseEnrollments_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseEnrollments_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseEnrollments_CourseId",
+                table: "CourseEnrollments",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseEnrollments_StudentId_CourseId",
+                table: "CourseEnrollments",
+                columns: new[] { "StudentId", "CourseId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CoursePrerequisites_PrerequisiteCourseId",
                 table: "CoursePrerequisites",
                 column: "PrerequisiteCourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_Code_GroupNumber",
+                table: "Courses",
+                columns: new[] { "Code", "GroupNumber" },
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -146,6 +191,9 @@ namespace UniversityRegistration.Api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "CourseEnrollments");
 
             migrationBuilder.DropTable(
                 name: "CoursePrerequisites");

@@ -13,6 +13,9 @@
         // تعداد واحد
         public int Units { get; set; }
 
+        // شماره گروه 
+        public int GroupNumber { get; set; } 
+
         // ظرفیت
         public int Capacity { get; set; }
 

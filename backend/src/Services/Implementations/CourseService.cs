@@ -40,6 +40,7 @@ namespace UniversityRegistration.Api.Services.Implementations
                 Title = dto.Title,
                 Code = dto.Code,
                 Units = dto.Units,
+                GroupNumber = dto.GroupNumber,
                 Capacity = dto.Capacity,
                 TeacherName = dto.TeacherName,
                 Time = dto.Time,
@@ -69,6 +70,9 @@ namespace UniversityRegistration.Api.Services.Implementations
 
             if (dto.Units.HasValue)
                 course.Units = dto.Units.Value;
+
+            if (dto.GroupNumber.HasValue)
+                course.GroupNumber = dto.GroupNumber.Value;
 
             if (dto.Capacity.HasValue)
                 course.Capacity = dto.Capacity.Value;
@@ -103,6 +107,7 @@ namespace UniversityRegistration.Api.Services.Implementations
             existing.Title = dto.Title;
             existing.Code = dto.Code;
             existing.Units = dto.Units;
+            existing.GroupNumber = dto.GroupNumber;
             existing.Capacity = dto.Capacity;
             existing.TeacherName = dto.TeacherName;
             existing.Time = dto.Time;
@@ -159,6 +164,7 @@ namespace UniversityRegistration.Api.Services.Implementations
                 Title = course.Title,
                 Code = course.Code,
                 Units = course.Units,
+                GroupNumber = course.GroupNumber,
                 Capacity = course.Capacity,
                 TeacherName = course.TeacherName,
                 Time = course.Time,

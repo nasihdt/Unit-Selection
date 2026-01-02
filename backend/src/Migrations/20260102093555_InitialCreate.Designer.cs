@@ -12,8 +12,8 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260101192009_AddUniqueIndexCourseCodeGroup")]
-    partial class AddUniqueIndexCourseCodeGroup
+    [Migration("20260102093555_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,6 +72,9 @@ namespace UniversityRegistration.Api.Migrations
                     b.Property<DateTime?>("ExamDateTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("GroupNumber")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -96,6 +99,9 @@ namespace UniversityRegistration.Api.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code", "GroupNumber")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });

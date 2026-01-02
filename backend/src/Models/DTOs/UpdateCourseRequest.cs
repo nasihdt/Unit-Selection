@@ -17,6 +17,10 @@ namespace UniversityRegistration.Api.Models.DTOs
         public int Units { get; set; }
 
         [Required]
+        [Range(1, 50)]
+        public int GroupNumber { get; set; }
+
+        [Required]
         [Range(1, 500)]
         public int Capacity { get; set; }
 
