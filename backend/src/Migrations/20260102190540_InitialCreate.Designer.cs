@@ -12,7 +12,7 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260102093555_InitialCreate")]
+    [Migration("20260102190540_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

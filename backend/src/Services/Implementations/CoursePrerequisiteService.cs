@@ -43,7 +43,7 @@ namespace UniversityRegistration.Api.Services.Implementations
             // جلوگیری از پیش‌نیاز دوطرفه (A↔B)
             var reverseExists = await _repo.ExistsAsync(prerequisiteCourseId, courseId);
             if (reverseExists)
-                throw new InvalidOperationException("این دو درس نمی‌توانند پیش‌نیاز یکدیگر باشند.");
+                throw new InvalidOperationException(" دو درس نمی‌توانند پیش‌نیاز یکدیگر باشند.");
 
             // جلوگیری از ایجاد چرخه‌های طولانی‌تر (A→B→C→A)
             var createsCycle = await WouldCreateCycleAsync(courseId, prerequisiteCourseId);
