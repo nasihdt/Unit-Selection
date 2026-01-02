@@ -10,6 +10,8 @@ namespace UniversityRegistration.Api.Repository.Interfaces
 
         Task<List<CoursePrerequisite>> GetByCourseIdAsync(int courseId);
 
+        Task<List<int>> GetPrerequisiteIdsAsync(int courseId);
+
         Task<CoursePrerequisite?> GetAsync(int courseId, int prerequisiteCourseId);
 
         Task AddAsync(CoursePrerequisite entity);

@@ -34,6 +34,15 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .ToListAsync();
         }
 
+        // ✅ فقط idها (برای DFS)
+        public async Task<List<int>> GetPrerequisiteIdsAsync(int courseId)
+        {
+            return await _context.CoursePrerequisites
+                .Where(x => x.CourseId == courseId)
+                .Select(x => x.PrerequisiteCourseId)
+                .ToListAsync();
+        }
+
         public async Task<CoursePrerequisite?> GetAsync(int courseId, int prerequisiteCourseId)
         {
             return await _context.CoursePrerequisites
