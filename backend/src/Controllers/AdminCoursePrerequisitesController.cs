@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UniversityRegistration.Api.Data;
 using UniversityRegistration.Api.Models.DTOs;
+using UniversityRegistration.Api.Services.Interfaces;
 
 namespace UniversityRegistration.Api.Controllers
 {
@@ -12,10 +13,14 @@ namespace UniversityRegistration.Api.Controllers
     public class AdminCoursePrerequisitesController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ICoursePrerequisiteService _service;
 
-        public AdminCoursePrerequisitesController(AppDbContext context)
+        public AdminCoursePrerequisitesController(
+            AppDbContext context,
+            ICoursePrerequisiteService service)
         {
             _context = context;
+            _service = service;
         }
 
         // =====================================
@@ -26,7 +31,7 @@ namespace UniversityRegistration.Api.Controllers
         {
             var exists = await _context.Courses.AnyAsync(c => c.Id == courseId);
             if (!exists)
-                return NotFound("Course not found.");
+                return NotFound(new { message = "درس موردنظر یافت نشد." });
 
             var prerequisites = await _context.CoursePrerequisites
                 .Where(x => x.CourseId == courseId)
@@ -36,6 +41,7 @@ namespace UniversityRegistration.Api.Controllers
                     Title = x.PrerequisiteCourse.Title,
                     Code = x.PrerequisiteCourse.Code,
                     Units = x.PrerequisiteCourse.Units,
+                    GroupNumber = x.PrerequisiteCourse.GroupNumber,
                     Capacity = x.PrerequisiteCourse.Capacity,
                     TeacherName = x.PrerequisiteCourse.TeacherName,
                     Time = x.PrerequisiteCourse.Time,
@@ -49,37 +55,35 @@ namespace UniversityRegistration.Api.Controllers
 
         // =====================================
         // POST: api/admin/courses/{courseId}/prerequisites
+        // Body: { "prerequisiteCourseId": 12 }
         // =====================================
         [HttpPost]
         public async Task<IActionResult> AddPrerequisite(
             int courseId,
             [FromBody] AddPrerequisiteRequest request)
         {
-            if (courseId == request.PrerequisiteCourseId)
-                return BadRequest("A course cannot be its own prerequisite.");
+            if (!ModelState.IsValid)
+                return BadRequest(new { message = "اطلاعات ارسال‌شده نامعتبر است." });
 
-            var courseExists = await _context.Courses.AnyAsync(c => c.Id == courseId);
-            var prereqExists = await _context.Courses.AnyAsync(c => c.Id == request.PrerequisiteCourseId);
-
-            if (!courseExists || !prereqExists)
-                return NotFound("Course or prerequisite course not found.");
-
-            var alreadyExists = await _context.CoursePrerequisites.AnyAsync(x =>
-                x.CourseId == courseId &&
-                x.PrerequisiteCourseId == request.PrerequisiteCourseId);
-
-            if (alreadyExists)
-                return Conflict("This prerequisite already exists.");
-
-            _context.CoursePrerequisites.Add(new Models.CoursePrerequisite
+            try
             {
-                CourseId = courseId,
-                PrerequisiteCourseId = request.PrerequisiteCourseId
-            });
-
-            await _context.SaveChangesAsync();
-
-            return Ok();
+                await _service.AddAsync(courseId, request.PrerequisiteCourseId);
+                return Ok(new { message = "پیش‌نیاز با موفقیت اضافه شد." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                // درس یا پیش‌نیاز پیدا نشده
+                return NotFound(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                // حالت‌هایی مثل: خودش بودن، دوطرفه بودن، چرخه
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "خطای داخلی سرور رخ داد." });
+            }
         }
 
         // =====================================
@@ -90,16 +94,19 @@ namespace UniversityRegistration.Api.Controllers
             int courseId,
             int prerequisiteCourseId)
         {
-            var entity = await _context.CoursePrerequisites
-                .FindAsync(courseId, prerequisiteCourseId);
-
-            if (entity == null)
-                return NotFound("Prerequisite not found.");
-
-            _context.CoursePrerequisites.Remove(entity);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            try
+            {
+                await _service.RemoveAsync(courseId, prerequisiteCourseId);
+                return Ok(new { message = "پیش‌نیاز با موفقیت حذف شد." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new { message = "خطای داخلی سرور رخ داد." });
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .ToListAsync();
         }
 
-        // ✅ فقط idها (برای DFS)
         public async Task<List<int>> GetPrerequisiteIdsAsync(int courseId)
         {
             return await _context.CoursePrerequisites
