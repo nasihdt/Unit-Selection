@@ -33,7 +33,12 @@ namespace UniversityRegistration.Api.Services.Implementations
             var day = ParseWeekDay(dto.DayOfWeek);
             ValidateSchedule(dto.StartTime, dto.EndTime);
 
-            //  چک تداخل مکانی برای Admin هنگام ثبت درس
+            // ✅ جلوگیری از تکراری بودن کد + گروه
+            var duplicate = await _repo.ExistsByCodeAndGroupAsync(dto.Code, dto.GroupNumber);
+            if (duplicate)
+                throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
+
+            // ✅ چک تداخل مکانی
             await EnsureNoLocationConflictAsync(
                 excludeCourseId: null,
                 location: dto.Location,
@@ -45,7 +50,7 @@ namespace UniversityRegistration.Api.Services.Implementations
             var course = new Course
             {
                 Title = dto.Title,
-                Code = dto.Code,
+                Code = dto.Code.Trim(),
                 Units = dto.Units,
                 GroupNumber = dto.GroupNumber,
                 Capacity = dto.Capacity,
@@ -75,7 +80,12 @@ namespace UniversityRegistration.Api.Services.Implementations
             var day = ParseWeekDay(dto.DayOfWeek);
             ValidateSchedule(dto.StartTime, dto.EndTime);
 
-            //  چک تداخل مکانی برای Admin هنگام ویرایش درس
+            // ✅ جلوگیری از تکراری بودن کد + گروه (غیر از خودش)
+            var duplicate = await _repo.ExistsByCodeAndGroupAsync(dto.Code, dto.GroupNumber, excludeCourseId: existing.Id);
+            if (duplicate)
+                throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
+
+            // ✅ چک تداخل مکانی (غیر از خودش)
             await EnsureNoLocationConflictAsync(
                 excludeCourseId: existing.Id,
                 location: dto.Location,
@@ -85,7 +95,7 @@ namespace UniversityRegistration.Api.Services.Implementations
             );
 
             existing.Title = dto.Title;
-            existing.Code = dto.Code;
+            existing.Code = dto.Code.Trim();
             existing.Units = dto.Units;
             existing.GroupNumber = dto.GroupNumber;
             existing.Capacity = dto.Capacity;
@@ -114,7 +124,7 @@ namespace UniversityRegistration.Api.Services.Implementations
                 course.Title = dto.Title;
 
             if (dto.Code != null)
-                course.Code = dto.Code;
+                course.Code = dto.Code.Trim();
 
             if (dto.Units.HasValue)
                 course.Units = dto.Units.Value;
@@ -133,13 +143,9 @@ namespace UniversityRegistration.Api.Services.Implementations
 
             if (dto.ExamDateTime.HasValue)
             {
-                course.ExamDateTime = DateTime.SpecifyKind(
-                    dto.ExamDateTime.Value,
-                    DateTimeKind.Utc
-                );
+                course.ExamDateTime = DateTime.SpecifyKind(dto.ExamDateTime.Value, DateTimeKind.Utc);
             }
 
-            //  اگر برنامه‌ی زمانی عوض شد باید Time دوباره ساخته شود
             bool scheduleChanged = false;
 
             if (dto.DayOfWeek.HasValue)
@@ -166,7 +172,15 @@ namespace UniversityRegistration.Api.Services.Implementations
                 course.Time = BuildTimeString(course.DayOfWeek, course.StartTime, course.EndTime);
             }
 
-            //  (چک تداخل مکانی فقط وقتی لازمه (مکان یا زمان تغییر کرده
+            // ✅ اگر کد یا گروه تغییر کرد باید دوباره تکراری بودن چک شود
+            if (dto.Code != null || dto.GroupNumber.HasValue)
+            {
+                var duplicate = await _repo.ExistsByCodeAndGroupAsync(course.Code, course.GroupNumber, excludeCourseId: course.Id);
+                if (duplicate)
+                    throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
+            }
+
+            // ✅ اگر مکان یا زمان تغییر کرد باید تداخل مکانی چک شود
             if (dto.Location != null || scheduleChanged)
             {
                 await EnsureNoLocationConflictAsync(
@@ -211,7 +225,7 @@ namespace UniversityRegistration.Api.Services.Implementations
         }
 
         // ==========================
-        // Location Conflict
+        // Location Conflict Check
         // ==========================
         private async Task EnsureNoLocationConflictAsync(
             int? excludeCourseId,
@@ -227,15 +241,9 @@ namespace UniversityRegistration.Api.Services.Implementations
                 if (excludeCourseId.HasValue && c.Id == excludeCourseId.Value)
                     continue;
 
-                // اگر درس قبلی هنوز schedule ندارد، ردش می‌کنیم
-                // (در حالت migration قدیمی یا دیتای ناقص)
-                // اگر همه required هستند، این قسمت عملاً لازم نیست
-                if (c.StartTime == default || c.EndTime == default)
-                    continue;
-
                 if (IsTimeOverlap(dayOfWeek, startTime, endTime, c.DayOfWeek, c.StartTime, c.EndTime))
                 {
-                    throw new Exception(
+                    throw new InvalidOperationException(
                         $"در مکان «{location}» در این بازه زمانی، درس دیگری ثبت شده است: «{c.Title} ({c.Code}-{c.GroupNumber})»"
                     );
                 }
@@ -291,6 +299,7 @@ namespace UniversityRegistration.Api.Services.Implementations
         // ==========================
         // Mapping
         // ==========================
+
         private static CourseResponse MapToResponse(Course course)
         {
             return new CourseResponse

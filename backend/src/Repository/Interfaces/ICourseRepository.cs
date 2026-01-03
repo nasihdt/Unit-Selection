@@ -13,6 +13,8 @@ namespace UniversityRegistration.Api.Repository.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<List<Course>> GetFilteredAsync(CourseQueryParameters q);
         Task<List<Course>> GetCoursesByLocationAsync(string location);
+        Task<bool> ExistsByCodeAndGroupAsync(string code, int groupNumber, int? excludeCourseId = null);
+
 
     }
 }

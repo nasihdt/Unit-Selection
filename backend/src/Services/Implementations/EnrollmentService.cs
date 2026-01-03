@@ -70,7 +70,7 @@ namespace UniversityRegistration.Api.Services.Implementations
                         other.DayOfWeek, other.StartTime, other.EndTime))
                 {
                     throw new Exception(
-                        $"تداخل زمانی با درس «{other.Title} ({other.Code}-{other.GroupNumber})» وجود دارد"
+                        $"تداخل زمانی با درس اخذ شده ی «{other.Title} ({other.Code}-{other.GroupNumber})» وجود دارد"
                     );
                 }
             }

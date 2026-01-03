@@ -29,9 +29,10 @@ namespace UniversityRegistration.Api.Repository.Implementations
 
         public async Task<Course?> FindByCodeAsync(string code)
         {
+            var clean = code.Trim();
             return await _context.Courses
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Code == code);
+                .FirstOrDefaultAsync(c => c.Code == clean);
         }
 
         public async Task<Course> AddAsync(Course course)
@@ -51,17 +52,17 @@ namespace UniversityRegistration.Api.Repository.Implementations
             existing.Code = course.Code;
             existing.Units = course.Units;
             existing.GroupNumber = course.GroupNumber;
-
             existing.Capacity = course.Capacity;
             existing.TeacherName = course.TeacherName;
 
-            //  زمان ساختاریافته + رشته نمایشی
+            existing.Location = course.Location;
+
+            // ✅ زمان‌های جدید
             existing.DayOfWeek = course.DayOfWeek;
             existing.StartTime = course.StartTime;
             existing.EndTime = course.EndTime;
             existing.Time = course.Time;
 
-            existing.Location = course.Location;
             existing.ExamDateTime = course.ExamDateTime;
 
             await _context.SaveChangesAsync();
@@ -116,7 +117,9 @@ namespace UniversityRegistration.Api.Repository.Implementations
             return await query.ToListAsync();
         }
 
-        // برای تداخل مکان: تمام درس‌های یک لوکیشن
+        // ==========================
+        //  برای چک تداخل مکانی
+        // ==========================
         public async Task<List<Course>> GetCoursesByLocationAsync(string location)
         {
             var loc = location.Trim();
@@ -125,6 +128,22 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 .AsNoTracking()
                 .Where(c => c.Location == loc)
                 .ToListAsync();
+        }
+
+        // ==========================
+        //  برای چک تکراری بودن Code + Group
+        // ==========================
+        public async Task<bool> ExistsByCodeAndGroupAsync(string code, int groupNumber, int? excludeCourseId = null)
+        {
+            var cleanCode = code.Trim();
+
+            IQueryable<Course> query = _context.Courses.AsNoTracking()
+                .Where(c => c.Code == cleanCode && c.GroupNumber == groupNumber);
+
+            if (excludeCourseId.HasValue)
+                query = query.Where(c => c.Id != excludeCourseId.Value);
+
+            return await query.AnyAsync();
         }
     }
 }
