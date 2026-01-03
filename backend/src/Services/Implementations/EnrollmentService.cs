@@ -26,9 +26,6 @@ namespace UniversityRegistration.Api.Services.Implementations
             _settingsRepo = settingsRepo;
         }
 
-        // =========================
-        // Select Course (اخذ درس)
-        // =========================
         public async Task SelectCourseAsync(int studentId, int courseId)
         {
             var student = await _studentRepo.GetByIdAsync(studentId);
@@ -56,16 +53,27 @@ namespace UniversityRegistration.Api.Services.Implementations
             if (settings != null && currentUnits + course.Units > settings.MaxUnits)
                 throw new Exception("مجموع واحدهای انتخابی بیشتر از حد مجاز است");
 
-            // بررسی پیش‌نیازها (از Service استفاده می‌کنیم)
+            // بررسی پیش‌نیازها
             var prereqIds = await _prereqService.GetPrerequisiteIdsAsync(courseId);
             var passedCourseIds = currentEnrollments.Select(x => x.CourseId).ToList();
 
             if (prereqIds.Except(passedCourseIds).Any())
                 throw new Exception("پیش‌نیاز این درس پاس نشده است");
 
-            // بررسی تداخل زمانی کلاس
-            if (currentEnrollments.Any(e => e.Course.Time == course.Time))
-                throw new Exception("تداخل زمانی با درس دیگر وجود دارد");
+            // ✅ تداخل زمانی برای دانشجو
+            foreach (var e in currentEnrollments)
+            {
+                var other = e.Course;
+
+                if (IsTimeOverlap(
+                        course.DayOfWeek, course.StartTime, course.EndTime,
+                        other.DayOfWeek, other.StartTime, other.EndTime))
+                {
+                    throw new Exception(
+                        $"تداخل زمانی با درس «{other.Title} ({other.Code}-{other.GroupNumber})» وجود دارد"
+                    );
+                }
+            }
 
             // ثبت نهایی انتخاب واحد
             var enrollment = new CourseEnrollment
@@ -77,9 +85,6 @@ namespace UniversityRegistration.Api.Services.Implementations
             await _enrollmentRepo.AddAsync(enrollment);
         }
 
-        // =========================
-        // Remove Course (حذف درس)
-        // =========================
         public async Task RemoveCourseAsync(int studentId, int courseId)
         {
             var enrollments = await _enrollmentRepo.GetByStudentAsync(studentId);
@@ -91,12 +96,22 @@ namespace UniversityRegistration.Api.Services.Implementations
             await _enrollmentRepo.RemoveAsync(enrollment);
         }
 
-        // =========================
-        // Get Student Enrollments
-        // =========================
         public async Task<List<CourseEnrollment>> GetStudentEnrollmentsAsync(int studentId)
         {
             return await _enrollmentRepo.GetByStudentAsync(studentId);
+        }
+
+        // ==========================
+        // Time Overlap Helper
+        // ==========================
+        private static bool IsTimeOverlap(
+            WeekDay day1, TimeSpan start1, TimeSpan end1,
+            WeekDay day2, TimeSpan start2, TimeSpan end2)
+        {
+            if (day1 != day2) return false;
+
+            // overlap: start1 < end2 && start2 < end1
+            return start1 < end2 && start2 < end1;
         }
     }
 }

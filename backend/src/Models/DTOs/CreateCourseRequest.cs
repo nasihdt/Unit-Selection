@@ -29,8 +29,14 @@ namespace UniversityRegistration.Api.Models.DTOs
         public string TeacherName { get; set; } = null!;
 
         [Required]
-        [MaxLength(50)]
-        public string Time { get; set; } = null!;
+        [Range(0, 6, ErrorMessage = "روز هفته نامعتبر است (0 تا 6).")]
+        public int DayOfWeek { get; set; }
+
+        [Required]
+        public TimeSpan StartTime { get; set; }
+
+        [Required]
+        public TimeSpan EndTime { get; set; }
 
         [Required]
         [MaxLength(100)]

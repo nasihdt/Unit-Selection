@@ -12,7 +12,7 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260102190540_InitialCreate")]
+    [Migration("20260102191425_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -69,6 +69,12 @@ namespace UniversityRegistration.Api.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
+
                     b.Property<DateTime?>("ExamDateTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -79,6 +85,9 @@ namespace UniversityRegistration.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
 
                     b.Property<string>("TeacherName")
                         .IsRequired()

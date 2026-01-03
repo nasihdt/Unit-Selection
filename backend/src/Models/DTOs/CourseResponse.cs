@@ -12,6 +12,9 @@ namespace UniversityRegistration.Api.Models.DTOs
         public int Capacity { get; set; }
         public string TeacherName { get; set; } = null!;
         public string Time { get; set; } = null!;
+        public int DayOfWeek { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public string Location { get; set; } = null!;
         public DateTime? ExamDateTime { get; set; }
     }

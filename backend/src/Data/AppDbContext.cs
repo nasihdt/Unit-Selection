@@ -116,6 +116,12 @@ namespace UniversityRegistration.Api.Data
                       .IsRequired()
                       .HasMaxLength(50);
 
+                entity.Property(x => x.DayOfWeek).IsRequired();
+
+                entity.Property(x => x.StartTime).IsRequired();
+
+                entity.Property(x => x.EndTime).IsRequired();
+
                 entity.Property(x => x.Location)
                       .IsRequired()
                       .HasMaxLength(100);

@@ -50,9 +50,17 @@ namespace UniversityRegistration.Api.Repository.Implementations
             existing.Title = course.Title;
             existing.Code = course.Code;
             existing.Units = course.Units;
+            existing.GroupNumber = course.GroupNumber;
+
             existing.Capacity = course.Capacity;
             existing.TeacherName = course.TeacherName;
+
+            //  زمان ساختاریافته + رشته نمایشی
+            existing.DayOfWeek = course.DayOfWeek;
+            existing.StartTime = course.StartTime;
+            existing.EndTime = course.EndTime;
             existing.Time = course.Time;
+
             existing.Location = course.Location;
             existing.ExamDateTime = course.ExamDateTime;
 
@@ -106,6 +114,17 @@ namespace UniversityRegistration.Api.Repository.Implementations
                 query = query.Where(c => c.Capacity > 0);
 
             return await query.ToListAsync();
+        }
+
+        // برای تداخل مکان: تمام درس‌های یک لوکیشن
+        public async Task<List<Course>> GetCoursesByLocationAsync(string location)
+        {
+            var loc = location.Trim();
+
+            return await _context.Courses
+                .AsNoTracking()
+                .Where(c => c.Location == loc)
+                .ToListAsync();
         }
     }
 }

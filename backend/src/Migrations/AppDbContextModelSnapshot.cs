@@ -66,6 +66,12 @@ namespace UniversityRegistration.Api.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
+
                     b.Property<DateTime?>("ExamDateTime")
                         .HasColumnType("timestamp with time zone");
 
@@ -76,6 +82,9 @@ namespace UniversityRegistration.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
 
                     b.Property<string>("TeacherName")
                         .IsRequired()

@@ -40,6 +40,9 @@ namespace UniversityRegistration.Api.Migrations
                     Capacity = table.Column<int>(type: "integer", nullable: false),
                     TeacherName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Time = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    DayOfWeek = table.Column<int>(type: "integer", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
                     Location = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ExamDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },

@@ -25,6 +25,15 @@
         // زمان برگزاری (مثلاً "شنبه 10-12")
         public string Time { get; set; } = null!;
 
+        // روز های هفته
+        public WeekDay DayOfWeek { get; set; } 
+
+        // شروع کلاس
+        public TimeSpan StartTime { get; set; }
+
+        //پایان کلاس 
+        public TimeSpan EndTime { get; set; } 
+
         // مکان برگزاری (مثلاً "کلاس 201")
         public string Location { get; set; } = null!;
         public ICollection<CoursePrerequisite> Prerequisites { get; set; } = new List<CoursePrerequisite>();

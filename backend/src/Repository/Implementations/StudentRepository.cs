@@ -23,8 +23,11 @@ namespace UniversityRegistration.Api.Repository.Implementations
 
         public async Task<Student?> GetByIdAsync(int id)
         {
-            return await _context.Students.FindAsync(id);
+            return await _context.Students
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.Id == id);
         }
+
 
     }
 }
