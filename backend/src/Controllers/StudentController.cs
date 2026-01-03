@@ -41,7 +41,6 @@ namespace UniversityRegistration.Api.Controllers
             try
             {
                 var studentId = GetStudentId();
-
                 await _enrollmentService.SelectCourseAsync(studentId, request.CourseId);
 
                 return Ok(new { message = "درس با موفقیت انتخاب شد" });
@@ -55,13 +54,12 @@ namespace UniversityRegistration.Api.Controllers
         // =====================================
         // DELETE: api/student/remove-course/{courseId}
         // =====================================
-        [HttpDelete("remove-course/{courseId}")]
+        [HttpDelete("remove-course/{courseId:int}")]
         public async Task<IActionResult> RemoveCourse(int courseId)
         {
             try
             {
                 var studentId = GetStudentId();
-
                 await _enrollmentService.RemoveCourseAsync(studentId, courseId);
 
                 return Ok(new { message = "درس با موفقیت حذف شد" });
@@ -78,10 +76,19 @@ namespace UniversityRegistration.Api.Controllers
         [HttpGet("selected-courses")]
         public async Task<IActionResult> GetStudentEnrollments()
         {
-            var studentId = GetStudentId();
+            try
+            {
+                var studentId = GetStudentId();
 
-            var enrollments = await _enrollmentService.GetStudentEnrollmentsAsync(studentId);
-            return Ok(enrollments);
+                // ✅ خروجی DTO است (بدون cycle)
+                var enrollments = await _enrollmentService.GetStudentEnrollmentsAsync(studentId);
+
+                return Ok(enrollments);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
     }
 }

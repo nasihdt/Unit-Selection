@@ -15,26 +15,44 @@ namespace UniversityRegistration.Api.Repository.Implementations
             _context = context;
         }
 
-        public async Task<List<Course>> GetAllAsync()
-        {
-            return await _context.Courses.AsNoTracking().ToListAsync();
-        }
-
-        public async Task<Course?> GetByIdAsync(int id)
+        // ==========================
+        // Get All (با Sessions)
+        // ==========================
+        public async Task<List<Course>> GetAllWithSessionsAsync()
         {
             return await _context.Courses
+                .Include(c => c.Sessions)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        // ==========================
+        // Get By Id (با Sessions)
+        // ==========================
+        public async Task<Course?> GetByIdWithSessionsAsync(int id)
+        {
+            return await _context.Courses
+                .Include(c => c.Sessions)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        // ==========================
+        // Find By Code
+        // ==========================
         public async Task<Course?> FindByCodeAsync(string code)
         {
             var clean = code.Trim();
+
             return await _context.Courses
+                .Include(c => c.Sessions)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Code == clean);
         }
 
+        // ==========================
+        // Add
+        // ==========================
         public async Task<Course> AddAsync(Course course)
         {
             _context.Courses.Add(course);
@@ -42,9 +60,16 @@ namespace UniversityRegistration.Api.Repository.Implementations
             return course;
         }
 
+        // ==========================
+        // Update
+        // ==========================
         public async Task<bool> UpdateAsync(Course course)
         {
-            var existing = await _context.Courses.FindAsync(course.Id);
+            // اینجا لازم داریم Sessions هم لود شده باشه
+            var existing = await _context.Courses
+                .Include(c => c.Sessions)
+                .FirstOrDefaultAsync(c => c.Id == course.Id);
+
             if (existing == null)
                 return false;
 
@@ -55,20 +80,31 @@ namespace UniversityRegistration.Api.Repository.Implementations
             existing.Capacity = course.Capacity;
             existing.TeacherName = course.TeacherName;
 
-            existing.Location = course.Location;
-
-            // ✅ زمان‌های جدید
-            existing.DayOfWeek = course.DayOfWeek;
-            existing.StartTime = course.StartTime;
-            existing.EndTime = course.EndTime;
+            // نمایش
             existing.Time = course.Time;
 
             existing.ExamDateTime = course.ExamDateTime;
+
+            // ✅ جایگزینی کامل Sessions
+            existing.Sessions.Clear();
+            foreach (var s in course.Sessions)
+            {
+                existing.Sessions.Add(new CourseSession
+                {
+                    DayOfWeek = s.DayOfWeek,
+                    StartTime = s.StartTime,
+                    EndTime = s.EndTime,
+                    Location = s.Location
+                });
+            }
 
             await _context.SaveChangesAsync();
             return true;
         }
 
+        // ==========================
+        // Delete
+        // ==========================
         public async Task<bool> DeleteAsync(int id)
         {
             var course = await _context.Courses.FindAsync(id);
@@ -80,9 +116,14 @@ namespace UniversityRegistration.Api.Repository.Implementations
             return true;
         }
 
+        // ==========================
+        // Filter
+        // ==========================
         public async Task<List<Course>> GetFilteredAsync(CourseQueryParameters q)
         {
-            IQueryable<Course> query = _context.Courses.AsNoTracking();
+            IQueryable<Course> query = _context.Courses
+                .Include(c => c.Sessions)
+                .AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(q.Search))
             {
@@ -120,13 +161,18 @@ namespace UniversityRegistration.Api.Repository.Implementations
         // ==========================
         //  برای چک تداخل مکانی
         // ==========================
-        public async Task<List<Course>> GetCoursesByLocationAsync(string location)
+        public async Task<List<Course>> GetCoursesByLocationsAsync(List<string> locations)
         {
-            var loc = location.Trim();
+            var cleaned = locations
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim())
+                .Distinct()
+                .ToList();
 
             return await _context.Courses
+                .Include(c => c.Sessions)
                 .AsNoTracking()
-                .Where(c => c.Location == loc)
+                .Where(c => c.Sessions.Any(s => cleaned.Contains(s.Location)))
                 .ToListAsync();
         }
 

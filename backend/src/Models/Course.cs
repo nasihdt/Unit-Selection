@@ -1,4 +1,6 @@
-﻿namespace UniversityRegistration.Api.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace UniversityRegistration.Api.Models
 {
     public class Course
     {
@@ -13,8 +15,8 @@
         // تعداد واحد
         public int Units { get; set; }
 
-        // شماره گروه 
-        public int GroupNumber { get; set; } 
+        // شماره گروه
+        public int GroupNumber { get; set; }
 
         // ظرفیت
         public int Capacity { get; set; }
@@ -22,26 +24,21 @@
         // نام استاد
         public string TeacherName { get; set; } = null!;
 
-        // زمان برگزاری (مثلاً "شنبه 10-12")
+        // زمان برگزاری (برای نمایش در UI - مشتق شده از Sessions)
+        // مثال: "شنبه 10:00-12:00 (کلاس 201) | دوشنبه 17:00-19:00 (کلاس 101)"
+        [NotMapped]
         public string Time { get; set; } = null!;
 
-        // روز های هفته
-        public WeekDay DayOfWeek { get; set; } 
+        // جلسات برگزاری درس (برای پشتیبانی از چند جلسه در هفته)
+        public ICollection<CourseSession> Sessions { get; set; } = new List<CourseSession>();
 
-        // شروع کلاس
-        public TimeSpan StartTime { get; set; }
-
-        //پایان کلاس 
-        public TimeSpan EndTime { get; set; } 
-
-        // مکان برگزاری (مثلاً "کلاس 201")
-        public string Location { get; set; } = null!;
+        // لیست پیش‌نیازهای این درس
         public ICollection<CoursePrerequisite> Prerequisites { get; set; } = new List<CoursePrerequisite>();
+
+        // لیست درس‌هایی که این درس پیش‌نیاز آن‌هاست
         public ICollection<CoursePrerequisite> IsPrerequisiteFor { get; set; } = new List<CoursePrerequisite>();
 
-        // توضیحات اختیاری
+        // تاریخ و زمان امتحان (اختیاری)
         public DateTime? ExamDateTime { get; set; }
-
     }
 }
-    

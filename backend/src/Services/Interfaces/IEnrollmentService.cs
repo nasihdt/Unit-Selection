@@ -1,4 +1,5 @@
 ﻿using UniversityRegistration.Api.Models;
+using UniversityRegistration.Api.Models.DTOs;
 
 namespace UniversityRegistration.Api.Services.Interfaces
 {
@@ -8,6 +9,6 @@ namespace UniversityRegistration.Api.Services.Interfaces
 
         Task RemoveCourseAsync(int studentId, int courseId);
 
-        Task<List<CourseEnrollment>> GetStudentEnrollmentsAsync(int studentId);
+        Task<List<StudentEnrollmentResponse>> GetStudentEnrollmentsAsync(int studentId);
     }
 }

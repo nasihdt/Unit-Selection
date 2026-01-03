@@ -13,12 +13,15 @@ namespace UniversityRegistration.Api.Data
         public DbSet<Admin> Admins => Set<Admin>();
         public DbSet<Student> Students => Set<Student>();
         public DbSet<Professor> Professors => Set<Professor>();
+
         public DbSet<Course> Courses => Set<Course>();
+        public DbSet<CourseSession> CourseSessions => Set<CourseSession>();
         public DbSet<CoursePrerequisite> CoursePrerequisites => Set<CoursePrerequisite>();
-        public DbSet<RegistrationSettings> RegistrationSettings => Set<RegistrationSettings>();
-        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
         public DbSet<CourseEnrollment> CourseEnrollments => Set<CourseEnrollment>();
 
+        public DbSet<RegistrationSettings> RegistrationSettings => Set<RegistrationSettings>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -112,25 +115,38 @@ namespace UniversityRegistration.Api.Data
                       .IsRequired()
                       .HasMaxLength(100);
 
-                entity.Property(x => x.Time)
-                      .IsRequired()
-                      .HasMaxLength(50);
+                entity.Ignore(x => x.Time);
 
-                entity.Property(x => x.DayOfWeek).IsRequired();
+                entity.Property(x => x.ExamDateTime)
+                      .HasColumnType("timestamp with time zone");
 
-                entity.Property(x => x.StartTime).IsRequired();
+                // ✅ unique Code + GroupNumber
+                entity.HasIndex(x => new { x.Code, x.GroupNumber })
+                      .IsUnique();
+            });
 
-                entity.Property(x => x.EndTime).IsRequired();
+            // ===== CourseSession =====
+            modelBuilder.Entity<CourseSession>(entity =>
+            {
+                entity.HasKey(x => x.Id);
 
                 entity.Property(x => x.Location)
                       .IsRequired()
                       .HasMaxLength(100);
 
-                entity.Property(x => x.ExamDateTime)
-                      .HasColumnType("timestamp with time zone");
+                entity.Property(x => x.DayOfWeek)
+                      .IsRequired();
 
-                entity.HasIndex(x => new { x.Code, x.GroupNumber }).IsUnique();
+                entity.Property(x => x.StartTime)
+                      .IsRequired();
 
+                entity.Property(x => x.EndTime)
+                      .IsRequired();
+
+                entity.HasOne(x => x.Course)
+                      .WithMany(c => c.Sessions)
+                      .HasForeignKey(x => x.CourseId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
             // ===== CoursePrerequisite =====
@@ -177,7 +193,7 @@ namespace UniversityRegistration.Api.Data
                 entity.Property(x => x.MaxUnits).IsRequired();
             });
 
-            // ===== RefreshToken (Generic) =====
+            // ===== RefreshToken =====
             modelBuilder.Entity<RefreshToken>(entity =>
             {
                 entity.HasKey(x => x.Id);

@@ -30,6 +30,7 @@ namespace UniversityRegistration.Api.Repository.Implementations
         {
             return await _context.CourseEnrollments
                 .Include(x => x.Course)
+                    .ThenInclude(c => c.Sessions) 
                 .Where(x => x.StudentId == studentId)
                 .AsNoTracking()
                 .ToListAsync();
@@ -57,4 +58,3 @@ namespace UniversityRegistration.Api.Repository.Implementations
         }
     }
 }
-

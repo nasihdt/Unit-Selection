@@ -16,16 +16,10 @@ namespace UniversityRegistration.Api.Models.DTOs
         [Range(1, 500)]
         public int? Capacity { get; set; }
 
+        [MaxLength(100)]
         public string? TeacherName { get; set; }
 
-        [Range(0, 6, ErrorMessage = "روز هفته نامعتبر است (0 تا 6).")]
-        public int? DayOfWeek { get; set; }
-
-        public TimeSpan? StartTime { get; set; }
-        public TimeSpan? EndTime { get; set; }
-
-        [MaxLength(100)]
-        public string? Location { get; set; }
+        public List<CourseSessionDto>? Sessions { get; set; }
 
         public DateTime? ExamDateTime { get; set; }
     }

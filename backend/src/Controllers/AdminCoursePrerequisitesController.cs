@@ -35,6 +35,8 @@ namespace UniversityRegistration.Api.Controllers
 
             var prerequisites = await _context.CoursePrerequisites
                 .Where(x => x.CourseId == courseId)
+                .Include(x => x.PrerequisiteCourse)
+                    .ThenInclude(c => c.Sessions)
                 .Select(x => new CourseResponse
                 {
                     Id = x.PrerequisiteCourse.Id,
@@ -44,8 +46,16 @@ namespace UniversityRegistration.Api.Controllers
                     GroupNumber = x.PrerequisiteCourse.GroupNumber,
                     Capacity = x.PrerequisiteCourse.Capacity,
                     TeacherName = x.PrerequisiteCourse.TeacherName,
-                    Time = x.PrerequisiteCourse.Time,
-                    Location = x.PrerequisiteCourse.Location,
+
+                    // ✅ سازگار با DTO جدید
+                    Sessions = x.PrerequisiteCourse.Sessions.Select(s => new CourseSessionDto
+                    {
+                        DayOfWeek = (int)s.DayOfWeek,
+                        StartTime = s.StartTime,
+                        EndTime = s.EndTime,
+                        Location = s.Location
+                    }).ToList(),
+
                     ExamDateTime = x.PrerequisiteCourse.ExamDateTime
                 })
                 .ToListAsync();
@@ -72,12 +82,10 @@ namespace UniversityRegistration.Api.Controllers
             }
             catch (KeyNotFoundException ex)
             {
-                // درس یا پیش‌نیاز پیدا نشده
                 return NotFound(new { message = ex.Message });
             }
             catch (InvalidOperationException ex)
             {
-                // حالت‌هایی مثل: خودش بودن، دوطرفه بودن، چرخه
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception)

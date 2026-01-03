@@ -66,10 +66,15 @@ namespace UniversityRegistration.Api.Controllers
                 // تداخل مکانی یا تکراری بودن کد+گروه
                 return Conflict(new { message = ex.Message });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500, new { message = "خطای داخلی سرور رخ داده است" });
+                return StatusCode(500, new
+                {
+                    message = ex.Message,
+                    detail = ex.InnerException?.Message
+                });
             }
+
         }
 
         // ==========================

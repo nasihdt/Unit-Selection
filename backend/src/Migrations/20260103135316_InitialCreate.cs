@@ -39,11 +39,6 @@ namespace UniversityRegistration.Api.Migrations
                     GroupNumber = table.Column<int>(type: "integer", nullable: false),
                     Capacity = table.Column<int>(type: "integer", nullable: false),
                     TeacherName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Time = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    DayOfWeek = table.Column<int>(type: "integer", nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    Location = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ExamDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -140,6 +135,29 @@ namespace UniversityRegistration.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CourseSessions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CourseId = table.Column<int>(type: "integer", nullable: false),
+                    DayOfWeek = table.Column<int>(type: "integer", nullable: false),
+                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    Location = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseSessions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CourseSessions_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CourseEnrollments",
                 columns: table => new
                 {
@@ -187,6 +205,11 @@ namespace UniversityRegistration.Api.Migrations
                 table: "Courses",
                 columns: new[] { "Code", "GroupNumber" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseSessions_CourseId",
+                table: "CourseSessions",
+                column: "CourseId");
         }
 
         /// <inheritdoc />
@@ -200,6 +223,9 @@ namespace UniversityRegistration.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "CoursePrerequisites");
+
+            migrationBuilder.DropTable(
+                name: "CourseSessions");
 
             migrationBuilder.DropTable(
                 name: "Professors");

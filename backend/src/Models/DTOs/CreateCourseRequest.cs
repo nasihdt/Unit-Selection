@@ -28,19 +28,9 @@ namespace UniversityRegistration.Api.Models.DTOs
         [MaxLength(100)]
         public string TeacherName { get; set; } = null!;
 
-        [Required]
-        [Range(0, 6, ErrorMessage = "روز هفته نامعتبر است (0 تا 6).")]
-        public int DayOfWeek { get; set; }
-
-        [Required]
-        public TimeSpan StartTime { get; set; }
-
-        [Required]
-        public TimeSpan EndTime { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        public string Location { get; set; } = null!;
+        [Required(ErrorMessage = "حداقل یک جلسه برای درس لازم است")]
+        [MinLength(1, ErrorMessage = "حداقل یک جلسه برای درس لازم است")]
+        public List<CourseSessionDto> Sessions { get; set; } = new();
 
         public DateTime? ExamDateTime { get; set; }
     }

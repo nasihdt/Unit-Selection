@@ -12,7 +12,7 @@ using UniversityRegistration.Api.Data;
 namespace UniversityRegistration.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260102191425_InitialCreate")]
+    [Migration("20260103135316_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -69,35 +69,16 @@ namespace UniversityRegistration.Api.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("integer");
-
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("interval");
-
                     b.Property<DateTime?>("ExamDateTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("GroupNumber")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("interval");
-
                     b.Property<string>("TeacherName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -155,6 +136,38 @@ namespace UniversityRegistration.Api.Migrations
                     b.HasIndex("PrerequisiteCourseId");
 
                     b.ToTable("CoursePrerequisites");
+                });
+
+            modelBuilder.Entity("UniversityRegistration.Api.Models.CourseSession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("interval");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseSessions");
                 });
 
             modelBuilder.Entity("UniversityRegistration.Api.Models.Professor", b =>
@@ -315,11 +328,24 @@ namespace UniversityRegistration.Api.Migrations
                     b.Navigation("PrerequisiteCourse");
                 });
 
+            modelBuilder.Entity("UniversityRegistration.Api.Models.CourseSession", b =>
+                {
+                    b.HasOne("UniversityRegistration.Api.Models.Course", "Course")
+                        .WithMany("Sessions")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("UniversityRegistration.Api.Models.Course", b =>
                 {
                     b.Navigation("IsPrerequisiteFor");
 
                     b.Navigation("Prerequisites");
+
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

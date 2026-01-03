@@ -18,33 +18,29 @@ namespace UniversityRegistration.Api.Services.Implementations
 
         public async Task<List<CourseResponse>> GetAllAsync()
         {
-            var courses = await _repo.GetAllAsync();
+            var courses = await _repo.GetAllWithSessionsAsync();
             return courses.Select(MapToResponse).ToList();
         }
 
         public async Task<CourseResponse?> GetByIdAsync(int id)
         {
-            var course = await _repo.GetByIdAsync(id);
+            var course = await _repo.GetByIdWithSessionsAsync(id);
             return course == null ? null : MapToResponse(course);
         }
 
         public async Task<CourseResponse> AddAsync(CreateCourseRequest dto)
         {
-            var day = ParseWeekDay(dto.DayOfWeek);
-            ValidateSchedule(dto.StartTime, dto.EndTime);
+            ValidateSessions(dto.Sessions);
 
             // ✅ جلوگیری از تکراری بودن کد + گروه
             var duplicate = await _repo.ExistsByCodeAndGroupAsync(dto.Code, dto.GroupNumber);
             if (duplicate)
                 throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
 
-            // ✅ چک تداخل مکانی
-            await EnsureNoLocationConflictAsync(
+            // ✅ چک تداخل مکانی/زمانی برای Admin
+            await EnsureNoLocationConflictsAsync(
                 excludeCourseId: null,
-                location: dto.Location,
-                dayOfWeek: day,
-                startTime: dto.StartTime,
-                endTime: dto.EndTime
+                sessions: dto.Sessions
             );
 
             var course = new Course
@@ -55,43 +51,47 @@ namespace UniversityRegistration.Api.Services.Implementations
                 GroupNumber = dto.GroupNumber,
                 Capacity = dto.Capacity,
                 TeacherName = dto.TeacherName,
-                Location = dto.Location,
-
-                DayOfWeek = day,
-                StartTime = dto.StartTime,
-                EndTime = dto.EndTime,
-                Time = BuildTimeString(day, dto.StartTime, dto.EndTime),
 
                 ExamDateTime = dto.ExamDateTime.HasValue
                     ? DateTime.SpecifyKind(dto.ExamDateTime.Value, DateTimeKind.Utc)
                     : null
             };
 
+            foreach (var s in dto.Sessions)
+            {
+                course.Sessions.Add(new CourseSession
+                {
+                    DayOfWeek = ParseWeekDay(s.DayOfWeek),
+                    StartTime = s.StartTime,
+                    EndTime = s.EndTime,
+                    Location = s.Location.Trim()
+                });
+            }
+
             var created = await _repo.AddAsync(course);
-            return MapToResponse(created);
+
+            // ✅ چون AddAsync معمولاً Sessions رو Include نمی‌کنه، برای پاسخ دقیق دوباره می‌گیریم
+            var createdWithSessions = await _repo.GetByIdWithSessionsAsync(created.Id);
+            return MapToResponse(createdWithSessions!);
         }
 
         public async Task<bool> UpdateAsync(int id, UpdateCourseRequest dto)
         {
-            var existing = await _repo.GetByIdAsync(id);
+            var existing = await _repo.GetByIdWithSessionsAsync(id);
             if (existing == null)
                 return false;
 
-            var day = ParseWeekDay(dto.DayOfWeek);
-            ValidateSchedule(dto.StartTime, dto.EndTime);
+            ValidateSessions(dto.Sessions);
 
             // ✅ جلوگیری از تکراری بودن کد + گروه (غیر از خودش)
             var duplicate = await _repo.ExistsByCodeAndGroupAsync(dto.Code, dto.GroupNumber, excludeCourseId: existing.Id);
             if (duplicate)
                 throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
 
-            // ✅ چک تداخل مکانی (غیر از خودش)
-            await EnsureNoLocationConflictAsync(
+            // ✅ چک تداخل مکانی/زمانی (غیر از خودش)
+            await EnsureNoLocationConflictsAsync(
                 excludeCourseId: existing.Id,
-                location: dto.Location,
-                dayOfWeek: day,
-                startTime: dto.StartTime,
-                endTime: dto.EndTime
+                sessions: dto.Sessions
             );
 
             existing.Title = dto.Title;
@@ -101,22 +101,29 @@ namespace UniversityRegistration.Api.Services.Implementations
             existing.Capacity = dto.Capacity;
             existing.TeacherName = dto.TeacherName;
 
-            existing.Location = dto.Location;
-            existing.DayOfWeek = day;
-            existing.StartTime = dto.StartTime;
-            existing.EndTime = dto.EndTime;
-            existing.Time = BuildTimeString(day, dto.StartTime, dto.EndTime);
-
             existing.ExamDateTime = dto.ExamDateTime.HasValue
                 ? DateTime.SpecifyKind(dto.ExamDateTime.Value, DateTimeKind.Utc)
                 : null;
+
+            // ✅ جایگزینی Sessions
+            existing.Sessions.Clear();
+            foreach (var s in dto.Sessions)
+            {
+                existing.Sessions.Add(new CourseSession
+                {
+                    DayOfWeek = ParseWeekDay(s.DayOfWeek),
+                    StartTime = s.StartTime,
+                    EndTime = s.EndTime,
+                    Location = s.Location.Trim()
+                });
+            }
 
             return await _repo.UpdateAsync(existing);
         }
 
         public async Task<bool> PatchAsync(int id, PatchCourseRequest dto)
         {
-            var course = await _repo.GetByIdAsync(id);
+            var course = await _repo.GetByIdWithSessionsAsync(id);
             if (course == null)
                 return false;
 
@@ -138,41 +145,10 @@ namespace UniversityRegistration.Api.Services.Implementations
             if (dto.TeacherName != null)
                 course.TeacherName = dto.TeacherName;
 
-            if (dto.Location != null)
-                course.Location = dto.Location;
-
             if (dto.ExamDateTime.HasValue)
-            {
                 course.ExamDateTime = DateTime.SpecifyKind(dto.ExamDateTime.Value, DateTimeKind.Utc);
-            }
 
-            bool scheduleChanged = false;
-
-            if (dto.DayOfWeek.HasValue)
-            {
-                course.DayOfWeek = ParseWeekDay(dto.DayOfWeek.Value);
-                scheduleChanged = true;
-            }
-
-            if (dto.StartTime.HasValue)
-            {
-                course.StartTime = dto.StartTime.Value;
-                scheduleChanged = true;
-            }
-
-            if (dto.EndTime.HasValue)
-            {
-                course.EndTime = dto.EndTime.Value;
-                scheduleChanged = true;
-            }
-
-            if (scheduleChanged)
-            {
-                ValidateSchedule(course.StartTime, course.EndTime);
-                course.Time = BuildTimeString(course.DayOfWeek, course.StartTime, course.EndTime);
-            }
-
-            // ✅ اگر کد یا گروه تغییر کرد باید دوباره تکراری بودن چک شود
+            // ✅ اگر کد یا گروه تغییر کرد، تکراری بودن چک شود
             if (dto.Code != null || dto.GroupNumber.HasValue)
             {
                 var duplicate = await _repo.ExistsByCodeAndGroupAsync(course.Code, course.GroupNumber, excludeCourseId: course.Id);
@@ -180,16 +156,28 @@ namespace UniversityRegistration.Api.Services.Implementations
                     throw new InvalidOperationException("درس با این کد و شماره گروه قبلاً ثبت شده است.");
             }
 
-            // ✅ اگر مکان یا زمان تغییر کرد باید تداخل مکانی چک شود
-            if (dto.Location != null || scheduleChanged)
+            // ✅ اگر Sessions ارسال شد، جایگزین کن + چک تداخل مکانی
+            if (dto.Sessions != null)
             {
-                await EnsureNoLocationConflictAsync(
+                ValidateSessions(dto.Sessions);
+
+                await EnsureNoLocationConflictsAsync(
                     excludeCourseId: course.Id,
-                    location: course.Location,
-                    dayOfWeek: course.DayOfWeek,
-                    startTime: course.StartTime,
-                    endTime: course.EndTime
+                    sessions: dto.Sessions
                 );
+
+                course.Sessions.Clear();
+
+                foreach (var s in dto.Sessions)
+                {
+                    course.Sessions.Add(new CourseSession
+                    {
+                        DayOfWeek = ParseWeekDay(s.DayOfWeek),
+                        StartTime = s.StartTime,
+                        EndTime = s.EndTime,
+                        Location = s.Location.Trim()
+                    });
+                }
             }
 
             return await _repo.UpdateAsync(course);
@@ -202,7 +190,7 @@ namespace UniversityRegistration.Api.Services.Implementations
 
         public async Task<CourseDeleteInfoResponse?> GetDeleteInfoAsync(int courseId)
         {
-            var course = await _repo.GetByIdAsync(courseId);
+            var course = await _repo.GetByIdWithSessionsAsync(courseId);
             if (course == null)
                 return null;
 
@@ -225,27 +213,38 @@ namespace UniversityRegistration.Api.Services.Implementations
         }
 
         // ==========================
-        // Location Conflict Check
+        // ✅ Location Conflict Check (Admin Add/Update)
         // ==========================
-        private async Task EnsureNoLocationConflictAsync(
+        private async Task EnsureNoLocationConflictsAsync(
             int? excludeCourseId,
-            string location,
-            WeekDay dayOfWeek,
-            TimeSpan startTime,
-            TimeSpan endTime)
+            List<CourseSessionDto> sessions)
         {
-            var coursesInLocation = await _repo.GetCoursesByLocationAsync(location);
+            var locations = sessions.Select(s => s.Location).ToList();
+            var coursesInLocations = await _repo.GetCoursesByLocationsAsync(locations);
 
-            foreach (var c in coursesInLocation)
+            foreach (var session in sessions)
             {
-                if (excludeCourseId.HasValue && c.Id == excludeCourseId.Value)
-                    continue;
+                var day = ParseWeekDay(session.DayOfWeek);
+                var start = session.StartTime;
+                var end = session.EndTime;
+                var loc = session.Location.Trim();
 
-                if (IsTimeOverlap(dayOfWeek, startTime, endTime, c.DayOfWeek, c.StartTime, c.EndTime))
+                foreach (var course in coursesInLocations)
                 {
-                    throw new InvalidOperationException(
-                        $"در مکان «{location}» در این بازه زمانی، درس دیگری ثبت شده است: «{c.Title} ({c.Code}-{c.GroupNumber})»"
-                    );
+                    if (excludeCourseId.HasValue && course.Id == excludeCourseId.Value)
+                        continue;
+
+                    foreach (var cs in course.Sessions)
+                    {
+                        if (cs.Location != loc) continue;
+
+                        if (IsTimeOverlap(day, start, end, cs.DayOfWeek, cs.StartTime, cs.EndTime))
+                        {
+                            throw new InvalidOperationException(
+                                $"در مکان «{loc}» در این بازه زمانی، درس دیگری ثبت شده است: «{course.Title} ({course.Code}-{course.GroupNumber})»"
+                            );
+                        }
+                    }
                 }
             }
         }
@@ -259,12 +258,24 @@ namespace UniversityRegistration.Api.Services.Implementations
         }
 
         // ==========================
-        // Helpers
+        // ✅ Helpers
         // ==========================
-        private static void ValidateSchedule(TimeSpan start, TimeSpan end)
+        private static void ValidateSessions(List<CourseSessionDto> sessions)
         {
-            if (end <= start)
-                throw new ArgumentException("ساعت پایان باید بعد از ساعت شروع باشد.");
+            if (sessions == null || sessions.Count == 0)
+                throw new ArgumentException("حداقل یک جلسه برای درس لازم است.");
+
+            foreach (var s in sessions)
+            {
+                if (s.EndTime <= s.StartTime)
+                    throw new ArgumentException("ساعت پایان باید بعد از ساعت شروع باشد.");
+
+                if (string.IsNullOrWhiteSpace(s.Location))
+                    throw new ArgumentException("مکان جلسه نمی‌تواند خالی باشد.");
+
+                if (s.DayOfWeek < 0 || s.DayOfWeek > 6)
+                    throw new ArgumentException("روز هفته نامعتبر است (0 تا 6).");
+            }
         }
 
         private static WeekDay ParseWeekDay(int dayOfWeek)
@@ -290,16 +301,23 @@ namespace UniversityRegistration.Api.Services.Implementations
             };
         }
 
-        private static string BuildTimeString(WeekDay dayOfWeek, TimeSpan start, TimeSpan end)
+        private static string BuildTimeStringFromCourseSessions(ICollection<CourseSession> sessions)
         {
-            var dayName = GetDayName(dayOfWeek);
-            return $"{dayName} {start:hh\\:mm}-{end:hh\\:mm}";
+            var parts = sessions
+                .OrderBy(s => s.DayOfWeek)
+                .ThenBy(s => s.StartTime)
+                .Select(s =>
+                {
+                    var dayName = GetDayName(s.DayOfWeek);
+                    return $"{dayName} {s.StartTime:hh\\:mm}-{s.EndTime:hh\\:mm} ({s.Location.Trim()})";
+                });
+
+            return string.Join(" | ", parts);
         }
 
         // ==========================
-        // Mapping
+        // ✅ Mapping
         // ==========================
-
         private static CourseResponse MapToResponse(Course course)
         {
             return new CourseResponse
@@ -312,13 +330,22 @@ namespace UniversityRegistration.Api.Services.Implementations
                 Capacity = course.Capacity,
                 TeacherName = course.TeacherName,
 
-                Time = course.Time,
-                DayOfWeek = (int)course.DayOfWeek,
-                StartTime = course.StartTime,
-                EndTime = course.EndTime,
+                // ✅ Time همیشه از Sessions ساخته می‌شود (نه از دیتابیس)
+                Time = BuildTimeStringFromCourseSessions(course.Sessions),
 
-                Location = course.Location,
-                ExamDateTime = course.ExamDateTime
+                ExamDateTime = course.ExamDateTime,
+
+                Sessions = course.Sessions
+                    .OrderBy(s => s.DayOfWeek)
+                    .ThenBy(s => s.StartTime)
+                    .Select(s => new CourseSessionDto
+                    {
+                        DayOfWeek = (int)s.DayOfWeek,
+                        StartTime = s.StartTime,
+                        EndTime = s.EndTime,
+                        Location = s.Location
+                    })
+                    .ToList()
             };
         }
     }

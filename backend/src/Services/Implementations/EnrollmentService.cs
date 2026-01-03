@@ -1,4 +1,5 @@
 ﻿using UniversityRegistration.Api.Models;
+using UniversityRegistration.Api.Models.DTOs;
 using UniversityRegistration.Api.Repository.Interfaces;
 using UniversityRegistration.Api.Services.Interfaces;
 
@@ -32,50 +33,61 @@ namespace UniversityRegistration.Api.Services.Implementations
             if (student == null)
                 throw new Exception("دانشجو یافت نشد");
 
-            var course = await _courseRepo.GetByIdAsync(courseId);
+            // ✅ باید Course همراه Sessions گرفته شود
+            var course = await _courseRepo.GetByIdWithSessionsAsync(courseId);
             if (course == null)
                 throw new Exception("درس یافت نشد");
 
-            // جلوگیری از اخذ تکراری
+            if (course.Sessions == null || course.Sessions.Count == 0)
+                throw new Exception("برای این درس هیچ جلسه‌ای تعریف نشده است");
+
+            // ✅ جلوگیری از اخذ تکراری
             if (await _enrollmentRepo.ExistsAsync(studentId, courseId))
                 throw new Exception("این درس قبلاً اخذ شده است");
 
-            // بررسی ظرفیت
+            // ✅ بررسی ظرفیت
             var enrolledCount = await _enrollmentRepo.CountByCourseAsync(courseId);
             if (enrolledCount >= course.Capacity)
                 throw new Exception("ظرفیت درس تکمیل شده است");
 
-            // بررسی سقف واحد
+            // ✅ بررسی سقف واحد
             var settings = await _settingsRepo.GetAsync();
             var currentEnrollments = await _enrollmentRepo.GetByStudentAsync(studentId);
-            var currentUnits = currentEnrollments.Sum(x => x.Course.Units);
 
+            var currentUnits = currentEnrollments.Sum(x => x.Course.Units);
             if (settings != null && currentUnits + course.Units > settings.MaxUnits)
                 throw new Exception("مجموع واحدهای انتخابی بیشتر از حد مجاز است");
 
-            // بررسی پیش‌نیازها
+            // ✅ بررسی پیش‌نیازها
             var prereqIds = await _prereqService.GetPrerequisiteIdsAsync(courseId);
             var passedCourseIds = currentEnrollments.Select(x => x.CourseId).ToList();
 
             if (prereqIds.Except(passedCourseIds).Any())
                 throw new Exception("پیش‌نیاز این درس پاس نشده است");
 
-            // ✅ تداخل زمانی برای دانشجو
+            // ✅ تداخل زمانی (بین Sessions)
             foreach (var e in currentEnrollments)
             {
-                var other = e.Course;
+                var otherCourse = e.Course;
 
-                if (IsTimeOverlap(
-                        course.DayOfWeek, course.StartTime, course.EndTime,
-                        other.DayOfWeek, other.StartTime, other.EndTime))
+                if (otherCourse.Sessions == null || otherCourse.Sessions.Count == 0)
+                    continue;
+
+                foreach (var newSession in course.Sessions)
                 {
-                    throw new Exception(
-                        $"تداخل زمانی با درس اخذ شده ی «{other.Title} ({other.Code}-{other.GroupNumber})» وجود دارد"
-                    );
+                    foreach (var otherSession in otherCourse.Sessions)
+                    {
+                        if (IsSessionOverlap(newSession, otherSession))
+                        {
+                            throw new Exception(
+                                $"تداخل زمانی با درس اخذ شده‌ی «{otherCourse.Title} ({otherCourse.Code}-{otherCourse.GroupNumber})» وجود دارد"
+                            );
+                        }
+                    }
                 }
             }
 
-            // ثبت نهایی انتخاب واحد
+            // ✅ ثبت نهایی انتخاب واحد
             var enrollment = new CourseEnrollment
             {
                 StudentId = studentId,
@@ -96,22 +108,88 @@ namespace UniversityRegistration.Api.Services.Implementations
             await _enrollmentRepo.RemoveAsync(enrollment);
         }
 
-        public async Task<List<CourseEnrollment>> GetStudentEnrollmentsAsync(int studentId)
+        // ✅ این متد دیگه Entity برنمی‌گردونه (برای جلوگیری از Cycle)
+        public async Task<List<StudentEnrollmentResponse>> GetStudentEnrollmentsAsync(int studentId)
         {
-            return await _enrollmentRepo.GetByStudentAsync(studentId);
+            var enrollments = await _enrollmentRepo.GetByStudentAsync(studentId);
+
+            return enrollments.Select(e => new StudentEnrollmentResponse
+            {
+                EnrollmentId = e.Id,
+                CourseId = e.CourseId,
+
+                Course = new CourseResponse
+                {
+                    Id = e.Course.Id,
+                    Title = e.Course.Title,
+                    Code = e.Course.Code,
+                    Units = e.Course.Units,
+                    GroupNumber = e.Course.GroupNumber,
+                    Capacity = e.Course.Capacity,
+                    TeacherName = e.Course.TeacherName,
+
+                    // ✅ Time از Sessions محاسبه می‌شود (نه از DB)
+                    Time = BuildTimeStringFromCourseSessions(e.Course.Sessions),
+
+                    ExamDateTime = e.Course.ExamDateTime,
+
+                    Sessions = e.Course.Sessions
+                        .OrderBy(s => s.DayOfWeek)
+                        .ThenBy(s => s.StartTime)
+                        .Select(s => new CourseSessionDto
+                        {
+                            DayOfWeek = (int)s.DayOfWeek,
+                            StartTime = s.StartTime,
+                            EndTime = s.EndTime,
+                            Location = s.Location
+                        })
+                        .ToList()
+                }
+            }).ToList();
         }
 
         // ==========================
-        // Time Overlap Helper
+        // Helpers
         // ==========================
-        private static bool IsTimeOverlap(
-            WeekDay day1, TimeSpan start1, TimeSpan end1,
-            WeekDay day2, TimeSpan start2, TimeSpan end2)
+        private static bool IsSessionOverlap(CourseSession a, CourseSession b)
         {
-            if (day1 != day2) return false;
+            if (a.DayOfWeek != b.DayOfWeek)
+                return false;
 
-            // overlap: start1 < end2 && start2 < end1
-            return start1 < end2 && start2 < end1;
+            // overlap: startA < endB && startB < endA
+            return a.StartTime < b.EndTime && b.StartTime < a.EndTime;
+        }
+
+        private static string GetDayName(WeekDay dayOfWeek)
+        {
+            return dayOfWeek switch
+            {
+                WeekDay.Saturday => "شنبه",
+                WeekDay.Sunday => "یکشنبه",
+                WeekDay.Monday => "دوشنبه",
+                WeekDay.Tuesday => "سه‌شنبه",
+                WeekDay.Wednesday => "چهارشنبه",
+                WeekDay.Thursday => "پنجشنبه",
+                WeekDay.Friday => "جمعه",
+                _ => "نامشخص"
+            };
+        }
+
+        private static string BuildTimeStringFromCourseSessions(ICollection<CourseSession> sessions)
+        {
+            if (sessions == null || sessions.Count == 0)
+                return "";
+
+            var parts = sessions
+                .OrderBy(s => s.DayOfWeek)
+                .ThenBy(s => s.StartTime)
+                .Select(s =>
+                {
+                    var dayName = GetDayName(s.DayOfWeek);
+                    return $"{dayName} {s.StartTime:hh\\:mm}-{s.EndTime:hh\\:mm} ({s.Location.Trim()})";
+                });
+
+            return string.Join(" | ", parts);
         }
     }
 }
